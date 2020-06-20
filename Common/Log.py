@@ -34,13 +34,13 @@ def creat_file(filename):
 
 def set_handler(levels):
     if levels == 'error':
-        logging.addHandler(MyLog.err_handler)
-    logging.removeHandler(MyLog.handler)
+        logger.addHandler(MyLog.err_handler)
+    logger.addHandler(MyLog.handler)
 
 def remove_handler(levels):
     if levels == 'error':
-        logging.removeHandler(MyLog.err_handler)
-    logging.removeHandler(MyLog.handler)
+        logger.removeHandler(MyLog.err_handler)
+    logger.removeHandler(MyLog.handler)
 
 def get_current_time():
     return time.strftime(MyLog.date,time.localtime(time.time()))
@@ -49,7 +49,7 @@ class MyLog:
     path = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
     log_file = path+'/Log/log.log'
     err_file = path+'/Log/error.log'
-    logging.setLevel(LEVELS.get(level,logging.NOTSET))
+    logger.setLevel(LEVELS.get(level,logging.NOTSET))
     creat_file(log_file)
     creat_file(err_file)
     date = '%Y-%m-%d %H:%M:%S'
