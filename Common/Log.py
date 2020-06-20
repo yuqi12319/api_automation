@@ -60,13 +60,13 @@ class MyLog:
     @staticmethod
     def debug(log_meg):
         set_handler('debug')
-        logging.debug("[DEBUG " + get_current_time() + "]" + log_meg)
+        logging.debug("[DEBUG    " + get_current_time() + "]" + log_meg)
         remove_handler('debug')
 
     @staticmethod
     def info(log_meg):
         set_handler('info')
-        logging.debug("[INFO " + get_current_time() + "]" + log_meg)
+        logging.debug("[INFO     " + get_current_time() + "]" + log_meg)
         remove_handler('info')
 
     @staticmethod
@@ -78,13 +78,13 @@ class MyLog:
     @staticmethod
     def error(log_meg):
         set_handler('error')
-        logging.debug("[ERROR   " + get_current_time() + "]" + log_meg)
+        logging.debug("[ERROR    " + get_current_time() + "]" + log_meg)
         remove_handler('error')
 
     @staticmethod
     def critical(log_meg):
         set_handler('critical')
-        logging.debug("[CRITICAL    " + get_current_time() + "]" + log_meg)
+        logging.debug("[CRITICAL " + get_current_time() + "]" + log_meg)
         remove_handler('critical')
 
 if __name__ == '__main__':
