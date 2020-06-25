@@ -79,5 +79,3 @@ def my_aes_decrypt(msg, key, vi):
     msg = binascii.a2b_hex(msg)
     obj = AES.new(key, AES.MODE_CBC, vi)
     return obj.decrypt(msg).decode()
-
-print(my_md5('213w1'))
