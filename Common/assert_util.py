@@ -1,5 +1,5 @@
 # coding:utf-8
-# Name:Assert.py
+# Name:assert_util.py
 # Author:qi.yu
 # Time:2020/6/20 18:55
 
@@ -7,13 +7,13 @@
 封装Assert方法
 """
 
-from Common import Log
-from Common import Consts
+from Common import log
+from Common import consts
 import json
 
 class Assertions:
     def __init__(self):
-        self.log = Log.MyLog()
+        self.log = log.MyLog()
 
     def assert_code(self,code,expected_code):
         """
@@ -27,7 +27,7 @@ class Assertions:
             return True
         except:
             self.log.error("statusCode error, expected_code is %s, statusCode is %s " % (expected_code, code))
-            Consts.RESULT_LIST.append('fail')
+            consts.RESULT_LIST.append('fail')
 
             raise
 
@@ -45,7 +45,7 @@ class Assertions:
             return True
         except:
             self.log.error("Response body msg != expected_msg, expected_msg is %s, body_msg is %s" % (expected_msg, body_msg))
-            Consts.RESULT_LIST.append('fail')
+            consts.RESULT_LIST.append('fail')
 
             raise
 
@@ -63,7 +63,7 @@ class Assertions:
             return True
         except:
             self.log.error("Response body Does not contain expected_msg, expected_msg is %s" % expected_msg)
-            Consts.RESULT_LIST.append('fail')
+            consts.RESULT_LIST.append('fail')
 
             raise
 
@@ -79,7 +79,7 @@ class Assertions:
             return True
         except:
             self.log.error("Response body != expected_msg, expected_msg is %s, body is %s" % (expected_msg, body))
-            Consts.RESULT_LIST.append('fail')
+            consts.RESULT_LIST.append('fail')
 
     def assert_time(self,time,expected_time):
         """
@@ -93,6 +93,6 @@ class Assertions:
             return True
         except:
             self.log.error("Response time > expected_time, expected_time is %s, time is %s" % (expected_time, time))
-            Consts.RESULT_LIST.append('fail')
+            consts.RESULT_LIST.append('fail')
 
             raise
