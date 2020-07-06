@@ -1,5 +1,5 @@
 # coding:utf-8
-# Name:Hash.py
+# Name:hash.py
 # Author:qi.yu
 # Time:2020/6/20 19:27
 
