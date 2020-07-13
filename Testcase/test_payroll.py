@@ -7,7 +7,7 @@ import pytest
 import allure
 
 from Common.operation_assert import *
-from Common.operation_yaml import GetTestData
+from Common.operation_yaml import YamlHandle
 from Robot.api_robot import Payroll
 from Conf.config import Config
 
@@ -30,19 +30,19 @@ from Conf.config import Config
 
 class TestPayroll:
     @pytest.mark.high
-    def test_payrollItem_list_api(self,login):
-        url = Config().get_conf('test_env','test2')+GetTestData.get_value('payrollItem_list_api')['url']
-        data = GetTestData.get_value('payrollItem_list_api')['data']
-        headers = {'x-dk-token': login}
+    def test_payrollItem_list_api(self):
+        url = Config().get_conf('test_env','test2')+YamlHandle().read_yaml('payroll.yaml')['payrollItem_list_api']['url']
+        data = YamlHandle().read_yaml('payroll.yaml')['payrollItem_list_api']['data']
+        headers = {'x-dk-token': YamlHandle().read_yaml('login.yaml')['login']['accessToken']}
         res = Payroll().get_payrollItem_list_api(url,data,headers)
-        Assertions().assert_code(res['json']['errcode'],'1')
+        Assertions().assert_code(res['json']['errcode'],'0')
 
     @pytest.mark.smoke
     def test_paygroup_list_api(self,login):
-        url = Config().get_conf('test_env','test2')+GetTestData.get_value('paygroup_list_api')['url']
-        data = GetTestData.get_value('paygroup_list_api')['data']
-        headers = GetTestData.get_value('paygroup_list_api')['headers']
-        headers.update({'x-dk-token':login})
+        url = Config().get_conf('test_env','test2')+YamlHandle().read_yaml('payroll.yaml')['paygroup_list_api']['url']
+        data = YamlHandle().read_yaml('payroll.yaml')['paygroup_list_api']['data']
+        headers = YamlHandle().read_yaml('payroll.yaml')['paygroup_list_api']['headers']
+        headers.update({'x-dk-token':YamlHandle().read_yaml('login.yaml')['login']['accessToken']})
         res = Payroll().get_paygroup_list_api(url,data,headers)
         Assertions().assert_code(res['json']['errcode'],'0')
 

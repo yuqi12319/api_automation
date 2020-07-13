@@ -10,34 +10,34 @@ import pytest
 from Common.request import Request
 from Common.operation_assert import Assertions
 
+
 class TestThirdParty:
 
     def test_get_open_token(self):
-        url = YamlHandle('third_party.yaml').get_yaml_value_of_key()['access_open_token']['url']
-        data = YamlHandle('third_party.yaml').get_yaml_value_of_key()['access_open_token']['data']
-        res =Request().post_requests(url,data)
+        url = YamlHandle().read_yaml('third_party.yaml')['access_open_token']['url']
+        data = YamlHandle().read_yaml('third_party.yaml')['access_open_token']['data']
+        res = Request().post_requests(url, data)
         if Assertions().assert_code(res['code'], 200):
-            Assertions().assert_text(res['json']['errcode'],'0')
-            return res
-
-    def test_refresh_open_token(self):
-        refreshToken = TestThirdParty().test_get_open_token()['json']['data']['refreshToken']
-        url = YamlHandle('third_party.yaml').get_yaml_value_of_key()['refresh_open_token']['url']
-        data = YamlHandle('third_party.yaml').get_yaml_value_of_key()['refresh_open_token']['data']
-        data.update({'refreshOpenToken':refreshToken})
-        res = Request().post_requests(url,data)
-        if Assertions().assert_code(res['code'],200):
             Assertions().assert_text(res['json']['errcode'], '0')
             return res
 
-    def test_regist_company(self):
-        accessToken = ThirdParty.test_get_open_token()['json']['data']['accessToken']
-        url = 'https://dktest-openapi.bipocloud.com/business/openbussiness/companies/registration?'+accessToken
-        data = {
+    def test_refresh_open_token(self):
+        refresh_token = TestThirdParty().test_get_open_token()['json']['data']['refreshToken']
+        url = YamlHandle().read_yaml('third_party.yaml')['refresh_open_token']['url']
+        data = YamlHandle().read_yaml('third_party.yaml')['refresh_open_token']['data']
+        data.update({'refreshOpenToken': refresh_token})
+        res = Request().post_requests(url, data)
+        if Assertions().assert_code(res['code'], 200):
+            Assertions().assert_text(res['json']['errcode'], '0')
+            return res
 
-        }
+    # def test_regist_company(self):
+    #     accessToken = ThirdParty.test_get_open_token()['json']['data']['accessToken']
+    #     url = 'https://dktest-openapi.bipocloud.com/business/openbussiness/companies/registration
+    #     data = {
+    #
+    #     }
+
 
 if __name__ == '__main__':
     pytest.main(['test_third_party.py'])
-
-
