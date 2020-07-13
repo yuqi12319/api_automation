@@ -15,11 +15,8 @@ urllib3.disable_warnings(InsecureRequestWarning)
 
 TIMEOUT = 60
 
-<<<<<<< Updated upstream
-class HttpRequest:
-=======
 class Request:
->>>>>>> Stashed changes
+
     def __init__(self):
         self.log = log.MyLog()
 
@@ -29,46 +26,6 @@ class Request:
         except ValueError as e:
             return False
         return True
-
-    def send_request_method(self,method,url,data=None,headers=None,timeout=TIMEOUT):
-        if not url.startswith('http://'):
-            url = "s%s" % ('http://',url)
-        if headers is None:
-<<<<<<< Updated upstream
-            headers = {
-                'Content-type': 'application/json',
-                'Authorization': ''
-            }
-=======
-            headers = {'Content-type': "application/json",
-                       "Authorization": ""}
->>>>>>> Stashed changes
-        try:
-            if method in ['get','GET']:
-                response = requests.get(url=url,json=data,headers=headers,timeout=timeout,verify=False)
-            elif method in ['post','POST']:
-                response = requests.post(url=url,json=data,headers=headers,timeout=timeout,verify=False)
-            elif method in ['put','PUT']:
-                response = requests.put(url=url,json=data,headers=headers,timeout=timeout,verify=False)
-
-<<<<<<< Updated upstream
-            # if self.is_json(response.text):
-            #     print("[%s] URL: %s \n[REQUEST BODY]:%s \n[RESPONSE]:%s \n[CODE]: %s" % (method, url, response.request.body, response.json(), response.status_code))
-            # else:
-            #     print("[%s] URL: %s \n[REQUEST BODY]:%s \n[RESPONSE EMPTY] \n[CODE]: %s" % (method, url, response.request.body, response.status_code))
-=======
-            if self.is_json(response.text):
-                print("[%s] URL: %s \n[REQUEST BODY]:%s \n[RESPONSE]:%s \n[CODE]: %s" % (method, url, response.request.body, response.json(), response.status_code))
-            else:
-                print("[%s] URL: %s \n[REQUEST BODY]:%s \n[RESPONSE EMPTY] \n[CODE]: %s" % (method, url, response.request.body, response.status_code))
->>>>>>> Stashed changes
-            return response
-        except requests.exceptions.ConnectTimeout:
-            raise Exception("CONNECTION_TIMEOUT")
-        except requests.exceptions.ConnectionError:
-            raise Exception("CONNECTION_ERROR")
-        except urllib3.exceptions.ProtocolError:
-            raise Exception("CONNECTION_ERROR")
 
     def get_requests(self,url,data=None,headers=None,cookies=None,timeout=TIMEOUT):
         """
@@ -178,7 +135,30 @@ class Request:
         response_dicts['time_total'] = time_total
         return response_dicts
 
+    def send_request_method(self,method,url,data=None,headers=None,timeout=TIMEOUT):
+        if headers is None:
+            headers = {
+                'Content-type': 'application/json',
+                'Authorization': ''
+            }
+            headers = {'Content-type': "application/json",
+                       "Authorization": ""}
 
+        if method in ['get','GET']:
+            response = requests.get(url=url,json=data,headers=headers,timeout=timeout,verify=False)
+        elif method in ['post','POST']:
+            response = requests.post(url=url,json=data,headers=headers,timeout=timeout,verify=False)
+        elif method in ['put','PUT']:
+            response = requests.put(url=url,json=data,headers=headers,timeout=timeout,verify=False)
+        else:
+            self.log.error("request method error")
+
+        if self.is_json(response.text):
+            self.log.info("[%s] URL: %s \n[REQUEST BODY]:%s \n[RESPONSE]:%s \n[CODE]: %s" % (method, url, response.request.body, response.json(), response.status_code))
+        else:
+            self.log.info("[%s] URL: %s \n[REQUEST BODY]:%s \n[RESPONSE EMPTY] \n[CODE]: %s" % (method, url, response.request.body, response.status_code))
+
+        return response
 
 
 if __name__ == '__main__':

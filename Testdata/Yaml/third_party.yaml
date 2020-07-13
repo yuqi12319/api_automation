@@ -1,0 +1,7 @@
+access_open_token:
+  url: 'http://dktest-openapi.bipocloud.com/services/oauth/access_open_token'
+  data: {'appId': 'e7e06b0ae5334714b72f','appSecret': '27708b9089c64f99939d5d3a4e638ba4'}
+
+refresh_open_token:
+  url: 'http://dktest-openapi.bipocloud.com/services/oauth/refresh_open_token'
+  data: {'refreshOpenToken': }
