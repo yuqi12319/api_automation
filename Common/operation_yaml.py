@@ -6,13 +6,12 @@
 读取yaml数据
 """
 
-import yaml
-import os
 import os.path
 from Common import log
 from ruamel import yaml
 
 path_ya = str(os.path.abspath(os.path.join(os.path.dirname(__file__), os.pardir))) + '/Testdata/Yaml/'
+
 
 # def parse():
 #     pages = {}
@@ -32,24 +31,39 @@ path_ya = str(os.path.abspath(os.path.join(os.path.dirname(__file__), os.pardir)
 #         pages = parse()
 #         return pages[key]
 
+class YamlHandle:
+    def __init__(self):
+        self.log = log.MyLog()
 
+    def read_yaml(self, file_name, mode='r'):
+        try:
+            with open(path_ya + file_name, mode, encoding='utf-8') as f:
+                return yaml.safe_load(f)
+        except Exception as e:
+            self.log.error(f'{file_name} yaml read error,error as {e}')
+            return False
 
+    def write_yaml(self, file_name, major_key, key, value):
+        try:
+            with open(path_ya + file_name, 'r', encoding='utf-8') as f:
+                content = yaml.safe_load(f)
+                content[major_key][key] = value
+                # print(type(content))
+            with open(path_ya + file_name, 'w', encoding='utf-8') as ff:
+                yaml.dump(content, ff, Dumper=yaml.RoundTripDumper)
+            return True
+        except Exception as e:
+            self.log.error(f'{file_name} yaml write error,error as {e}')
+            return False
 
 
 if __name__ == '__main__':
     # lists = GetTestData.get_value('login')
     # print(lists)
-    aa = YamlHandle('login.yaml')
-    # b = aa.get_yaml_value_of_key('login1.yaml','login')
-    # print(type(b))
-    abc = {
-        'dsv1221d': {
-            '888':'567'
-        }
-    }
-    # b = aa.get_yaml_value_of_key()
+    aa = YamlHandle()
+    # b = aa.read_yaml('login.yaml')
     # print(b)
-    aa.write_yaml_key_value('login','data',abc)
-
-
-
+    abc = '123'
+    b = aa.write_yaml('login.yaml', 'login', 'accessToken', abc)
+    # print(b)
+    # aa.write_yaml_key_value('login', 'data', abc)
