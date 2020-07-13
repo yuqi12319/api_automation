@@ -58,12 +58,5 @@ class YamlHandle:
 
 
 if __name__ == '__main__':
-    # lists = GetTestData.get_value('login')
-    # print(lists)
     aa = YamlHandle()
-    # b = aa.read_yaml('login.yaml')
-    # print(b)
-    abc = '123'
-    b = aa.write_yaml('login.yaml', 'login', 'accessToken', abc)
-    # print(b)
-    # aa.write_yaml_key_value('login', 'data', abc)
+    b = aa.read_yaml('login.yaml')
