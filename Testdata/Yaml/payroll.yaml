@@ -1,6 +1,8 @@
 payrollItem_list_api:
   url: /services/dukang-payroll/payrollItem/list
   data: {coOrgId: '724563241753116672', limit: 10, offset: 0}
+  header:
+  except_result:
 
 paygroup_list_api:
   url: /services/dukang-payroll/paygroup

@@ -1,0 +1,4 @@
+refresh_open_token_01:
+  url: 'http://dktest-openapi.bipocloud.com/services/oauth/refresh_open_token'
+  data:
+    'refreshOpenToken':
