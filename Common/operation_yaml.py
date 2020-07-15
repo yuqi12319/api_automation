@@ -56,7 +56,22 @@ class YamlHandle:
             self.log.error(f'{file_name} yaml write error,error as {e}')
             return False
 
+    def read_yaml_return_list(self, file_name, mode='r'):
+        with open(path_ya + file_name, mode, encoding='utf-8') as f:
+            content = yaml.safe_load(f)
+            data_list =[]
+            new_data_list = []
+            for i in content:
+                data_list.append(content[i])
+            for j in data_list:
+                a = []
+                for k in j:
+                    a.append(j[k])
+                new_data_list.append(a)
+            return new_data_list
+
 
 if __name__ == '__main__':
     aa = YamlHandle()
-    b = aa.read_yaml('login.yaml')
+    b = aa.read_yaml_return_list('third_party/regist_company.yaml')
+    print(b)

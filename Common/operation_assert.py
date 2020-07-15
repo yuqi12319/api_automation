@@ -10,11 +10,12 @@ from Common import log
 import Common.consts
 import json
 
+
 class Assertions:
     def __init__(self):
         self.log = log.MyLog()
 
-    def assert_code(self,code,expected_code):
+    def assert_code(self, code, expected_code):
         """
         验证response状态码
         :param code
@@ -31,7 +32,7 @@ class Assertions:
 
             raise
 
-    def assert_body(self,body,body_msg,expected_msg):
+    def assert_body(self, body, body_msg, expected_msg):
         """
         验证response body中任意属性的值
         :param body:
@@ -45,12 +46,13 @@ class Assertions:
             Common.consts.RESULT_LIST.append('True')
             return True
         except:
-            self.log.error("Response body msg != expected_msg, expected_msg is %s, body_msg is %s" % (expected_msg, body_msg))
+            self.log.error(
+                "Response body msg != expected_msg, expected_msg is %s, body_msg is %s" % (expected_msg, body_msg))
             Common.consts.RESULT_LIST.append('fail')
 
             raise
 
-    def assert_in_text(self,body,expected_msg):
+    def assert_in_text(self, body, expected_msg):
         """
         验证response body中是否包含预期字符串
         :param body:
@@ -58,7 +60,7 @@ class Assertions:
         :return:
         """
         try:
-            text = json.dumps(body,ensure_ascii=False)
+            text = json.dumps(body, ensure_ascii=False)
             assert expected_msg in text
             Common.consts.RESULT_LIST.append('True')
             return True
@@ -68,7 +70,7 @@ class Assertions:
 
             raise
 
-    def assert_text(self,body,expected_msg):
+    def assert_text(self, body, expected_msg):
         """
         验证response body中是否等于预期字符串
         :param body:
@@ -82,8 +84,9 @@ class Assertions:
         except:
             self.log.error("Response body != expected_msg, expected_msg is %s, body is %s" % (expected_msg, body))
             Common.consts.RESULT_LIST.append('fail')
+            raise
 
-    def assert_time(self,time,expected_time):
+    def assert_time(self, time, expected_time):
         """
         验证response body响应时间小于预期最大响应时间,单位：毫秒
         :param time:
