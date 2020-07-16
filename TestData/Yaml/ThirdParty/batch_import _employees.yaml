@@ -1,0 +1,4 @@
+url: 'http://dktest-openapi.bipocloud.com/services/business/openbussiness/batch_import_employees'
+body:
+  companyId:
+  importEmployeeDtoList:

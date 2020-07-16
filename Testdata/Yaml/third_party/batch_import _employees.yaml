@@ -1,3 +1,0 @@
-batch_import_employees_01:
-  url: 'http://dktest-openapi.bipocloud.com/services/business/openbussiness/bat ch_import _employees'
-  data:

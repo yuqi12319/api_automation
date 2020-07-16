@@ -24,15 +24,3 @@ class ThirdParty:
     def regist_company_api(self, url, data):
         res = self.request.send_request_method('post', url, data)
         return res
-
-    # 批量导入员工
-    def batch_import_employees(self, url, data):
-        res = self.request.send_request_method('post', url, data)
-        return res
-
-
-if __name__ == '__main__':
-    a = ThirdParty()
-    # ThirdParty().regist_company_api('run_all')
-    a = ThirdParty().regist_company_api('run_all')
-    print(a)

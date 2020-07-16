@@ -24,5 +24,3 @@ def login():
     YamlHandle().write_yaml('login.yaml', 'login', 'accessToken', access_token)
     return access_token
 
-
-# login()
