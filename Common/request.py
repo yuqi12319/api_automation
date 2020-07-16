@@ -53,20 +53,14 @@ class Request:
             raise Exception("CONNECTION_ERROR")
 
         time_consuming = response.elapsed.microseconds / 1000  # time_consuming为响应时间，单位为毫秒
-        time_total = response.elapsed.total_seconds()  # time_total为响应时间，单位为秒
         Common.consts.STRESS_LIST.append(time_consuming)
-        response_dicts = dict()
-        response_dicts['code'] = response.status_code
         if self.is_json(response.text):
             self.log.info("URL: %s \n[REQUEST BODY]:%s \n[RESPONSE]:%s \n[CODE]: %s" % (
                 url, response.request.body, response.json(), response.status_code))
         else:
             self.log.info("URL: %s \n[REQUEST BODY]:%s \n[RESPONSE EMPTY] \n[CODE]: %s" % (
                 url, response.request.body, response.status_code))
-        response_dicts['json'] = response.json()
-        response_dicts['time_consuming'] = time_consuming
-        response_dicts['time_total'] = time_total
-        return response_dicts
+        return response
 
     def post_requests(self, url, data=None, headers=None, cookies=None, timeout=TIMEOUT):
         """
@@ -82,7 +76,8 @@ class Request:
             url = '%s%s' % ('http://', url)
 
         try:
-            response = requests.post(url=url, json=data, headers=headers, cookies=cookies, timeout=timeout, verify=False)
+            response = requests.post(url=url, json=data, headers=headers, cookies=cookies, timeout=timeout,
+                                     verify=False)
         except requests.exceptions.ConnectTimeout:
             raise Exception("CONNECTION_TIMEOUT")
         except requests.exceptions.ConnectionError:
@@ -91,25 +86,15 @@ class Request:
             raise Exception("CONNECTION_ERROR")
 
         time_consuming = response.elapsed.microseconds / 1000
-        time_total = response.elapsed.total_seconds()
         Common.consts.STRESS_LIST.append(time_consuming)
-        response_dicts = dict()
-        if response.status_code == 200:
-            response_dicts['code'] = response.status_code
-            if self.is_json(response.text):
-                self.log.info("URL: %s \n[REQUEST BODY]:%s \n[RESPONSE]:%s \n[CODE]: %s" % (
-                    url, response.request.body, response.json(), response.status_code))
-            else:
-                self.log.info("URL: %s \n[REQUEST BODY]:%s \n[RESPONSE EMPTY] \n[CODE]: %s" % (
-                    url, response.request.body, response.status_code))
-            response_dicts['json'] = response.json()
-            response_dicts['time_consuming'] = time_consuming
-            response_dicts['time_total'] = time_total
-            return response_dicts
+        if self.is_json(response.text):
+            self.log.info("URL: %s \n[REQUEST BODY]:%s \n[RESPONSE]:%s \n[CODE]: %s" % (
+                url, response.request.body, response.json(), response.status_code))
         else:
-            print(response.status_code)
-            self.log.error('request status_code error: ')
-            raise
+            self.log.info("URL: %s \n[REQUEST BODY]:%s \n[RESPONSE EMPTY] \n[CODE]: %s" % (
+                url, response.request.body, response.status_code))
+        return response
+
 
     def put_requests(self, url, data=None, headers=None, cookies=None, timeout=TIMEOUT):
         """
@@ -125,7 +110,8 @@ class Request:
             url = '%s%s' % ('http://', url)
 
         try:
-            response = requests.put(url=url, json=data, headers=headers, cookies=cookies, timeout=timeout, verify=False)
+            response = requests.request(url=url, method='post', json=data, headers=headers, cookies=cookies,
+                                        timeout=timeout, verify=False)
         except requests.exceptions.ConnectTimeout:
             raise Exception("CONNECTION_TIMEOUT")
         except requests.exceptions.ConnectionError:
@@ -134,20 +120,14 @@ class Request:
             raise Exception("CONNECTION_ERROR")
 
         time_consuming = response.elapsed.microseconds / 1000
-        time_total = response.elapsed.total_seconds()
         Common.consts.STRESS_LIST.append(time_consuming)
-        response_dicts = dict()
-        response_dicts['code'] = response.status_code
         if self.is_json(response.text):
             self.log.info("URL: %s \n[REQUEST BODY]:%s \n[RESPONSE]:%s \n[CODE]: %s" % (
                 url, response.request.body, response.json(), response.status_code))
         else:
             self.log.info("URL: %s \n[REQUEST BODY]:%s \n[RESPONSE EMPTY] \n[CODE]: %s" % (
                 url, response.request.body, response.status_code))
-        response_dicts['json'] = response.json()
-        response_dicts['time_consuming'] = time_consuming
-        response_dicts['time_total'] = time_total
-        return response_dicts
+        return response
 
     def send_request_method(self, method, url, data=None, headers=None, timeout=TIMEOUT):
         if headers is None:
@@ -159,11 +139,11 @@ class Request:
                        "Authorization": ""}
 
         if method in ['get', 'GET']:
-            response = Request().get_requests(url,data,headers)
+            response = Request().get_requests(url, data, headers)
         elif method in ['post', 'POST']:
-            response = Request().post_requests(url,data,headers)
+            response = Request().post_requests(url, data, headers)
         elif method in ['put', 'PUT']:
-            response = Request.put_requests(url,data,headers)
+            response = Request.put_requests(url, data, headers)
         else:
             self.log.error("request method error")
 
@@ -172,5 +152,5 @@ class Request:
 
 if __name__ == '__main__':
     a = Request()
-    b = a.get_requests("https://baidu.com")
-    print(b['time_consuming'])
+    b = a.send_request_method('get','http://baidu.com')
+    print(b.text)
