@@ -10,7 +10,7 @@ import os.path
 from Common import log
 from ruamel import yaml
 
-path_ya = str(os.path.abspath(os.path.join(os.path.dirname(__file__), os.pardir))) + '/Testdata/Yaml/'
+path_ya = str(os.path.abspath(os.path.join(os.path.dirname(__file__), os.pardir))) + '/TestData/Yaml/'
 
 
 # def parse():
@@ -38,7 +38,7 @@ class YamlHandle:
     def read_yaml(self, file_name, mode='r'):
         try:
             with open(path_ya + file_name, mode, encoding='utf-8') as f:
-                return yaml.safe_load(f)
+                return list(yaml.safe_load_all(f))
         except Exception as e:
             self.log.error(f'{file_name} yaml read error,error as {e}')
             return False
@@ -73,5 +73,5 @@ class YamlHandle:
 
 if __name__ == '__main__':
     aa = YamlHandle()
-    b = aa.read_yaml_return_list('third_party/regist_company.yaml')
+    b = aa.read_yaml('ThirdParty/regist_company.yaml')
     print(b)
