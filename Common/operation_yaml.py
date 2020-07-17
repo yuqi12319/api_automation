@@ -12,6 +12,7 @@ from ruamel import yaml
 
 path_ya = str(os.path.abspath(os.path.join(os.path.dirname(__file__), os.pardir))) + '/TestData/Yaml/'
 
+
 class YamlHandle:
     def __init__(self):
         self.log = log.MyLog()
@@ -24,12 +25,11 @@ class YamlHandle:
             self.log.error(f'{file_name} yaml read error,error as {e}')
             return False
 
-    def write_yaml(self, file_name, major_key, key, value):
+    def write_yaml(self, file_name, key, value):
         try:
             with open(path_ya + file_name, 'r', encoding='utf-8') as f:
                 content = yaml.safe_load(f)
-                content[major_key][key] = value
-                # print(type(content))
+                content[key] = value
             with open(path_ya + file_name, 'w', encoding='utf-8') as ff:
                 yaml.dump(content, ff, Dumper=yaml.RoundTripDumper)
             return True
@@ -40,7 +40,7 @@ class YamlHandle:
     def read_yaml_return_list(self, file_name, mode='r'):
         with open(path_ya + file_name, mode, encoding='utf-8') as f:
             content = yaml.safe_load(f)
-            data_list =[]
+            data_list = []
             new_data_list = []
             for i in content:
                 data_list.append(content[i])
@@ -54,5 +54,5 @@ class YamlHandle:
 
 if __name__ == '__main__':
     aa = YamlHandle()
-    b = aa.read_yaml('ThirdParty/regist_company.yaml')
+    b = aa.write_yaml('login.yaml')
     print(b)
