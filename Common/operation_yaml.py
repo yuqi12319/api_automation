@@ -25,12 +25,11 @@ class YamlHandle:
             self.log.error(f'{file_name} yaml read error,error as {e}')
             return False
 
-    def write_yaml(self, file_name, major_key, key, value):
+    def write_yaml(self, file_name, key, value):
         try:
             with open(path_ya + file_name, 'r', encoding='utf-8') as f:
                 content = yaml.safe_load(f)
-                content[major_key][key] = value
-                # print(type(content))
+                content[key] = value
             with open(path_ya + file_name, 'w', encoding='utf-8') as ff:
                 yaml.dump(content, ff, Dumper=yaml.RoundTripDumper)
             return True
@@ -55,5 +54,5 @@ class YamlHandle:
 
 if __name__ == '__main__':
     aa = YamlHandle()
-    b = aa.read_yaml('ThirdParty/regist_company.yaml')
+    b = aa.write_yaml('login.yaml')
     print(b)
