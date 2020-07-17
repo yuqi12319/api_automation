@@ -7,15 +7,17 @@
 import pymysql
 
 mysqlDict = {
-    "host":"rm-uf6p31b6r5763b09wko.mysql.rds.aliyuncs.com",
-    "user":"iac_dev",
-    "password":"B1p02017",
+    "host": "rm-uf6p31b6r5763b09wko.mysql.rds.aliyuncs.com",
+    "user": "iac_dev",
+    "password": "B1p02017",
 }
 
-def mysql_operate_select_fetchall(database,select_sql=None):
-    db = pymysql.connect(host=mysqlDict['host'],port=3306,user=mysqlDict['user'],password=mysqlDict['password'],database=database,charset='utf8')
+
+def mysql_operate_select_fetchall(database, select_sql=None):
+    db = pymysql.connect(host=mysqlDict['host'], port=3306, user=mysqlDict['user'], password=mysqlDict['password'],
+                         database=database, charset='utf8')
     cursor = db.cursor(pymysql.cursors.DictCursor)
-    if select_sql != None:
+    if select_sql is not None:
         try:
             cursor.execute(select_sql)
             data = cursor.fetchall()
@@ -28,10 +30,12 @@ def mysql_operate_select_fetchall(database,select_sql=None):
     db.close()
     return data
 
-def mysql_operate_select_fetchone(database,select_sql=None):
-    db = pymysql.connect(host=mysqlDict['host'],port=3306,user=mysqlDict['user'],password=mysqlDict['password'],database=database,charset='utf8')
+
+def mysql_operate_select_fetchone(database, select_sql=None):
+    db = pymysql.connect(host=mysqlDict['host'], port=3306, user=mysqlDict['user'], password=mysqlDict['password'],
+                         database=database, charset='utf8')
     cursor = db.cursor(pymysql.cursors.DictCursor)
-    if select_sql != None:
+    if select_sql is not None:
         try:
             cursor.execute(select_sql)
             data = cursor.fetchone()
@@ -45,12 +49,12 @@ def mysql_operate_select_fetchone(database,select_sql=None):
     return data
 
 
-
-def mysql_operate_insert_update_delete(database,insert_sql=None,update_sql=None,delete_sql=None):
-    db = pymysql.connect(host=mysqlDict['host'],port=3306,user=mysqlDict['user'],password=mysqlDict['password'],database=database,charset='utf8')
+def mysql_operate_insert_update_delete(database, insert_sql=None, update_sql=None, delete_sql=None):
+    db = pymysql.connect(host=mysqlDict['host'], port=3306, user=mysqlDict['user'], password=mysqlDict['password'],
+                         database=database, charset='utf8')
     cursor = db.cursor()
 
-    if insert_sql != None:
+    if insert_sql is not None:
         try:
             cursor.execute(insert_sql)
             db.commit()
@@ -59,7 +63,7 @@ def mysql_operate_insert_update_delete(database,insert_sql=None,update_sql=None,
     else:
         pass
 
-    if update_sql != None:
+    if update_sql is not None:
         try:
             cursor.execute(update_sql)
             db.commit()
@@ -68,7 +72,7 @@ def mysql_operate_insert_update_delete(database,insert_sql=None,update_sql=None,
     else:
         pass
 
-    if delete_sql != None:
+    if delete_sql is not None:
         try:
             cursor.execute(delete_sql)
             db.commit()
