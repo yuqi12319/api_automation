@@ -11,7 +11,7 @@ from Common.operation_yaml import YamlHandle
 @pytest.fixture(scope="session")
 @pytest.mark.parametrize('data',YamlHandle().read_yaml('login.yaml'))
 def login(data):
-    url = Config().get_conf_env('test3') + data['url']
+    url = Config().get_conf('test_env','test3') + data['url']
     res = Request().send_request_method('post', url, data['body'])
     access_token = res.json()['data']['accessToken']
     YamlHandle().write_yaml('login.yaml', 'accessToken', access_token)
