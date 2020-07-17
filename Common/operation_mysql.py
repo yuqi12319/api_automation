@@ -21,8 +21,9 @@ def mysql_operate_select_fetchall(database, select_sql=None):
         try:
             cursor.execute(select_sql)
             data = cursor.fetchall()
-        except:
+        except Exception as e:
             print("Error:unable to fetch data")
+            return e
     else:
         pass
 
@@ -39,8 +40,9 @@ def mysql_operate_select_fetchone(database, select_sql=None):
         try:
             cursor.execute(select_sql)
             data = cursor.fetchone()
-        except:
+        except Exception as e:
             print("Error:unable to fetch data")
+            return e
     else:
         pass
 
@@ -58,8 +60,9 @@ def mysql_operate_insert_update_delete(database, insert_sql=None, update_sql=Non
         try:
             cursor.execute(insert_sql)
             db.commit()
-        except:
+        except Exception as e:
             db.rollback()
+            return e
     else:
         pass
 
@@ -67,8 +70,9 @@ def mysql_operate_insert_update_delete(database, insert_sql=None, update_sql=Non
         try:
             cursor.execute(update_sql)
             db.commit()
-        except:
+        except Exception as e:
             db.rollback()
+            return e
     else:
         pass
 
@@ -76,8 +80,9 @@ def mysql_operate_insert_update_delete(database, insert_sql=None, update_sql=Non
         try:
             cursor.execute(delete_sql)
             db.commit()
-        except:
+        except Exception as e:
             db.rollback()
+            return e
     else:
         pass
 

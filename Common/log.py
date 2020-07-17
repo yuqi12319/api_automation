@@ -22,40 +22,45 @@ LEVELS = {
 logger = logging.getLogger()
 level = 'default'
 
+
 def creat_file(filename):
     path = filename[0:filename.rfind('/')]
     if not os.path.isdir(path):
         os.makedirs(path)
     if not os.path.isfile(filename):
-        fd = open(filename,mode='w',encoding='utf-8')
+        fd = open(filename, mode='w', encoding='utf-8')
         fd.close()
     else:
         pass
+
 
 def set_handler(levels):
     if levels == 'error':
         logger.addHandler(MyLog.err_handler)
     logger.addHandler(MyLog.handler)
 
+
 def remove_handler(levels):
     if levels == 'error':
         logger.removeHandler(MyLog.err_handler)
     logger.removeHandler(MyLog.handler)
 
+
 def get_current_time():
-    return time.strftime(MyLog.date,time.localtime(time.time()))
+    return time.strftime(MyLog.date, time.localtime(time.time()))
+
 
 class MyLog:
     path = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
-    log_file = path+'/Log/log.log'
-    err_file = path+'/Log/error.log'
-    logger.setLevel(LEVELS.get(level,logging.NOTSET))
+    log_file = path + '/Log/log.log'
+    err_file = path + '/Log/error.log'
+    logger.setLevel(LEVELS.get(level, logging.NOTSET))
     creat_file(log_file)
     creat_file(err_file)
     date = '%Y-%m-%d %H:%M:%S'
 
-    handler = logging.FileHandler(log_file,encoding='utf-8')
-    err_handler = logging.FileHandler(err_file,encoding='utf-8')
+    handler = logging.FileHandler(log_file, encoding='utf-8')
+    err_handler = logging.FileHandler(err_file, encoding='utf-8')
 
     @staticmethod
     def debug(log_meg):
@@ -86,6 +91,7 @@ class MyLog:
         set_handler('critical')
         logging.debug("[CRITICAL " + get_current_time() + "]" + log_meg)
         remove_handler('critical')
+
 
 if __name__ == '__main__':
     MyLog.debug("This is debug message")
