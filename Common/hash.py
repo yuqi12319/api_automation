@@ -14,6 +14,7 @@ from Crypto.Cipher import AES
 from Crypto.Cipher import DES
 import binascii
 
+
 def my_md5(msg):
     """
     md5 算法加密
@@ -23,6 +24,7 @@ def my_md5(msg):
     h1 = md5()
     h1.update(msg.encode('utf-8'))
     return h1.hexdigest()
+
 
 def my_sha1(msg):
     """
@@ -34,6 +36,7 @@ def my_sha1(msg):
     sh.update(msg.encode('utf-8'))
     return sh.hexdigest()
 
+
 def my_sha256(msg):
     """
     sha256 算法加密
@@ -44,7 +47,8 @@ def my_sha256(msg):
     sh.update(msg.encode('utf-8'))
     return sh.hexdigest()
 
-def my_des(msg,key):
+
+def my_des(msg, key):
     """
 
     :param msg:需加密的字符串,长度必须为8的倍数，不足添加'='
@@ -55,6 +59,7 @@ def my_des(msg,key):
     mss = msg + (8 - (len(msg) % 8)) * '='
     text = de.encrypt(mss.encode())
     return binascii.b2a_hex(text).decode()
+
 
 def my_aes_encrypt(msg, key, vi):
     """
@@ -67,6 +72,7 @@ def my_aes_encrypt(msg, key, vi):
     obj = AES.new(key, AES.MODE_CBC, vi)
     txt = obj.encrypt(msg.encode())
     return binascii.b2a_hex(txt).decode()
+
 
 def my_aes_decrypt(msg, key, vi):
     """
