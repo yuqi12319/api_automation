@@ -12,6 +12,7 @@ from ruamel import yaml
 
 path_ya = str(os.path.abspath(os.path.join(os.path.dirname(__file__), os.pardir))) + '/TestData/Yaml/'
 
+
 class YamlHandle:
     def __init__(self):
         self.log = log.MyLog()
@@ -40,7 +41,7 @@ class YamlHandle:
     def read_yaml_return_list(self, file_name, mode='r'):
         with open(path_ya + file_name, mode, encoding='utf-8') as f:
             content = yaml.safe_load(f)
-            data_list =[]
+            data_list = []
             new_data_list = []
             for i in content:
                 data_list.append(content[i])

@@ -95,7 +95,6 @@ class Request:
                 url, response.request.body, response.status_code))
         return response
 
-
     def put_requests(self, url, data=None, headers=None, cookies=None, timeout=TIMEOUT):
         """
         put请求
@@ -152,5 +151,5 @@ class Request:
 
 if __name__ == '__main__':
     a = Request()
-    b = a.send_request_method('get','http://baidu.com')
+    b = a.send_request_method('get', 'http://baidu.com')
     print(b.text)
