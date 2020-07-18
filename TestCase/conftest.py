@@ -8,10 +8,19 @@ from Conf.config import Config
 from Common.operation_yaml import YamlHandle
 
 
-@pytest.fixture(scope="session")
-@pytest.mark.parametrize('data', YamlHandle().read_yaml('login.yaml'))
-def login(data):
-    url = Config().get_conf('test_env', 'test3') + data['url']
-    res = Request().send_request_method('post', url, data['body'])
+# @pytest.mark.parametrize('data', YamlHandle().read_yaml('login.yaml'))
+@pytest.fixture(autouse=True)
+def login():
+    url = Config().get_conf('test_env', 'test3') + '/dukang-user/login'
+    body = {
+        "areaCode": 86,
+        "clientId": "gardenia",
+        "password": 12345678,
+        "username": 18373280066
+        # "username": 13300001234
+    }
+
+    res = Request().send_request_method('post', url,  body)
     access_token = res.json()['data']['accessToken']
     YamlHandle().write_yaml('login.yaml', 'accessToken', access_token)
+    # return access_token
