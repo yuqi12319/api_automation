@@ -81,12 +81,17 @@ def random_idcard():
     return credit
 
 
+def date_of_birth_by_idcard(idcard):
+    birth = idcard[6:14]
+    birth_list = list(birth)
+    birth_list.insert(4, '/')
+    birth_list.insert(7, '/')
+    new_birth = ''.join(birth_list)
+    return new_birth
+
 # 生成18位随机id
 def snowflake():
     t = time.time()
     s = ''.join(random.sample(string.digits, 2))
     id = str(round(t * 1000000)) + s
     return id
-
-
-print(snowflake())
