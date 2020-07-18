@@ -109,7 +109,7 @@ class Request:
             url = '%s%s' % ('http://', url)
 
         try:
-            response = requests.request(url=url, method='post', json=data, headers=headers, cookies=cookies,
+            response = requests.request(url=url, json=data, headers=headers, cookies=cookies,
                                         timeout=timeout, verify=False)
         except requests.exceptions.ConnectTimeout:
             raise Exception("CONNECTION_TIMEOUT")
@@ -138,11 +138,11 @@ class Request:
                        "Authorization": ""}
 
         if method in ['get', 'GET']:
-            response = Request().get_requests(url, data, headers)
+            response = self.get_requests(url, data, headers)
         elif method in ['post', 'POST']:
-            response = Request().post_requests(url, data, headers)
+            response = self.post_requests(url, data, headers)
         elif method in ['put', 'PUT']:
-            response = Request.put_requests(url, data, headers)
+            response = self.put_requests(url, data, headers)
         else:
             self.log.error("request method error")
 
