@@ -1,0 +1,3 @@
+url: /dukang-workforce/api/workforce/apply/detail/
+headers:
+  X-Dk-Token:
