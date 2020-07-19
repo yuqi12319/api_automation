@@ -12,36 +12,35 @@ from Robot.api_third_party import ThirdParty
 import Common.operation_mysql as mysql
 
 
-@pytest.fixture(scope='module')
-def test_access_open_token():
-    url = YamlHandle().read_yaml('ThirdParty/access_open_token.yaml')[0]['url']
-    data = YamlHandle().read_yaml('ThirdParty/access_open_token.yaml')[0]['body']
-    res = ThirdParty().access_open_token_api(url, data)
-    Assertions().assert_text(res.json()['errcode'], '0')
-    return res.json()['data']['accessToken']
+class TestOpenToken:
 
-class TestRefreshOpenToken:
+    @pytest.mark.skip
+    @pytest.mark.parametrize('data', YamlHandle().read_yaml('ThirdParty/access_open_token.yaml'))
+    def test_access_open_token(self, data):
+        res = ThirdParty().access_open_token_api()
+        Assertions().assert_text(res.json()['errcode'], '0')
+        return res.json()['data']['accessToken']
 
     @allure.feature('第三方系统对接')
     @allure.title('刷新token接口')
-    @pytest.mark.skip
-    @pytest.mark.parametrize("data",YamlHandle().read_yaml('ThirdParty/refresh_open_token.yaml'))
-    def test_refresh_open_token(self, data, test_access_open_token):
-        url = data['url']
-        data = data['body']
-        data.update({'refreshOpenToken': test_access_open_token})
-        res = ThirdParty().refresh_open_token_api(url, data)
+    # @pytest.mark.skip
+    @pytest.mark.parametrize("data", YamlHandle().read_yaml('ThirdParty/refresh_open_token.yaml'))
+    def test_refresh_open_token(self, data):
+        access_token = ThirdParty().access_open_token_api().json()['data']['accessToken']
+        res = ThirdParty().refresh_open_token_api(data, access_token)
         if Assertions().assert_code(res['code'], 200):
             Assertions().assert_text(res['json']['errcode'], '0')
+
 
 class TestRegistCompany:
 
     @allure.feature('第三方系统对接')
     @allure.title('注册公司接口')
     @pytest.mark.parametrize("data", YamlHandle().read_yaml('ThirdParty/regist_company.yaml'))
-    def test_regist_company(self, data, test_access_open_token):
-        url = data['url'] + '?x-open-token=' + test_access_open_token
-        res = ThirdParty().regist_company_api(url, data['body'])
+    @pytest.mark.skip
+    def test_regist_company(self, data):
+        access_token = ThirdParty().access_open_token_api().json()['data']['accessToken']
+        res = ThirdParty().regist_company_api(data, access_token)
         if Assertions().assert_code(res.status_code, 200):
             if data['expect']['assert_type'] == 'text_errcode':
                 Assertions().assert_text(res.json()['errcode'], data['expect']['expect_result'])
@@ -53,7 +52,6 @@ class TestRegistCompany:
         mysql.mysql_operate_insert_update_delete('dukang_businessentry_dktest', delete_sql=delect_sql_01)
         delect_sql_02 = 'delete from company where name = "test_company_01"'
         mysql.mysql_operate_insert_update_delete('bipo_lite_dktest', delete_sql=delect_sql_02)
-
 
 
 if __name__ == '__main__':
