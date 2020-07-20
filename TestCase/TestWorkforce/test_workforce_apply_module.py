@@ -6,30 +6,34 @@ import pytest
 from Common.operation_yaml import YamlHandle
 from Common.operation_assert import Assertions
 from Robot.Workforce.workforce_apply import WorkforceApply
+from Conf.config import Config
 
 
 class TestApply:
 
-    @pytest.mark.skip
-    @pytest.mark.parametrize('data', YamlHandle().read_yaml('Workforce/FirstParty/apply.yaml'))
+    def setup_class(self):
+        self.url_path = Config().get_conf('test_env', 'test3')
+
+    # @pytest.mark.skip
+    @pytest.mark.parametrize('data', YamlHandle().read_yaml('Workforce/WorkforceApple/apply.yaml'))
     def test_send_apply(self, data):
-        res = WorkforceApply().send_apply_api(data)
-        if Assertions().assert_code(res.status_code, 200):
-            Assertions().assert_text(res.json()['errcode'], '0')
+        res = WorkforceApply().send_apply_api(self.url_path, data)
+        Assertions().assert_mode(res, data)
 
-    @pytest.mark.skip
-    @pytest.mark.parametrize('data', YamlHandle().read_yaml('Workforce/FirstParty/apply_list.yaml'))
+    # @pytest.mark.skip
+    @pytest.mark.parametrize('data', YamlHandle().read_yaml('Workforce/WorkforceApple/apply_list.yaml'))
     def test_apply_list(self, data):
-        res = WorkforceApply().apply_list_api(data)
-        if Assertions().assert_code(res.status_code, 200):
-            Assertions().assert_text(res.json()['errcode'], '0')
+        res = WorkforceApply().apply_list_api(self.url_path, data)
+        Assertions().assert_mode(res, data)
 
-    @pytest.mark.skip
-    @pytest.mark.parametrize('data', YamlHandle().read_yaml('Workforce/FirstParty/apply_detail.yaml'))
+    # @pytest.mark.skip
+    @pytest.mark.parametrize('data', YamlHandle().read_yaml('Workforce/WorkforceApple/apply_detail.yaml'))
     def test_apply_detail(self, data):
-        res = WorkforceApply().apply_detail_api(data)
-        if Assertions().assert_code(res.status_code, 200):
-            Assertions().assert_text(res.json()['errcode'], '0')
+        res = WorkforceApply().apply_detail_api(self.url_path, data)
+        Assertions().assert_mode(res, data)
+
+    def teardown_class(self):
+        pass
 
 
 if __name__ == '__main__':
