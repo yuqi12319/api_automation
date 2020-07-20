@@ -70,7 +70,7 @@ class Assertions:
 
             raise
 
-    def assert_text(self, body, expected_msg):
+    def assert_text(self, body, expected_result):
         """
         验证response body中是否等于预期字符串
         :param body:
@@ -78,7 +78,7 @@ class Assertions:
         :return:
         """
         try:
-            assert body == expected_msg
+            assert body == expected_result
             Common.consts.RESULT_LIST.append('True')
             return True
         except:
@@ -102,3 +102,17 @@ class Assertions:
             Common.consts.RESULT_LIST.append('fail')
 
             raise
+
+    def assert_mode(self, res, data):
+        '''
+        :param res:
+        :param data:
+        :return:
+        '''
+        Assertions().assert_code(res.status_code, 200)
+        if data['expect']['assert_type'] == 'errcode':
+            Assertions().assert_text(res.json()['errcode'], data['expect']['assert_result'])
+        elif data['expect']['assert_type'] == 'errmsg':
+            Assertions().assert_text(res.json()['errmsg'], data['expect']['assert_result'])
+        elif data['expect']['assert_type'] == 'data':
+            Assertions().assert_in_text(res.json()['data'], data['expect']['assert_result'])
