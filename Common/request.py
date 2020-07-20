@@ -31,10 +31,11 @@ class Request:
 
     def get_requests(self, url, data=None, headers=None, cookies=None, timeout=TIMEOUT):
         """
-        get请求
         :param url:
         :param data:
-        :param header:
+        :param headers:
+        :param cookies:
+        :param timeout:
         :return:
         """
         if url.startswith('http://') or url.startswith('https://'):
@@ -109,7 +110,7 @@ class Request:
             url = '%s%s' % ('http://', url)
 
         try:
-            response = requests.request(url=url, json=data, headers=headers, cookies=cookies,
+            response = requests.put(url=url, json=data, headers=headers, cookies=cookies,
                                         timeout=timeout, verify=False)
         except requests.exceptions.ConnectTimeout:
             raise Exception("CONNECTION_TIMEOUT")
