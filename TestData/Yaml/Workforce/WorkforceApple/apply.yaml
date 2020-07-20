@@ -31,3 +31,5 @@ body:
 headers:
   X-Dk-Token:
 expect:
+  assert_type: errcode
+  assert_result: '0'
