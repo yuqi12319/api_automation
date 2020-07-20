@@ -5,3 +5,6 @@ body:
   offset: 0
 headers:
   X-Dk-Token:
+expect:
+  assert_type: errcode
+  assert_result: '0'
