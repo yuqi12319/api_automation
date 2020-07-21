@@ -11,26 +11,25 @@ class WorkforceApply:
 
     def __init__(self):
         self.request = Request()
-        self.url_path = Config().get_conf('test_env', 'test3')
         self.access_token = YamlHandle().read_yaml('login.yaml')[0]['accessToken']
 
     # 创建用工申请接口
-    def send_apply_api(self, data):
-        url = self.url_path + data['url']
+    def send_apply_api(self, url_path, data):
+        url = url_path + data['url']
         headers = data['headers']
         headers.update({'X-Dk-Token': self.access_token})
         res = self.request.send_request_method('post', url, data['body'], headers)
         return res
 
-    def apply_list_api(self, data):
-        url = self.url_path + data['url'] + '?offset=0&limit=20'
+    def apply_list_api(self, url_path, data):
+        url = url_path + data['url'] + '?offset=0&limit=20'
         headers = data['headers']
         headers.update({'X-Dk-Token': self.access_token})
         res = self.request.send_request_method('post', url, data['body'], headers)
         return res
 
-    def apply_detail_api(self, data):
-        url = self.url_path + data['url'] + '733627681366605824'
+    def apply_detail_api(self, url_path, data):
+        url = url_path + data['url'] + str(data['applicationId'])
         headers = data['headers']
         headers.update({'X-Dk-Token': self.access_token})
         res = Request().send_request_method('get', url, headers=headers)

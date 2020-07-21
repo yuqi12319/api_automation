@@ -8,7 +8,6 @@ from Conf.config import Config
 from Common.operation_yaml import YamlHandle
 
 
-# @pytest.mark.parametrize('data', YamlHandle().read_yaml('login.yaml'))
 @pytest.fixture(autouse=True)
 def login():
     url = Config().get_conf('test_env', 'test3') + '/dukang-user/login'
@@ -23,4 +22,3 @@ def login():
     res = Request().send_request_method('post', url,  body)
     access_token = res.json()['data']['accessToken']
     YamlHandle().write_yaml('login.yaml', 'accessToken', access_token)
-    # return access_token
