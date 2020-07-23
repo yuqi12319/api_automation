@@ -3,8 +3,6 @@ body:
   coOrgId: 733358092246319104
   limit:
   offset: 0
-headers:
-  X-Dk-Token:
 expect:
   assert_type: errcode
   assert_result: '0'
