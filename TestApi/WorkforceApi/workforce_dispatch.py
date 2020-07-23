@@ -6,7 +6,7 @@
 from TestApi.consts_api import Const
 
 
-class WorkforceAssign(Const):
+class WorkforceDispatch(Const):
 
     def __init__(self):
         super().__init__()

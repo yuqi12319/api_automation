@@ -7,7 +7,7 @@ import pytest
 import allure
 from Common.operation_yaml import YamlHandle
 from Common.operation_assert import Assertions
-from TestApi.WorkforceApi.workforce_dispatch import WorkforceAssign
+from TestApi.WorkforceApi.workforce_dispatch import WorkforceDispatch
 from Conf.config import Config
 
 
@@ -19,18 +19,18 @@ class TestAssign:
     # @pytest.mark.skip
     @pytest.mark.parametrize('data', YamlHandle().read_yaml('Workforce/WorkforceAssign/dispatch_list.yaml'))
     def test_assign_list(self, data):
-        res = WorkforceAssign().assign_list_api(self.url_path, data)
+        res = WorkforceDispatch().dispatch_list_api(self.url_path, data)
         Assertions().assert_mode(res, data)
 
     # @pytest.mark.skip
     @pytest.mark.parametrize('data', YamlHandle().read_yaml('Workforce/WorkforceAssign/dispatch_detail.yaml'))
     def test_assign_detail(self, data):
-        res = WorkforceAssign().assign_detail_api(self.url_path, data)
+        res = WorkforceDispatch().dispatch_detail_api(self.url_path, data)
         Assertions().assert_mode(res, data)
 
     @pytest.mark.parametrize('data',YamlHandle().read_yaml('Workforce/WorkforceAssign/relevance_apply.yaml'))
     def test_relevance_apply(self, data):
-        res = WorkforceAssign().relevance_apply_api(self.url_path, data)
+        res = WorkforceDispatch().relevance_apply_api(self.url_path, data)
         Assertions().assert_mode(res,data)
 
 
