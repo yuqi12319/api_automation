@@ -1,0 +1,7 @@
+url: /dukang-workforce/api/receive/details
+params:
+  ticketId: 735445611213488128
+  workforceWorkingAssignId: 735445955146416128
+expect:
+  assert_type: errcode
+  assert_result: '0'

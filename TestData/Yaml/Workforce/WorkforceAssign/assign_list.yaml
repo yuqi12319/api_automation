@@ -1,0 +1,8 @@
+url: /dukang-workforce/api/assign/search
+params:
+  coOrgId: 733358092246319104
+  offset: 0
+  limit: 20
+expect:
+  assert_type: errcode
+  assert_result: '0'
