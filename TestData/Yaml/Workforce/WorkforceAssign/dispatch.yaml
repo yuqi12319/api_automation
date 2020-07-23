@@ -1,0 +1,11 @@
+url: /dukang-workforce/api/relation/dispatch
+body:
+  beginTime:
+  coOrgId:
+  dispatchCoOrgId:
+  employeeIds:
+  endTime:
+  workforceRequestId:
+expect:
+  assert_type: errcode
+  assert_result: '0'
