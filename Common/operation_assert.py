@@ -73,6 +73,7 @@ class Assertions:
     def assert_text(self, body, expected_result):
         """
         验证response body中是否等于预期字符串
+        :rtype:
         :param body:
         :param expected_msg:
         :return:
