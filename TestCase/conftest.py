@@ -19,6 +19,6 @@ def login():
         # "username": 13300001234
     }
 
-    res = Request().send_request_method('post', url=url, data=body)
+    res = Request().send_request_method('post', url=url, json=body)
     access_token = res.json()['data']['accessToken']
     YamlHandle().write_yaml('login.yaml', 'accessToken', access_token)
