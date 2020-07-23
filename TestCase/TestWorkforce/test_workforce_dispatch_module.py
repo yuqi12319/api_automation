@@ -21,7 +21,7 @@ class TestAssign:
     @pytest.mark.parametrize('data', YamlHandle().read_yaml('Workforce/WorkforceAssign/dispatch.yaml'))
     def test_dispatch(self, data):
         res = WorkforceDispatch().dispatch_api(self.url_path, data)
-        Assertions().assert_mode(res,data)
+        Assertions().assert_mode(res, data)
 
     # @pytest.mark.skip
     @allure.title("劳务工派遣列表test")

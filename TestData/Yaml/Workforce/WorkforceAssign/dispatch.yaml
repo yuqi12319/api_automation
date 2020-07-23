@@ -1,8 +1,8 @@
 url: /dukang-workforce/api/relation/dispatch
 body:
   beginTime:
-  coOrgId:
-  dispatchCoOrgId:
+  coOrgId: 733358092246319104
+  dispatchCoOrgId: 733365230582628352
   employeeIds:
   endTime:
   workforceRequestId:
