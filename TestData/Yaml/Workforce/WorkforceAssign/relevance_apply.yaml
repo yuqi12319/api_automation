@@ -1,0 +1,6 @@
+url: /dukang-workforce/api/workforce/require/ticketCodes
+params:
+  coOrgId: 733358092246319104
+expect:
+  assert_type: errcode
+  assert_result: '0'
