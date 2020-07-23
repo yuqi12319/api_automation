@@ -13,7 +13,7 @@ class WorkforceRequire(Const):
     # 获取用工需求列表接口
     def require_list_api(self, url_path, data):
         url = url_path + data['url']
-        res = self.request.send_request_method('post', url=url, data=data['body'], headers=self.headers)
+        res = self.request.send_request_method('post', url=url, json=data['body'], headers=self.headers)
         return res
 
     # 获取用工需求详情接口

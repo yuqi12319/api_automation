@@ -22,3 +22,9 @@ class WorkforceAssign(Const):
         url = url_path + data['url']
         res = self.request.send_request_method('get', url=url, params=data['params'], headers=self.headers)
         return res
+
+    # 关联申请查询
+    def relevance_apply_api(self, url_path, data):
+        url = url_path + data['url']
+        res = self.request.send_request_method('get', url=url, params=data['params'], headers=self.headers)
+        return res
