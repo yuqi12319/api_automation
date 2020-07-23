@@ -1,8 +1,1 @@
 url: /dukang-user/login
-body:
-  areaCode: 86
-  clientId: gardenia
-  password: 12345678
-  username: 18373280066
-accessToken: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJjbGllbnRJZCI6ImdhcmRlbmlhIiwiY3JlYXRlZFRpbWUiOjE1OTUyMjc4MDQ4ODYsInRva2VuVHlwZSI6IkFDQ0VTU1RPS0VOIiwidXNlcklkIjoiNzMzMzU4MDgzNTE3OTcyNDgwIiwiaWF0IjoxNTk1MjI3ODA0fQ.0RL0zRPYsj67DLy6uU7svuq4S10gU5My-Xa8fYUGzMI
-
