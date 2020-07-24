@@ -6,6 +6,8 @@
 
 
 ###修改手机号
+#####测试测试
+
 
 import pytest
 from Common.operation_yaml import YamlHandle
@@ -25,6 +27,8 @@ class TestChange:
         res = Request().send_request_method('put', url, body, headers)
         print(res.json())
 
+    def test1(self):
+        pass
 
 if __name__ == '__main__':
     pytest.main(['-s', '-v', 'test_mobile_change.py'])
