@@ -27,8 +27,6 @@ class TestCheckPwd:
         if Assertions().assert_code(res.status_code, 200):
             Assertions().assert_text(res.json()['errcode'], '0')
 
-    def test2(self):
-        pass
 
 
 if __name__ == '__main__':
