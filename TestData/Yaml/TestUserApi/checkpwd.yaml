@@ -1,0 +1,7 @@
+url: '/dukang-user/checkPwd'
+body:
+  userId: '733365227575312384'
+  password: '12345678'
+headers:
+  X-DK-Token:
+#expect:
