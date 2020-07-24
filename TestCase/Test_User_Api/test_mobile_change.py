@@ -27,11 +27,6 @@ class TestChange:
         res = Request().send_request_method('put', url, body, headers)
         print(res.json())
 
-    def test1(self):
-        pass
-
-    def test2(self):
-        pass
 
 if __name__ == '__main__':
     pytest.main(['-s', '-v', 'test_mobile_change.py'])
