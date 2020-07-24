@@ -1,8 +1,9 @@
 url: /dukang-workforce/api/workforce/form/list
+params:
+ offset: 0
+ limit: 20
 body:
  coOrgId: 733365230582628352
-headers:
- X-Dk-Token:
 expect:
  assert_type: errcode
  assert_result: '0'

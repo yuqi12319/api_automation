@@ -1,7 +1,5 @@
 url: /dukang-workforce/api/workforce/require/detail/
-headers:
-    X-Dk-Token:
-applicationId: 733627681421131776
+applicationId: 735445611213488128
 expect:
   assert_type: errcode
   assert_result: '0'

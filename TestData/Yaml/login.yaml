@@ -1,4 +1,1 @@
-login:
-  mobile: 18373280066
-  passport: 12345678
-  accessToken: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJjbGllbnRJZCI6ImdhcmRlbmlhIiwiY3JlYXRlZFRpbWUiOjE1OTQ2MjE1MTc4NTksInRva2VuVHlwZSI6IkFDQ0VTU1RPS0VOIiwidXNlcklkIjoiNzI0NTYzMjM4NDMxMjI3OTA0IiwiaWF0IjoxNTk0NjIxNTE3fQ.eCQ8hE8KMLRQ-VMGfnpNrG0pK7dB3pxwXcPfzomL7QI
+url: /dukang-user/login
