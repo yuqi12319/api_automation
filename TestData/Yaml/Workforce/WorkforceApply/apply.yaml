@@ -1,33 +1,33 @@
 #apply接口通过测试用例
 url: /dukang-workforce/api/workforce/apply
 body:
-  address:
-  cityId: 110100
-  cityName: 北京市
-  coOrgId: 733365230582628352
-  coOrgName: 测试公司3
+  recruitmentType: New
+  labourCompanyId: 733358092246319104
+  labourCompanyName: workforce_company_test01
+  provinceId: 130000
+  provinceName: 河北省
+  cityId: 130300
+  cityName: 秦皇岛市
+  organizationId: 733402522529562624
+  organizationName: 总部/华东区
+  address: osjsdjkasj
+  joinDate: 1595520000000
+  probationPeriodExpire: 1596124800000
+  positionId: 733424452708073472
+  positionName: 叉车工
+  demandPersonCount: 9
+  workforcePayrollDtos: []
   contactEmail: 123@163.com
   contactMobile: 18811223344
   contactPerson: admin
-  demandPersonCount: 11
-  joinDate: 1595260800000
-  labourCompanyId: 733358092246319104
-  labourCompanyName: workforce_company_test01
-  organizationId: 733402522529562624
-  organizationName: 总部/华东区
-  positionId: 733424452708073472
-  positionName: 叉车工
+  projectId:
+  projectName:
   positionObligation:
   positionQualification:
   positionQualificationId:
   positionTask:
-  probationPeriodExpire: 1596816000000
-  projectId:
-  projectName:
-  provinceId: 110000
-  provinceName: 北京
-  recruitmentType: new
-  workforcePayrollDtos: []
+  coOrgId: 733365230582628352
+  coOrgName: 测试公司3
 expect:
   assert_type: errcode
   assert_result: '0'

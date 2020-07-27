@@ -1,11 +1,12 @@
 url: /dukang-workforce/api/relation/dispatch
 body:
-  beginTime:
+  beginTime: 1595779200000
   coOrgId: 733358092246319104
   dispatchCoOrgId: 733365230582628352
-  employeeIds:
-  endTime:
-  workforceRequestId:
+  employeeIds: ["735086906294927360","735086906290733056"]
+  endTime: 1596038400000
+  workforceRequestId: 737254455392600064
 expect:
   assert_type: errcode
   assert_result: '0'
+clear: True
