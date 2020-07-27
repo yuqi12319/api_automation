@@ -16,3 +16,9 @@ class WorkforceBillManagement(Const):
         url = url_path + data['url']
         response = self.request.send_request_method('get', url, data['params'], data['body'], self.headers)
         return response
+
+    # 根据部门id和type获取审批流信息
+    def get_approval_query(self, url_path, data):
+        url = url_path + data['url_first_half'] + data['organization_id'] + data['url_second_half']
+        response = self.request.send_request_method('get', url, data['params'], data['body'], self.headers)
+        return response
