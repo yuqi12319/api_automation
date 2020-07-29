@@ -4,8 +4,6 @@
 # Time:2020/6/25 6:35 下午
 
 import requests
-from requests.models import Response
-
 import Common.consts
 from Common import log
 import json

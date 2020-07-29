@@ -17,7 +17,7 @@ class TestApply:
     def setup_class(self):
         self.url_path = Config().get_conf('test_env', 'test3')
 
-    # @pytest.mark.skip
+    @pytest.mark.skip
     @allure.title("甲方发送劳务工申请")
     @pytest.mark.parametrize('data', YamlHandle().read_yaml('Workforce/WorkforceApply/apply.yaml'))
     def test_send_apply(self, data):
@@ -39,7 +39,7 @@ class TestApply:
         res = WorkforceApply().apply_list_api(self.url_path, data)
         Assertions().assert_mode(res, data)
 
-    # @pytest.mark.skip
+    @pytest.mark.skip
     @allure.title("甲方劳务工申请详情")
     @pytest.mark.parametrize('data', YamlHandle().read_yaml('Workforce/WorkforceApply/apply_detail.yaml'))
     def test_apply_detail(self, data):
