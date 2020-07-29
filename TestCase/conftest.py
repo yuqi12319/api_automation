@@ -6,6 +6,7 @@ import pytest
 from Common.request import *
 from Conf.config import Config
 
+
 @pytest.fixture(autouse=True)
 def login():
     url = Config().get_conf('test_env', 'test3') + '/dukang-user/login'

@@ -1,19 +1,19 @@
 # coding:utf-8
-# Name:api_third_party.py
+# Name:api_thirdparty.py
 # Author:qi.yu
 # Time:2020/7/10 3:26 下午
-from Common.request import Request
-from Common.operation_yaml import YamlHandle
+from TestApi.consts_api import Const
 
 
-class ThirdParty:
+class ThirdParty(Const):
 
     def __init__(self):
-        self.request = Request()
+        super().__init__()
 
-    # 获取access_token
-    def access_open_token_api(self, data):
-        res = self.request.send_request_method('post', data['url'], data['body'])
+    # 获取access_token接口
+    def get_access_token_api(self, url_path, data):
+        url = url_path + data['url']
+        res = self.request.send_request_method('post', url=url, json=data['body'])
         return res
 
     # 刷新access_token
