@@ -9,6 +9,7 @@ from Common.operation_yaml import YamlHandle
 from Common.operation_assert import Assertions
 from TestApi.WorkforceApi.workforce_dispatch import WorkforceDispatch
 from Conf.config import Config
+from Common.operation_mysql import *
 
 
 @allure.feature("劳务工派遣模块")
@@ -22,6 +23,23 @@ class TestAssign:
     def test_dispatch(self, data):
         res = WorkforceDispatch().dispatch_api(self.url_path, data)
         Assertions().assert_mode(res, data)
+        # 删除派遣生成的db数据(派遣单，接收单，两者关联关系，派遣人员记录)
+        if 'clear' in data.keys():
+            selete_assign_sql = "SELECT id FROM workforce_working_assign WHERE workforce_ticket_id = %s" % (data['body']['workforceRequestId'])
+            id_list = mysql_operate_select_fetchall('dukang_workforce_dktest3', select_sql=selete_assign_sql)
+
+            delete_assign_map_sql = "DELETE FROM workforce_working_assign_map WHERE dispatch_working_assign_id = %s AND receive_working_assign_id = %s" % (
+                id_list[0]['id'], id_list[1]['id'])
+            mysql_operate_insert_update_delete('dukang_workforce_dktest3', delete_sql=delete_assign_map_sql)
+
+            delete_assign_relation_sql = "DELETE FROM workforce_assign_relation WHERE working_assign_id in (%s, %s) AND employee_id in %s" % (
+                id_list[0]['id'], id_list[1]['id'], tuple(data['body']['employeeIds']))
+            mysql_operate_insert_update_delete('dukang_workforce_dktest3', delete_sql=delete_assign_relation_sql)
+
+            delete_assign_sql = "DELETE FROM workforce_working_assign WHERE workforce_ticket_id = %s" % (data['body']['workforceRequestId'])
+            mysql_operate_insert_update_delete('dukang_workforce_dktest3', delete_sql=delete_assign_sql)
+        else:
+            pass
 
     # @pytest.mark.skip
     @allure.title("劳务工派遣列表test")
@@ -45,4 +63,4 @@ class TestAssign:
 
 
 if __name__ == '__main__':
-    pytest.main(["-s", "-v", "test_workforce_dispatch_module.py"])
+    pytest.main(["-s", "-v", "test_workforce_dispatch_module.py::TestAssign::test_dispatch"])
