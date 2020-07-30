@@ -6,7 +6,7 @@ from TestApi.consts_api import Const
 
 class WorkforceBillManagement(Const):
 
-    # 获取劳务公司
+    # 获取绑定劳务公司列表
     def get_workforce_company_map_api(self, url_path, data):
         url = url_path + data['url']
         response = self.request.send_request_method('get', url, data['params'], headers=self.headers)
