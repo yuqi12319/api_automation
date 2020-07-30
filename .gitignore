@@ -114,4 +114,5 @@ dmypy.json
 # Pyre type checker
 .pyre/
 .idea/
-!/TestData/Yaml/login.yaml
+
+TestData/Yaml/login.yaml

@@ -5,7 +5,6 @@
 import pytest
 from Common.request import *
 from Conf.config import Config
-from Common.operation_yaml import YamlHandle
 
 
 @pytest.fixture(autouse=True)
@@ -21,4 +20,4 @@ def login():
 
     res = Request().send_request_method('post', url=url, json=body)
     access_token = res.json()['data']['accessToken']
-    YamlHandle().write_yaml('login.yaml', 'accessToken', access_token)
+    Common.consts.ACCESS_TOKEN.append(access_token)

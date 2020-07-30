@@ -9,7 +9,7 @@ class WorkforceBillManagement(Const):
     # 获取劳务公司
     def get_workforce_company_map_api(self, url_path, data):
         url = url_path + data['url']
-        response = self.request.send_request_method('get', url, data['params'], data['body'], self.headers)
+        response = self.request.send_request_method('get', url, data['params'], headers=self.headers)
         return response
     #
     # # 根据部门id和type获取审批流信息

@@ -22,7 +22,7 @@ class WorkforceApply(Const):
         res = self.request.send_request_method('post', url=url, params=data['params'], json=data['body'], headers=self.headers)
         return res
 
-    #获取用工申请详情接口
+    # 获取用工申请详情接口
     def apply_detail_api(self, url_path, data):
         url = url_path + data['url'] + str(data['applicationId'])
         res = self.request.send_request_method('get', url=url, headers=self.headers)
