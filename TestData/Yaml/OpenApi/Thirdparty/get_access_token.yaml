@@ -1,0 +1,7 @@
+url: /oauth/access_open_token
+body:
+  appId: e7e06b0ae5334714b72f
+  appSecret: 27708b9089c64f99939d5d3a4e638ba4
+expect:
+  assert_type: errcode
+  assert_result: '0'

@@ -1,0 +1,7 @@
+url: '/dukang-user/phoneNumber/change'
+body:
+  areaCode: '86'
+  employeeId: '733365230570045440'
+  newNumber: '13300001234'
+headers:
+  X-Dk-Token:

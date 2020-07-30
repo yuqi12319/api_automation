@@ -1,0 +1,6 @@
+url: /dukang-workforce/api/relation/employee/status
+body:
+  employeeIds: 733365230570045440
+expect:
+  assert_type: errcode
+  assert_result: '0'

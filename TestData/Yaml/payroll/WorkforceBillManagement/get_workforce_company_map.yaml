@@ -1,0 +1,10 @@
+url: /dukang-coc/api/company/workforce/map
+
+params:
+  coOrgId: 634034976861454336
+  timestamp: 1596014401214
+
+expect:
+  assert_type: errcode
+  assert_result: '0'
+  #

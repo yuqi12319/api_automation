@@ -34,7 +34,7 @@ class YamlHandle:
                 yaml.dump(content, ff, Dumper=yaml.RoundTripDumper)
             return True
         except Exception as e:
-            self.log.error(f'{file_name} yaml write error,error as {e}')
+            self.log.error(f'{file_name} write error,error as {e}')
             return False
 
     def read_yaml_return_list(self, file_name, mode='r'):

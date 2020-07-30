@@ -4,8 +4,6 @@
 # Time:2020/6/25 6:35 下午
 
 import requests
-from requests.models import Response
-
 import Common.consts
 from Common import log
 import json
@@ -29,7 +27,7 @@ class Request:
             return False
         return True
 
-    def get_requests(self, url, data=None, headers=None, cookies=None, timeout=TIMEOUT):
+    def get_requests(self, url, params=None, headers=None, cookies=None, timeout=TIMEOUT):
         """
         :param url:
         :param data:
@@ -44,7 +42,7 @@ class Request:
             url = '%s%s' % ('http://', url)
 
         try:
-            response = requests.get(url=url, params=data, headers=headers, cookies=cookies, timeout=timeout,
+            response = requests.get(url=url, params=params, headers=headers, cookies=cookies, timeout=timeout,
                                     verify=False)
         except requests.exceptions.ConnectTimeout:
             raise Exception("CONNECTION_TIMEOUT")
@@ -63,7 +61,7 @@ class Request:
                 url, response.request.body, response.status_code))
         return response
 
-    def post_requests(self, url, data=None, headers=None, cookies=None, timeout=TIMEOUT):
+    def post_requests(self, url, params=None, json=None, headers=None, cookies=None, timeout=TIMEOUT):
         """
         post请求
         :param url:
@@ -77,7 +75,8 @@ class Request:
             url = '%s%s' % ('http://', url)
 
         try:
-            response = requests.post(url=url, json=data, headers=headers, cookies=cookies, timeout=timeout,
+            response = requests.post(url=url, params=params, json=json, headers=headers, cookies=cookies,
+                                     timeout=timeout,
                                      verify=False)
         except requests.exceptions.ConnectTimeout:
             raise Exception("CONNECTION_TIMEOUT")
@@ -96,7 +95,7 @@ class Request:
                 url, response.request.body, response.status_code))
         return response
 
-    def put_requests(self, url, data=None, headers=None, cookies=None, timeout=TIMEOUT):
+    def put_requests(self, url, params=None, json=None, headers=None, cookies=None, timeout=TIMEOUT):
         """
         put请求
         :param url:
@@ -110,8 +109,8 @@ class Request:
             url = '%s%s' % ('http://', url)
 
         try:
-            response = requests.put(url=url, json=data, headers=headers, cookies=cookies,
-                                        timeout=timeout, verify=False)
+            response = requests.put(url=url, params=params, json=json, headers=headers, cookies=cookies,
+                                    timeout=timeout, verify=False)
         except requests.exceptions.ConnectTimeout:
             raise Exception("CONNECTION_TIMEOUT")
         except requests.exceptions.ConnectionError:
@@ -129,21 +128,17 @@ class Request:
                 url, response.request.body, response.status_code))
         return response
 
-    def send_request_method(self, method, url, data=None, headers=None, timeout=TIMEOUT):
+    def send_request_method(self, method, url, params=None, json=None, headers=None):
         if headers is None:
-            headers = {
-                'Content-type': 'application/json',
-                'Authorization': ''
-            }
             headers = {'Content-type': "application/json",
                        "Authorization": ""}
 
         if method in ['get', 'GET']:
-            response = self.get_requests(url, data, headers)
+            response = self.get_requests(url=url, params=params, headers=headers)
         elif method in ['post', 'POST']:
-            response = self.post_requests(url, data, headers)
+            response = self.post_requests(url=url, params=params, json=json, headers=headers)
         elif method in ['put', 'PUT']:
-            response = self.put_requests(url, data, headers)
+            response = self.put_requests(url, params=params, json=json, headers=headers)
         else:
             self.log.error("request method error")
 
