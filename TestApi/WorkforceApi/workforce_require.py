@@ -1,4 +1,4 @@
-# coding:utf-8
+5# coding:utf-8
 # Name:workforce_require.py
 # Author:qi.yu
 # Time:2020/7/16 5:22 下午
@@ -18,6 +18,6 @@ class WorkforceRequire(Const):
 
     # 获取用工需求详情接口
     def require_detail_api(self, url_path, data):
-        url = url_path + data['url'] + str(data['applicationId'])
+        url = url_path + data['url'] +str (data['applicationId'])
         res = self.request.send_request_method('get', url=url, headers=self.headers)
         return res
