@@ -1,0 +1,106 @@
+url: /dukang-attendance/api/overtime?timestamp=1595485691800
+body:
+  {
+  "approverList": [{
+                       "employee_id": "616938539015208960",
+                       "sort_order": "1"
+                     }],
+  "attachment": "",
+  "attendanceGroupId": "685078214510379008",
+  "attendanceGroupType": "SCHEDULING",
+  "ccList": [],
+  "duration": 1800,
+  "employee_id": "616938539015208960",
+  "end_time": 1594146600000,
+  "org_id": "686624866853453824",
+  "overTimeDate": "1594137600000",
+  "reason": "",
+  "shiftId": "722232740354719744",
+  "start_time": 1594146600000,
+  "timeZone": "Asia/Shanghai"
+  }
+headers:
+    X-Dk-Token:
+expect:
+    assert_type: errmsg
+    assert_result: '加班开始时间大于等于加班结束时间'
+---
+url: /dukang-attendance/api/overtime?timestamp=1595485691800
+body:
+  {
+  "approverList": [{
+                       "employee_id": "616938539015208960",
+                       "sort_order": "1"
+                     }],
+  "attachment": "",
+  "attendanceGroupId": "685078214510379008",
+  "attendanceGroupType": "SCHEDULING",
+  "ccList": [],
+  "duration": 1800,
+  "employee_id": "616938539015208960",
+  "end_time": 1594148400000,
+  "org_id": "686624866853453824",
+  "overTimeDate": "1594137600000",
+  "reason": "",
+  "shiftId": "722232740354719744",
+  "start_time": 1594146600000,
+  "timeZone": "Asia/Shanghai"
+  }
+headers:
+    X-Dk-Token:
+expect:
+    assert_type: errmsg
+    assert_result: '所选时段已有重复记录'
+---
+url: /dukang-attendance/api/overtime
+body:
+  {
+  "approverList": [{
+                       "employee_id": "616938539015208960",
+                       "sort_order": "1"
+                     }],
+  "attachment": "",
+  "attendanceGroupId": "685078214510379008",
+  "attendanceGroupType": "SCHEDULING",
+  "ccList": [],
+  "duration": 1800,
+  "employee_id": "616938539015208960",
+  "end_time": 1595277000000,
+  "org_id": "686624866853453824",
+  "overTimeDate": "1595260800000",
+  "reason": "",
+  "shiftId": "722232740354719744",
+  "start_time": 1595262600000,
+  "timeZone": "Asia/Shanghai"
+  }
+headers:
+    X-Dk-Token:
+expect:
+    assert_type: errmsg
+    assert_result: '加班申请时间内未排班次'
+---
+url: /dukang-attendance/api/overtime
+body:
+  {
+  "approverList": [{
+      "employee_id": "617062748924149760",
+      "sort_order": "1"
+  }],
+  "attachment": "",
+  "attendanceGroupType": "FIXED",
+  "ccList": [],
+  "duration": 10800,
+  "employee_id": "617062748924149760",
+  "end_time": 1595271600000,
+  "org_id": "617062172182183936",
+  "overTimeDate": "",
+  "reason": "",
+  "shiftId": "",
+  "start_time": 1595260800000,
+  "timeZone": "Asia/Shanghai"
+  }
+headers:
+    X-Dk-Token:
+expect:
+    assert_type: errmsg
+    assert_result: '所选时段已有重复记录'
