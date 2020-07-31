@@ -27,3 +27,10 @@ class TestBillManagement:
     def test_get_employee_department_crumb(self, data):
         response = WorkforceBillManagement().get_employee_department_crumb(self.url_path, data)
         Assertions().assert_mode(response, data)
+
+    @allure.title('获取OSS凭据')
+    @pytest.mark.parametrize('data', YamlHandle().read_yaml(
+        '/Payroll/WorkforceBillManagement/EmployerCompanyWorkforceBillManagement/get_oss_credential.yaml'))
+    def test_get_oss_credential(self, data):
+        response = WorkforceBillManagement().get_oss_credential(self.url_path, data)
+        Assertions().assert_mode(response, data)

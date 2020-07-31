@@ -17,6 +17,12 @@ class WorkforceBillManagement(Const):
         url = url_path + data['url']['first_half'] + data['url']['employee_id'] + data['url']['second_half']
         response = self.request.send_request_method('get', url, headers=self.headers)
         return response
+
+    # 获取OSS凭据
+    def get_oss_credential(self, url_path, data):
+        url = url_path + data['url']
+        response = self.request.send_request_method('get', url, data['params'], headers=self.headers)
+        return response
 #
 # # 根据部门id和type获取审批流信息
 # def get_approval_query_api(self, url_path, data):
