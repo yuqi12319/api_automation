@@ -1,0 +1,26 @@
+{
+  "uid" : "4b4757e66a1912dae1a509f688f20b0f",
+  "name" : "categories",
+  "children" : [ {
+    "name" : "Test defects",
+    "children" : [ {
+      "name" : "NameError: name 'expected_msg' is not defined",
+      "children" : [ {
+        "name" : "劳务工派遣接口test",
+        "uid" : "b51d4a9529c17ef3",
+        "parentUid" : "f821d2e34370024fdcf773a9d7c994b2",
+        "status" : "broken",
+        "time" : {
+          "start" : 1596181871597,
+          "stop" : 1596181871734,
+          "duration" : 137
+        },
+        "flaky" : false,
+        "newFailed" : false,
+        "parameters" : [ "{'url': '/dukang-workforce/api/relation/dispatch', 'body': {'beginTime': None, 'coOrgId': 733358092246319104, 'dispatchCoOrgId': 733365230582628352, 'employeeIds': None, 'endTime': None, 'workforceRequestId': None}, 'expect': {'assert_type': 'errcode', 'assert_result': '0'}}" ]
+      } ],
+      "uid" : "f821d2e34370024fdcf773a9d7c994b2"
+    } ],
+    "uid" : "bdbf199525818fae7a8651db9eafe741"
+  } ]
+}

@@ -1,0 +1,101 @@
+[ {
+  "uid" : "b51d4a9529c17ef3",
+  "name" : "劳务工派遣接口test",
+  "time" : {
+    "start" : 1596181871597,
+    "stop" : 1596181871734,
+    "duration" : 137
+  },
+  "status" : "broken",
+  "severity" : "normal"
+}, {
+  "uid" : "d3b9761c2569c2cd",
+  "name" : "test_employee_status[data0]",
+  "time" : {
+    "start" : 1596181870529,
+    "stop" : 1596181870668,
+    "duration" : 139
+  },
+  "status" : "passed",
+  "severity" : "normal"
+}, {
+  "uid" : "1234a00bdb1c04a2",
+  "name" : "乙方劳务工需求列表",
+  "time" : {
+    "start" : 1596181873746,
+    "stop" : 1596181873876,
+    "duration" : 130
+  },
+  "status" : "passed",
+  "severity" : "normal"
+}, {
+  "uid" : "cedc0ce000a190b8",
+  "name" : "劳务工派遣详情test",
+  "time" : {
+    "start" : 1596181872818,
+    "stop" : 1596181872994,
+    "duration" : 176
+  },
+  "status" : "passed",
+  "severity" : "normal"
+}, {
+  "uid" : "cf01618c0a101d31",
+  "name" : "甲方发送劳务工申请",
+  "time" : {
+    "start" : 1596181870679,
+    "stop" : 1596181870679,
+    "duration" : 0
+  },
+  "status" : "skipped",
+  "severity" : "normal"
+}, {
+  "uid" : "95afa09c5fbfaa4f",
+  "name" : "甲方劳务工申请详情",
+  "time" : {
+    "start" : 1596181871203,
+    "stop" : 1596181871203,
+    "duration" : 0
+  },
+  "status" : "skipped",
+  "severity" : "normal"
+}, {
+  "uid" : "92cbdc0c211d6a23",
+  "name" : "派遣关联申请test",
+  "time" : {
+    "start" : 1596181873300,
+    "stop" : 1596181873411,
+    "duration" : 111
+  },
+  "status" : "passed",
+  "severity" : "normal"
+}, {
+  "uid" : "c8064bc4d124349f",
+  "name" : "甲方劳务工申请列表",
+  "time" : {
+    "start" : 1596181871092,
+    "stop" : 1596181871199,
+    "duration" : 107
+  },
+  "status" : "passed",
+  "severity" : "normal"
+}, {
+  "uid" : "4f936bd00c600abc",
+  "name" : "乙方劳务工需求详情",
+  "time" : {
+    "start" : 1596181874210,
+    "stop" : 1596181874314,
+    "duration" : 104
+  },
+  "status" : "passed",
+  "severity" : "normal"
+}, {
+  "uid" : "7b9418bba29268e6",
+  "name" : "劳务工派遣列表test",
+  "time" : {
+    "start" : 1596181872295,
+    "stop" : 1596181872429,
+    "duration" : 134
+  },
+  "status" : "passed",
+  "severity" : "normal"
+} ]
