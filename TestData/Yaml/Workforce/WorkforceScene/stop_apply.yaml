@@ -1,0 +1,52 @@
+send_apply:
+  url: /dukang-workforce/api/workforce/apply
+  body:
+    recruitmentType: New
+    labourCompanyId: 733358092246319104
+    labourCompanyName: workforce_company_test01
+    provinceId: 500000
+    provinceName: 重庆
+    cityId: 500100
+    cityName: 重庆市
+    organizationId: 737612490304651264
+    organizationName: A仓库
+    address: 工作地址输入框
+    joinDate: 1606752000000
+    probationPeriodExpire: 1609344000000
+    positionId: 737611770553696256
+    positionName: 商务
+    demandPersonCount: 10
+    workforcePayrollDtos: []
+    contactEmail: 123@abc.com
+    contactMobile: 18818811881
+    contactPerson: admin
+    projectId:
+    projectName:
+    positionObligation:
+    positionQualification:
+    positionQualificationId:
+    positionTask:
+    coOrgId: 733358092246319104
+    coOrgName: workforce_company_test01
+  expect:
+    assert_type: errcode
+    assert_result: '0'
+apply_list:
+  url: /dukang-workforce/api/workforce/form/list
+  params:
+    offset: 0
+    limit: 20
+  body:
+    coOrgId: 733358092246319104
+require_list:
+  url: /dukang-workforce/api/workforce/require/form/ticket
+  body:
+    coOrgId: 733358092246319104
+    limit:
+    offset: 0
+stop_apply:
+  url: /dukang-workforce/api/workforce/stop/
+  application_id:
+  expect:
+    assert_type: errcode
+    assert_result: '0'

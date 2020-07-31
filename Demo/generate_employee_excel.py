@@ -46,4 +46,4 @@ class Generate_Employee_excel:
 
 if __name__ == '__main__':
     obj = Generate_Employee_excel()
-    obj.add(2, 300)
+    obj.add(9, 22)
