@@ -24,6 +24,12 @@ class WorkforceApply(Const):
 
     # 获取用工申请详情接口
     def apply_detail_api(self, url_path, data):
-        url = url_path + data['url'] + str(data['applicationId'])
+        url = url_path + data['url'] + str(data['application_id'])
         res = self.request.send_request_method('get', url=url, headers=self.headers)
+        return res
+
+    # 停止申请接口
+    def stop_apply_api(self, url_path, data):
+        url = url_path + data['url'] + str(data['application_id'])
+        res = self.request.send_request_method('put', url=url, headers=self.headers)
         return res

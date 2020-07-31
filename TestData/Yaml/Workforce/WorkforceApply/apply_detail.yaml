@@ -1,5 +1,5 @@
 url: /dukang-workforce/api/workforce/apply/detail/
-applicationId: 737365907680002048
+application_id: 737365907680002048
 expect:
   assert_type: data
   assert_result: workforce_company_test01
