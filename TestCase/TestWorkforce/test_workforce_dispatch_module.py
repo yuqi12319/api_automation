@@ -18,14 +18,16 @@ class TestAssign:
     def setup_class(self):
         self.url_path = Config().get_conf('test_env', 'test3')
 
-    @allure.title("劳务工派遣接口test")
+    @pytest.mark.skip
+    @allure.story("劳务工派遣接口test")
     @pytest.mark.parametrize('data', YamlHandle().read_yaml('Workforce/WorkforceDispatch/dispatch.yaml'))
     def test_dispatch(self, data):
         res = WorkforceDispatch().dispatch_api(self.url_path, data)
         Assertions().assert_mode(res, data)
         # 删除派遣生成的db数据(派遣单，接收单，两者关联关系，派遣人员记录)
         if 'clear' in data.keys():
-            selete_assign_sql = "SELECT id FROM workforce_working_assign WHERE workforce_ticket_id = %s" % (data['body']['workforceRequestId'])
+            selete_assign_sql = "SELECT id FROM workforce_working_assign WHERE workforce_ticket_id = %s" % (
+            data['body']['workforceRequestId'])
             id_list = mysql_operate_select_fetchall('dukang_workforce_dktest3', select_sql=selete_assign_sql)
 
             delete_assign_map_sql = "DELETE FROM workforce_working_assign_map WHERE dispatch_working_assign_id = %s AND receive_working_assign_id = %s" % (
@@ -36,29 +38,32 @@ class TestAssign:
                 id_list[0]['id'], id_list[1]['id'], tuple(data['body']['employeeIds']))
             mysql_operate_insert_update_delete('dukang_workforce_dktest3', delete_sql=delete_assign_relation_sql)
 
-            delete_assign_sql = "DELETE FROM workforce_working_assign WHERE workforce_ticket_id = %s" % (data['body']['workforceRequestId'])
+            delete_assign_sql = "DELETE FROM workforce_working_assign WHERE workforce_ticket_id = %s" % (
+            data['body']['workforceRequestId'])
             mysql_operate_insert_update_delete('dukang_workforce_dktest3', delete_sql=delete_assign_sql)
         else:
             pass
 
-    # @pytest.mark.skip
-    @allure.title("劳务工派遣列表test")
+    @allure.story("劳务工派遣列表test")
+    @allure.testcase()
     @pytest.mark.parametrize('data', YamlHandle().read_yaml('Workforce/WorkforceDispatch/dispatch_list.yaml'))
     def test_dispatch_list(self, data):
         res = WorkforceDispatch().dispatch_list_api(self.url_path, data)
+        allure.attach(res.text, "返回结果", allure.attachment_type.JSON)
         Assertions().assert_mode(res, data)
 
-    # @pytest.mark.skip
-    @allure.title("劳务工派遣详情test")
+    @allure.story("劳务工派遣详情test")
     @pytest.mark.parametrize('data', YamlHandle().read_yaml('Workforce/WorkforceDispatch/dispatch_detail.yaml'))
     def test_dispatch_detail(self, data):
         res = WorkforceDispatch().dispatch_detail_api(self.url_path, data)
+        allure.attach(res.text, "返回结果", allure.attachment_type.JSON)
         Assertions().assert_mode(res, data)
 
-    @allure.title("派遣关联申请test")
+    @allure.story("派遣关联申请test")
     @pytest.mark.parametrize('data', YamlHandle().read_yaml('Workforce/WorkforceDispatch/relevance_apply.yaml'))
     def test_relevance_apply(self, data):
         res = WorkforceDispatch().relevance_apply_api(self.url_path, data)
+        allure.attach(res.text, "返回结果", allure.attachment_type.JSON)
         Assertions().assert_mode(res, data)
 
 
