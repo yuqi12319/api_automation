@@ -16,10 +16,10 @@ if __name__ == '__main__':
     html_report_path = conf.html_report_path
 
     # 定义测试集
-    args = ['-s', '-q', '--alluredir', xml_report_path, './TestCase/TestWorkforce/']
+    args = ['-s', '-q', '--alluredir', xml_report_path, './TestCase/TestWorkforce/test_workforce_dispatch_module.py']
     pytest.main(args)
 
-    cmd = 'allure generate %s -o %s' % (xml_report_path, html_report_path)
+    cmd = 'allure generate %s -o %s --clean' % (xml_report_path, html_report_path)
 
     try:
         shell.invoke(cmd)
