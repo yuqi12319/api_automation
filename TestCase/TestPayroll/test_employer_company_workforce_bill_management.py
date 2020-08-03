@@ -42,12 +42,21 @@ class TestBillManagement:
         with allure.step('上传附件'):
             credential_data = response.json()['data']
             with open(
-                    '/Users/sacosong/PycharmProjects/riesling-apitest/TestData/excel_for_uploading_bill_attachment.xlsx',
-                    'rb') as upload_file:
+                    '../../../TestData/excel_for_uploading_bill_attachment.xlsx', 'rb') as upload_file:
                 form_data = {'key': data['oss_data']['key'] + str(
-                    random.random()) + '/' + 'TestData/excel_for_uploading_bill_attachment.xlsx',
+                    random.random()) + '/' + 'excel_for_uploading_bill_attachment.xlsx',
                              'policy': credential_data['policy'], 'OSSAccessKeyId': credential_data['accessKeyId'],
                              'success_action_status': '201',
                              'signature': credential_data['signature'], 'file': upload_file}
                 response = WorkforceBillManagement().upload_file_to_oss(str(credential_data['host']) + '/', form_data)
                 Assertions().assert_code(response.status_code, 201)
+
+    @allure.title('生成用工账单（暂存）')
+    @pytest.mark.parametrize('data', YamlHandle().read_yaml(
+        '/Payroll/WorkforceBillManagement/EmployerCompanyWorkforceBillManagement/generate_workfirce_bill.yaml'))
+    def test_generate_workforce_bill(self, data):
+        response = WorkforceBillManagement().generate_workforce_bill(self.url_path, data)
+        print(response.request.headers)
+        print(response.request.url)
+        print(response.request.body)
+        Assertions().assert_mode(response, data)
