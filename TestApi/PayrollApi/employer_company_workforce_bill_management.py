@@ -35,8 +35,8 @@ class WorkforceBillManagement(Const):
 #     response = self.request.send_request_method('get', url, data['params'], data['body'], self.headers)
 #     return response
 
-# # 获取用工账单列表
-# def get_bill_lists_api(self, url_path, data):
-#     url = url_path + data['url']
-#     response = self.request.send_request_method('post', url, data['params'], data['body'], self.headers)
-#     return response
+# 获取用工账单列表
+def get_bill_lists_api(self, url_path, data):
+    url = url_path + data['url']
+    response = self.request.send_request_method('post', url, data['params'], data['body'], self.headers)
+    return response
