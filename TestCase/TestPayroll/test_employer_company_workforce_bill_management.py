@@ -68,11 +68,20 @@ class TestBillManagement:
         response = WorkforceBillManagement().get_bill_detail_api(self.url_path, data)
         Assertions().assert_mode(response, data)
 
-    @allure.title('获取form表单工作流和抄送信息')
+    @allure.title('获取form表单工作流和抄送信息接口')
     @pytest.mark.parametrize('data', YamlHandle().read_yaml(
         '/Payroll/WorkforceBillManagement/EmployerCompanyWorkforceBillManagement/get_form_of_workflow_and_cc.yaml'))
     def test_get_form_of_workflow_and_cc(self, data):
         response = WorkforceBillManagement().get_form_of_workflow_and_cc_api(self.url_path, data)
         Assertions().assert_mode(response, data)
+
+    @allure.title('点击账单的查看详情编辑账单接口')
+    @pytest.mark.parametrize('data', YamlHandle().read_yaml(
+        '/Payroll/WorkforceBillManagement/EmployerCompanyWorkforceBillManagement/edit_bill_by_click_detail.yaml'))
+    def test_edit_bill_by_click_detail(self, data):
+        response = WorkforceBillManagement().edit_bill_by_click_detail_api(self.url_path, data)
+        Assertions().assert_mode(response, data)
+
+
 
 

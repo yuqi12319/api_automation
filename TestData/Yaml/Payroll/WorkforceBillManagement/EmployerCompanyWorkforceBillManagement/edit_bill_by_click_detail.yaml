@@ -1,0 +1,17 @@
+url: /dukang-payroll/api/bill
+body:
+  attachment: "[{'url':'https://static-litedev.oss-cn-shanghai.aliyuncs.com/billManager/687335987495305216/0.39441676200830145/员工薪资测试用例.xlsx','key':'billManager/687335987495305216/0.39441676200830145/员工薪资测试用例.xlsx','name':'员工薪资测试用例.xlsx'}]"
+  billId: 737728154289831936
+  billMonth: 1577808000000
+  coOrgId: 687335987499499520
+  dataSource: ATTACHMENT
+  employeeId: 687335987495305216
+  name: 账单
+  orgId: 687335987499499520
+  remark:
+  type: PAYROLL
+  workforceOrgId: 657256194456420352
+
+expect:
+ assert_type: errcode
+ assert_result: '0'
