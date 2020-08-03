@@ -1,0 +1,6 @@
+url: /dukang-payroll/init/payrollItem/
+body:
+  coOrgId: 733365230582628352
+expect:
+ assert_type: errcode
+ assert_result: '0'

@@ -1,0 +1,6 @@
+url: /dukang-coc/api/company/workforce/map/
+body:
+ coOrgId: 733365230582628352
+expect:
+ assert_type: errcode
+ assert_result: '0'
