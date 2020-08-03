@@ -1,0 +1,9 @@
+url: /dukang-payroll/api/employee/my_approve/num
+
+params:
+  employeeId: '634034976857260032'
+  formType: BILL
+
+expect:
+ assert_type: errcode
+ assert_result: '0'

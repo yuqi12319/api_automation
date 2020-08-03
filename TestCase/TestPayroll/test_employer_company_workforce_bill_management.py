@@ -51,8 +51,6 @@ class TestBillManagement:
                 response = WorkforceBillManagement().upload_file_to_oss(str(credential_data['host']) + '/', form_data)
                 Assertions().assert_code(response.status_code, 201)
 
-
-
     @allure.title('获取用工账单列表')
     @pytest.mark.parametrize('data', YamlHandle().read_yaml(
         '/Payroll/WorkforceBillManagement/EmployerCompanyWorkforceBillManagement/get_bill_list.yaml'))
@@ -83,11 +81,17 @@ class TestBillManagement:
 
 
 
-
-
     @allure.title('生成用工账单（暂存）')
     @pytest.mark.parametrize('data', YamlHandle().read_yaml(
-        '/Payroll/WorkforceBillManagement/EmployerCompanyWorkforceBillManagement/generate_workfirce_bill.yaml'))
+        '/Payroll/WorkforceBillManagement/EmployerCompanyWorkforceBillManagement/generate_workforce_bill.yaml'))
     def test_generate_workforce_bill(self, data):
         response = WorkforceBillManagement().generate_workforce_bill(self.url_path, data)
+        Assertions().assert_mode(response, data)
+
+    @allure.title('获取待我审批账单个数')
+    @pytest.mark.parametrize('data', YamlHandle().read_yaml(
+        '/Payroll/WorkforceBillManagement/EmployerCompanyWorkforceBillManagement/'
+        'get_number_of_workforce_bills_waiting_for_my_approval.yaml'))
+    def test_get_number_of_approval_waiting_for_me(self, data):
+        response = WorkforceBillManagement().get_number_of_approval_waiting_for_me(self.url_path, data)
         Assertions().assert_mode(response, data)
