@@ -51,3 +51,13 @@ class TestBillManagement:
                              'signature': credential_data['signature'], 'file': upload_file}
                 response = WorkforceBillManagement().upload_file_to_oss(str(credential_data['host']) + '/', form_data)
                 Assertions().assert_code(response.status_code, 201)
+
+
+
+    @allure.title('获取用工账单列表')
+    @pytest.mark.parametrize('data', YamlHandle().read_yaml(
+        '/Payroll/WorkforceBillManagement/EmployerCompanyWorkforceBillManagement/get_bill_list.yaml'))
+    def test_get_bill_list(self, data):
+        response = WorkforceBillManagement().get_bill_list_api(self.url_path, data)
+        Assertions().assert_mode(response, data)
+
