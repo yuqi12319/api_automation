@@ -1,0 +1,26 @@
+url:
+  first_part: /dukang-workflow/api/organizations/
+  organizationId: 735904734002544640
+  second_part: /workflow/approval/query
+params:
+body:
+    "employeeId": 687335987495305216,
+    "teamOvertimeFormDto":
+      -"approverList":
+        -
+        "employeeId": 687335987495305216,
+      "attendanceGroupId": "string",
+      "employeeId": "string",
+      "endTime": "string",
+      "orgId": "string",
+      "orgName": "string",
+      "remark": "string",
+      "startTime": "string",
+      "teamOvertimeDate": "string",
+      "teamOvertimeEmployeeIdList": [
+        "string"
+      ],
+      "timeZone": "string",
+      "workflowDeploymentId": "string"
+    },
+    "type": "string"

@@ -1,0 +1,17 @@
+url: /dukang-workflow/api/form/workflow
+body:
+  approveEmployeeName:
+  createdTime: 1595933655000
+  employeeId: 687335987495305216
+  formId: 737744748629983232
+  formStatus: "AGREED"
+  formType: "BILL"
+  formWorkFlowId: 737744748613206016
+  myApproveStatus:
+  processInstanceId: 198501
+  status: "AGREED"
+  updatedTime: 1595933655000
+
+expect:
+  assert_type: errcode
+  assert_result: '0'
