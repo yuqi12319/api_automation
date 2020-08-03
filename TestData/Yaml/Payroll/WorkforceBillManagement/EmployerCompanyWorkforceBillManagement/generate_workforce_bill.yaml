@@ -1,4 +1,4 @@
-url: /dukang-payroll/api/bill
+url: /dukang-Payroll/api/bill
 
 body:
   attachment: "[{\"url\":\"https://static-litedev.oss-cn-shanghai.aliyuncs.com/billManager/634034976857260032/0.29859311984193937/excel_for_uploading_bill_attachment.xlsx\",\"key\":\"billManager/634034976857260032/0.29859311984193937/excel_for_uploading_bill_attachment.xlsx\",\"name\":\"excel_for_uploading_bill_attachment.xlsx\"}]"
