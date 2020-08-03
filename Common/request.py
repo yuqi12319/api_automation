@@ -61,7 +61,7 @@ class Request:
                 url, response.request.body, response.status_code))
         return response
 
-    def post_requests(self, url, params=None, json=None, headers=None, cookies=None, timeout=TIMEOUT):
+    def post_requests(self, url, params=None, json=None, headers=None, cookies=None, timeout=TIMEOUT, files=None):
         """
         post请求
         :param url:
@@ -77,7 +77,7 @@ class Request:
         try:
             response = requests.post(url=url, params=params, json=json, headers=headers, cookies=cookies,
                                      timeout=timeout,
-                                     verify=False)
+                                     verify=False, files=files)
         except requests.exceptions.ConnectTimeout:
             raise Exception("CONNECTION_TIMEOUT")
         except requests.exceptions.ConnectionError:
@@ -128,7 +128,7 @@ class Request:
                 url, response.request.body, response.status_code))
         return response
 
-    def send_request_method(self, method, url, params=None, json=None, headers=None):
+    def send_request_method(self, method, url, params=None, json=None, headers=None, files=None):
         if headers is None:
             headers = {'Content-type': "application/json",
                        "Authorization": ""}
@@ -136,7 +136,7 @@ class Request:
         if method in ['get', 'GET']:
             response = self.get_requests(url=url, params=params, headers=headers)
         elif method in ['post', 'POST']:
-            response = self.post_requests(url=url, params=params, json=json, headers=headers)
+            response = self.post_requests(url=url, params=params, json=json, headers=headers, files=files)
         elif method in ['put', 'PUT']:
             response = self.put_requests(url, params=params, json=json, headers=headers)
         else:

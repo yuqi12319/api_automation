@@ -23,6 +23,11 @@ class WorkforceBillManagement(Const):
         url = url_path + data['url']
         response = self.request.send_request_method('get', url, data['params'], headers=self.headers)
         return response
+
+    # 上传文件至OSS
+    def upload_file_to_oss(self, url_path, files):
+        response = self.request.send_request_method('post', url_path, headers=self.headers, files=files)
+        return response
 #
 # # 根据部门id和type获取审批流信息
 # def get_approval_query_api(self, url_path, data):

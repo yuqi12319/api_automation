@@ -1,6 +1,8 @@
 # @Author: Saco Song
 # @Time: 2020/7/29-10:28 上午
 # @Description:
+import random
+
 import allure
 import pytest
 
@@ -28,9 +30,24 @@ class TestBillManagement:
         response = WorkforceBillManagement().get_employee_department_crumb(self.url_path, data)
         Assertions().assert_mode(response, data)
 
-    @allure.title('获取OSS凭据')
+    @allure.title('获取OSS凭据并上传用工账单附件')
     @pytest.mark.parametrize('data', YamlHandle().read_yaml(
-        '/Payroll/WorkforceBillManagement/EmployerCompanyWorkforceBillManagement/get_oss_credential.yaml'))
+        '/Payroll/WorkforceBillManagement/EmployerCompanyWorkforceBillManagement/'
+        'get_oss_credential_then_upload_bill_attachment.yaml'))
     def test_get_oss_credential(self, data):
-        response = WorkforceBillManagement().get_oss_credential(self.url_path, data)
-        Assertions().assert_mode(response, data)
+        with allure.step('获取OSS凭据'):
+            response = WorkforceBillManagement().get_oss_credential(self.url_path, data)
+            Assertions().assert_mode(response, data)
+
+        with allure.step('上传附件'):
+            credential_data = response.json()['data']
+            with open(
+                    '/Users/sacosong/PycharmProjects/riesling-apitest/TestData/excel_for_uploading_bill_attachment.xlsx',
+                    'rb') as upload_file:
+                form_data = {'key': data['oss_data']['key'] + str(
+                    random.random()) + '/' + 'TestData/excel_for_uploading_bill_attachment.xlsx',
+                             'policy': credential_data['policy'], 'OSSAccessKeyId': credential_data['accessKeyId'],
+                             'success_action_status': '201',
+                             'signature': credential_data['signature'], 'file': upload_file}
+                response = WorkforceBillManagement().upload_file_to_oss(str(credential_data['host']) + '/', form_data)
+                Assertions().assert_code(response.status_code, 201)
