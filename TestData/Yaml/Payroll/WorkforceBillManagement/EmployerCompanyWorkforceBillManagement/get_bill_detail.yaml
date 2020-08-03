@@ -1,7 +1,6 @@
 url: /dukang-payroll/api/bill
 params:
-  billId: 737744748135055360
-  timestamp: 1596291131848
+  billId: 739876053886959616
 
 expect:
  assert_type: errcode

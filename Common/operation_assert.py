@@ -83,7 +83,7 @@ class Assertions:
             Common.consts.RESULT_LIST.append('True')
             return True
         except:
-            self.log.error("Response body != expected_msg, expected_msg is %s, body is %s" % (expected_msg, body))
+            self.log.error("Response body != expected_msg, expected_result is %s, body is %s" % (expected_result, body))
             Common.consts.RESULT_LIST.append('fail')
             raise
 

@@ -38,7 +38,7 @@ class WorkforceBillManagement(Const):
     # 获取用工账单详情接口
     def get_bill_detail_api(self, url_path, data):
         url = url_path + data['url']
-        response = self.request.send_request_method('get', url, data)
+        response = self.request.send_request_method('get', url, params = data['params'], headers = self.headers)
         return response
 
     # 获取form表单工作流和抄送信息接口
@@ -52,9 +52,3 @@ class WorkforceBillManagement(Const):
 #     url = url_path + data['url_first_half'] + data['organization_id'] + data['url_second_half']
 #     response = self.request.send_request_method('get', url, data['params'], data['body'], self.headers)
 #     return response
-
-# 获取用工账单列表
-def get_bill_lists_api(self, url_path, data):
-    url = url_path + data['url']
-    response = self.request.send_request_method('post', url, data['params'], data['body'], self.headers)
-    return response

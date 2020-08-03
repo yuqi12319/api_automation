@@ -61,3 +61,11 @@ class TestBillManagement:
         response = WorkforceBillManagement().get_bill_list_api(self.url_path, data)
         Assertions().assert_mode(response, data)
 
+    @allure.title('获取用工账单详情')
+    @pytest.mark.parametrize('data', YamlHandle().read_yaml(
+        '/Payroll/WorkforceBillManagement/EmployerCompanyWorkforceBillManagement/get_bill_detail.yaml'))
+    def test_get_bill_detail(self, data):
+        response = WorkforceBillManagement().get_bill_detail_api(self.url_path, data)
+        Assertions().assert_mode(response, data)
+
+
