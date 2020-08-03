@@ -56,7 +56,4 @@ class TestBillManagement:
         '/Payroll/WorkforceBillManagement/EmployerCompanyWorkforceBillManagement/generate_workforce_bill.yaml'))
     def test_generate_workforce_bill(self, data):
         response = WorkforceBillManagement().generate_workforce_bill(self.url_path, data)
-        print(response.request.headers)
-        print(response.request.url)
-        print(response.request.body)
         Assertions().assert_mode(response, data)
