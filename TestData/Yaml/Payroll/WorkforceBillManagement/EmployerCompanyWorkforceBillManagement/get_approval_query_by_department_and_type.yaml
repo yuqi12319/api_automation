@@ -1,0 +1,12 @@
+url:
+  first_part: /dukang-workflow/api/organizations/
+  organizationId: '687335987499499520'
+  second_part: /workflow/approval/query
+
+body:
+  employeeId: 687335987495305216
+  type: BILL
+
+expect:
+ assert_type: errcode
+ assert_result: '0'
