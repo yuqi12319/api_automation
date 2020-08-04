@@ -32,19 +32,19 @@ class WorkforceBillManagement(Const):
     # 获取用工账单列表接口
     def get_bill_list_api(self, url_path, data):
         url = url_path + data['url']
-        response = self.request.send_request_method('post', url, json = data['body'], headers = self.headers)
+        response = self.request.send_request_method('post', url, json=data['body'], headers=self.headers)
         return response
 
     # 获取用工账单详情接口
     def get_bill_detail_api(self, url_path, data):
         url = url_path + data['url']
-        response = self.request.send_request_method('get', url, params = data['params'], headers = self.headers)
+        response = self.request.send_request_method('get', url, params=data['params'], headers=self.headers)
         return response
 
     # 获取form表单工作流和抄送信息接口
     def get_form_of_workflow_and_cc_api(self, url_path, data):
         url = url_path + data['url']
-        response = self.request.send_request_method('post', url, json = data['body'], headers = self.headers)
+        response = self.request.send_request_method('post', url, json=data['body'], headers=self.headers)
         return response
 
     # 点击账单查看详情编辑账单接口
@@ -59,6 +59,13 @@ class WorkforceBillManagement(Const):
         url = url_path + data['url']
         response = self.request.send_request_method('post', url, json=data['body'], headers=self.headers)
         return response
+
+    # 获取待我审批账单个数
+    def get_number_of_approval_waiting_for_me(self, url_path, data):
+        url = url_path + data['url']
+        response = self.request.send_request_method('get', url, data['params'], headers=self.headers)
+        return response
+
 
     # 根据部门id和type获取审批流信息
     def get_approval_query_by_department_and_type_api(self, url_path, data):
