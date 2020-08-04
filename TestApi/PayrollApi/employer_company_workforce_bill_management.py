@@ -50,9 +50,8 @@ class WorkforceBillManagement(Const):
     # 点击账单查看详情编辑账单接口
     def edit_bill_by_click_detail_api(self, url_path, data):
         url = url_path + data['url']
-        response = self.request.send_request_method('put', url, json = data['body'], headers = self.headers)
+        response = self.request.send_request_method('put', url, json=data['body'], headers=self.headers)
         return response
-
 
     # 生成用工账单（暂存）
     def generate_workforce_bill(self, url_path, data):

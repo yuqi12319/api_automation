@@ -79,8 +79,6 @@ class TestBillManagement:
         response = WorkforceBillManagement().edit_bill_by_click_detail_api(self.url_path, data)
         Assertions().assert_mode(response, data)
 
-
-
     @allure.title('生成用工账单（暂存）')
     @pytest.mark.parametrize('data', YamlHandle().read_yaml(
         '/Payroll/WorkforceBillManagement/EmployerCompanyWorkforceBillManagement/generate_workforce_bill.yaml'))
