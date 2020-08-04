@@ -53,15 +53,14 @@ class WorkforceBillManagement(Const):
         response = self.request.send_request_method('put', url, json=data['body'], headers=self.headers)
         return response
 
-    # 生成用工账单（暂存）
-    def generate_workforce_bill(self, url_path, data):
-        url = url_path + data['url']
-        response = self.request.send_request_method('post', url, json=data['body'], headers=self.headers)
-        return response
-
     # 获取待我审批账单个数
     def get_number_of_approval_waiting_for_me(self, url_path, data):
         url = url_path + data['url']
         response = self.request.send_request_method('get', url, data['params'], headers=self.headers)
         return response
 
+    # 生成用工账单（暂存）
+    def generate_workforce_bill(self, url_path, data):
+        url = url_path + data['url']
+        response = self.request.send_request_method('post', url, json=data['body'], headers=self.headers)
+        return response
