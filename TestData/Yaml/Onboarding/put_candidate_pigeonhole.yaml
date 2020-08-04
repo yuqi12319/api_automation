@@ -1,0 +1,8 @@
+url: /dukang-recruitment/candidate/pigeonhole
+
+params:
+  candidateId: 698130498370666496
+
+expect:
+  assert_type: errcode
+  assert_result: '0'

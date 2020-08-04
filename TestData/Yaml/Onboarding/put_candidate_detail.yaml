@@ -1,0 +1,24 @@
+url: /dukang-recruitment/candidate/staff
+
+params:
+  candidateId: 740219452234137600
+
+body:
+  coOrgId: 616301125670273024
+  email: jdhd@hdh.urh
+  entryDate: 1596556800000
+  genderValue: MALE
+  hireType: FULLTIME
+  mobile: 13817372696
+  mobileAreaCode: 86
+  name: 测试
+  orgHeadId: null
+  orgId: 616301125670273024
+  probationPeriod: 3
+  userLanguage: ZH
+  workPost: y du
+  commissionOrgnizationId:
+
+expect:
+  assert_type: errcode
+  assert_result: '0'

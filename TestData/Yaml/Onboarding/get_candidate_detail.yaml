@@ -1,0 +1,8 @@
+url: /dukang-recruitment/candidate/detail
+
+params:
+  candidateId: 740219452234137600
+
+expect:
+  assert_type: errcode
+  assert_result: '0'

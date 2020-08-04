@@ -1,0 +1,22 @@
+url: /dukang-recruitment/candidate/staff
+
+body:
+  coOrgId: 616301125670273024
+  email: xiguabg112@163.com
+  entryDate: 1596556800000
+  genderValue: MALE
+  hireType: FULLTIME
+  mobile: 13817372696
+  mobileAreaCode: 86
+  name: 张三
+  orgHeadId:
+  orgId: 616301125670273024
+  probationPeriod: 3
+  userLanguage: ZH
+  workPost: 测试
+  postionIdList: []
+  commissionOrgnizationId:
+
+expect:
+  assert_type: errcode
+  assert_result: '0'
