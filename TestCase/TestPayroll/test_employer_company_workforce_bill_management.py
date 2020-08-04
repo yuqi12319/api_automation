@@ -80,23 +80,9 @@ class TestBillManagement:
         Assertions().assert_mode(response, data)
 
     @allure.title('根据部门id和type获取审批流信息')
-
-
-    @allure.title('生成用工账单（暂存）')
     @pytest.mark.parametrize('data', YamlHandle().read_yaml(
         '/Payroll/WorkforceBillManagement/EmployerCompanyWorkforceBillManagement'
         '/get_approval_query_by_department_and_type.yaml'))
     def test_get_approval_query_by_department_and_type(self, data):
         response = WorkforceBillManagement().get_approval_query_by_department_and_type_api(self.url_path, data)
-        '/Payroll/WorkforceBillManagement/EmployerCompanyWorkforceBillManagement/generate_workforce_bill.yaml'))
-    def test_generate_workforce_bill(self, data):
-        response = WorkforceBillManagement().generate_workforce_bill(self.url_path, data)
-        Assertions().assert_mode(response, data)
-
-    @allure.title('获取待我审批账单个数')
-    @pytest.mark.parametrize('data', YamlHandle().read_yaml(
-        '/Payroll/WorkforceBillManagement/EmployerCompanyWorkforceBillManagement/'
-        'get_number_of_workforce_bills_waiting_for_my_approval.yaml'))
-    def test_get_number_of_approval_waiting_for_me(self, data):
-        response = WorkforceBillManagement().get_number_of_approval_waiting_for_me(self.url_path, data)
         Assertions().assert_mode(response, data)
