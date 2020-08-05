@@ -1,0 +1,9 @@
+url: /dukang-payroll/api/submit_dissent_workforce_bill_form
+
+body:
+  reason:
+  id: "740576933095407616"
+  employeeId: "740535772817391616"
+
+expect:
+  assert_message: "[reason] can't be empty"
