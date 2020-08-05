@@ -10,7 +10,7 @@ class ApplicationWorkflow(Const):
     def __init__(self):
         super().__init__()
 
-    def workfolw_await(self, url_path, data, style):
+    def workfolw_application(self, url_path, data, style):
         if style == 'await':
             url = url_path + data['url']
         elif style == 'cc':

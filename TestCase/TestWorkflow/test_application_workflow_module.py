@@ -19,27 +19,27 @@ class TestApplicationWorkfolw:
     @allure.title("待我审批")
     @pytest.mark.parametrize('data', YamlHandle().read_yaml('Workflow/ApplicationWorkflow/workflow_application.yaml'))
     def test_workflow_application_await(self, data):
-        res = ApplicationWorkflow().workfolw_await(self.url_path, data, 'await')
+        res = ApplicationWorkflow().workfolw_application(self.url_path, data, 'await')
         Assertions.assert_mode(res, data)
 
     @pytest.mark.skip
     @allure.title("抄送我的")
     @pytest.mark.parametrize('data', YamlHandle().read_yaml('Workflow/ApplicationWorkflow/workflow_application.yaml'))
     def test_workflow_application_cc(self, data):
-        res = ApplicationWorkflow().workfolw_await(self.url_path, data, 'cc')
+        res = ApplicationWorkflow().workfolw_application(self.url_path, data, 'cc')
         Assertions.assert_mode(res, data)
 
     @pytest.mark.skip
     @allure.title('我通过的')
     @pytest.mark.parametrize('data', YamlHandle().read_yaml('Workflow/ApplicationWorkflow/workflow_application.yaml'))
     def test_workflow_application_pass(self, data):
-        res = ApplicationWorkflow().workfolw_await(self.url_path, data, 'pass')
+        res = ApplicationWorkflow().workfolw_application(self.url_path, data, 'pass')
         Assertions.assert_mode(res, data)
 
     @allure.title('我拒绝的')
     @pytest.mark.parametrize('data', YamlHandle().read_yaml('Workflow/ApplicationWorkflow/workflow_application.yaml'))
     def test_workflow_application_refuse(self, data):
-        res = ApplicationWorkflow().workfolw_await(self.url_path, data, 'refuse')
+        res = ApplicationWorkflow().workfolw_application(self.url_path, data, 'refuse')
         Assertions.assert_mode(res, data)
 
 
