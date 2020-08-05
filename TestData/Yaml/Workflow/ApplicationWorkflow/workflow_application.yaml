@@ -1,0 +1,13 @@
+url_await: /dukang-workforce/api/workflow/application/await
+url_cc: /dukang-workforce/api/workflow/application/cc
+url_pass: /dukang-workforce/api/workflow/application/pass
+url_refuse: /dukang-workforce/api/workflow/application/refuse
+body:
+  coOrgId: 733365230582628352
+  employeeId: 733749191917961216
+params:
+  offset: 0
+  limit: 20
+expect:
+ assert_type: errcode
+ assert_result: '0'
