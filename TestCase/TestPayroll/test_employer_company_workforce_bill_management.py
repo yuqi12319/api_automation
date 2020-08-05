@@ -9,34 +9,36 @@ import pytest
 from Common.operation_assert import Assertions
 from Common.operation_yaml import YamlHandle
 from Conf.config import Config
-from TestApi.PayrollApi.employer_company_workforce_bill_management import WorkforceBillManagement
+from TestApi.PayrollApi.employer_company_workforce_bill_management import EmployerCompanyWorkforceBillManagement
 
 
-class TestBillManagement:
+class TestEmployerCompanyWorkforceBillManagement:
     def setup_class(self):
         self.url_path = Config().get_conf('test_env', 'test2')
 
     @allure.title('获取劳务公司列表')
     @pytest.mark.parametrize('data', YamlHandle().read_yaml(
-        '/Payroll/WorkforceBillManagement/EmployerCompanyWorkforceBillManagement/get_service_company_list.yaml'))
+        '/Payroll/EmployerCompanyWorkforceBillManagement'
+        '/get_service_company_list.yaml'))
     def test_get_service_company_list(self, data):
-        response = WorkforceBillManagement().get_service_company_list_api(self.url_path, data)
+        response = EmployerCompanyWorkforceBillManagement().get_service_company_list_api(self.url_path, data)
         Assertions().assert_mode(response, data)
 
     @allure.title('获取员工所在部门面包屑')
     @pytest.mark.parametrize('data', YamlHandle().read_yaml(
-        '/Payroll/WorkforceBillManagement/EmployerCompanyWorkforceBillManagement/get_employee_department_crumb.yaml'))
+        '/Payroll/EmployerCompanyWorkforceBillManagement'
+        '/get_employee_department_crumb.yaml'))
     def test_get_employee_department_crumb(self, data):
-        response = WorkforceBillManagement().get_employee_department_crumb(self.url_path, data)
+        response = EmployerCompanyWorkforceBillManagement().get_employee_department_crumb(self.url_path, data)
         Assertions().assert_mode(response, data)
 
     @allure.title('获取OSS凭据并上传用工账单附件')
     @pytest.mark.parametrize('data', YamlHandle().read_yaml(
-        '/Payroll/WorkforceBillManagement/EmployerCompanyWorkforceBillManagement/'
-        'get_oss_credential_then_upload_bill_attachment.yaml'))
+        '/Payroll/EmployerCompanyWorkforceBillManagement'
+        '/get_oss_credential_then_upload_bill_attachment.yaml'))
     def test_get_oss_credential(self, data):
         with allure.step('获取OSS凭据'):
-            response = WorkforceBillManagement().get_oss_credential(self.url_path, data)
+            response = EmployerCompanyWorkforceBillManagement().get_oss_credential(self.url_path, data)
             Assertions().assert_mode(response, data)
 
         with allure.step('上传附件'):
@@ -48,56 +50,61 @@ class TestBillManagement:
                              'policy': credential_data['policy'], 'OSSAccessKeyId': credential_data['accessKeyId'],
                              'success_action_status': '201',
                              'signature': credential_data['signature'], 'file': upload_file}
-                response = WorkforceBillManagement().upload_file_to_oss(str(credential_data['host']) + '/', form_data)
+                response = EmployerCompanyWorkforceBillManagement().upload_file_to_oss(
+                    str(credential_data['host']) + '/', form_data)
                 Assertions().assert_code(response.status_code, 201)
 
     @allure.title('获取用工账单列表')
     @pytest.mark.parametrize('data', YamlHandle().read_yaml(
-        '/Payroll/WorkforceBillManagement/EmployerCompanyWorkforceBillManagement/get_bill_list.yaml'))
+        '/Payroll/EmployerCompanyWorkforceBillManagement/get_bill_list.yaml'))
     def test_get_bill_list(self, data):
-        response = WorkforceBillManagement().get_bill_list_api(self.url_path, data)
+        response = EmployerCompanyWorkforceBillManagement().get_bill_list_api(self.url_path, data)
         Assertions().assert_mode(response, data)
 
     @allure.title('获取用工账单详情')
     @pytest.mark.parametrize('data', YamlHandle().read_yaml(
-        '/Payroll/WorkforceBillManagement/EmployerCompanyWorkforceBillManagement/get_bill_detail.yaml'))
+        '/Payroll/EmployerCompanyWorkforceBillManagement/get_bill_detail.yaml'))
     def test_get_bill_detail(self, data):
-        response = WorkforceBillManagement().get_bill_detail_api(self.url_path, data)
+        response = EmployerCompanyWorkforceBillManagement().get_bill_detail_api(self.url_path, data)
         Assertions().assert_mode(response, data)
 
     @allure.title('获取form表单工作流和抄送信息接口')
     @pytest.mark.parametrize('data', YamlHandle().read_yaml(
-        '/Payroll/WorkforceBillManagement/EmployerCompanyWorkforceBillManagement/get_form_of_workflow_and_cc.yaml'))
+        '/Payroll/EmployerCompanyWorkforceBillManagement'
+        '/get_form_of_workflow_and_cc.yaml'))
     def test_get_form_of_workflow_and_cc(self, data):
-        response = WorkforceBillManagement().get_form_of_workflow_and_cc_api(self.url_path, data)
+        response = EmployerCompanyWorkforceBillManagement().get_form_of_workflow_and_cc_api(self.url_path, data)
         Assertions().assert_mode(response, data)
 
     @allure.title('点击账单的查看详情编辑账单接口')
     @pytest.mark.parametrize('data', YamlHandle().read_yaml(
-        '/Payroll/WorkforceBillManagement/EmployerCompanyWorkforceBillManagement/edit_bill_by_click_detail.yaml'))
+        '/Payroll/EmployerCompanyWorkforceBillManagement'
+        '/edit_bill_by_click_detail.yaml'))
     def test_edit_bill_by_click_detail(self, data):
-        response = WorkforceBillManagement().edit_bill_by_click_detail_api(self.url_path, data)
-        Assertions().assert_mode(response, data)
-
-    @allure.title('根据部门id和type获取审批流信息')
-    @pytest.mark.parametrize('data', YamlHandle().read_yaml(
-        '/Payroll/WorkforceBillManagement/EmployerCompanyWorkforceBillManagement'
-        '/get_approval_query_by_department_and_type.yaml'))
-    def test_get_approval_query_by_department_and_type(self, data):
-        response = WorkforceBillManagement().get_approval_query_by_department_and_type_api(self.url_path, data)
-        Assertions().assert_mode(response, data)
-
-    @allure.title('获取待我审批账单个数')
-    @pytest.mark.parametrize('data', YamlHandle().read_yaml(
-        '/Payroll/WorkforceBillManagement/EmployerCompanyWorkforceBillManagement/'
-        'get_number_of_workforce_bills_waiting_for_my_approval.yaml'))
-    def test_get_number_of_approval_waiting_for_me(self, data):
-        response = WorkforceBillManagement().get_number_of_approval_waiting_for_me(self.url_path, data)
+        response = EmployerCompanyWorkforceBillManagement().edit_bill_by_click_detail_api(self.url_path, data)
         Assertions().assert_mode(response, data)
 
     @allure.title('生成用工账单（暂存）')
     @pytest.mark.parametrize('data', YamlHandle().read_yaml(
-        '/Payroll/WorkforceBillManagement/EmployerCompanyWorkforceBillManagement/generate_workforce_bill.yaml'))
+        '/Payroll/EmployerCompanyWorkforceBillManagement'
+        '/generate_workforce_bill.yaml'))
     def test_generate_workforce_bill(self, data):
-        response = WorkforceBillManagement().generate_workforce_bill(self.url_path, data)
+        response = EmployerCompanyWorkforceBillManagement().generate_workforce_bill(self.url_path, data)
+        Assertions().assert_mode(response, data)
+
+    @allure.title('根据部门id和type获取审批流信息')
+    @pytest.mark.parametrize('data', YamlHandle().read_yaml(
+        '/Payroll/EmployerCompanyWorkforceBillManagement'
+        '/get_approval_query_by_department_and_type.yaml'))
+    def test_get_approval_query_by_department_and_type(self, data):
+        response = EmployerCompanyWorkforceBillManagement().get_approval_query_by_department_and_type_api(self.url_path,
+                                                                                                          data)
+        Assertions().assert_mode(response, data)
+
+    @allure.title('获取待我审批账单个数')
+    @pytest.mark.parametrize('data', YamlHandle().read_yaml(
+        '/Payroll/EmployerCompanyWorkforceBillManagement'
+        '/get_number_of_workforce_bills_waiting_for_my_approval.yaml'))
+    def test_get_number_of_approval_waiting_for_me(self, data):
+        response = EmployerCompanyWorkforceBillManagement().get_number_of_approval_waiting_for_me(self.url_path, data)
         Assertions().assert_mode(response, data)
