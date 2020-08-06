@@ -44,7 +44,7 @@ class TestEmployerCompanyWorkforceBillManagement:
         with allure.step('上传附件'):
             credential_data = response.json()['data']
             with open(
-                    '../../../TestData/excel_for_uploading_bill_attachment.xlsx', 'rb') as upload_file:
+                    '../../TestData/excel_for_uploading_bill_attachment.xlsx', 'rb') as upload_file:
                 form_data = {'key': data['oss_data']['key'] + str(
                     random.random()) + '/' + 'excel_for_uploading_bill_attachment.xlsx',
                              'policy': credential_data['policy'], 'OSSAccessKeyId': credential_data['accessKeyId'],
