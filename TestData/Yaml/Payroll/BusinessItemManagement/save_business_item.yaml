@@ -1,0 +1,14 @@
+url: /dukang-payroll/business_item
+
+body:
+  coOrgId: "634034976861454336"
+  factorKey:
+  dataUnit: "Decimal"
+  name:
+  description: "这是一个接口测试"
+  source: "OUTSIDE"
+
+
+
+expect:
+  assert_message: "[reason] can't be empty"
