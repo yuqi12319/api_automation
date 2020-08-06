@@ -1,0 +1,9 @@
+url: /dukang-payroll/api/workforce_bill_forms
+params:
+  coOrgId: 657256194456420352
+  offset: 0
+  limit: 10
+
+expect:
+ assert_type: errcode
+ assert_result: '0'

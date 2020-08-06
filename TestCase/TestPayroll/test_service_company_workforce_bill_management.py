@@ -20,3 +20,10 @@ class TestServiceCompanyWorkforceBillManagement:
     def test_submit_dissent_workforce_bill_form(self, data):
         response = ServiceCompanyWorkforceBillManagement().submit_dissent_workforce_bill_form(self.url_path, data)
         Assertions().assert_in_text(response.json(), data['expect']['assert_message'])
+
+    @allure.title('获取劳务工账单列表')
+    @pytest.mark.parametrize('data',YamlHandle().read_yaml(
+        '/Payroll/ServiceCompanyWorkforceBillManagement/get_workforce_bill_list.yaml'))
+    def test_get_workforce_bill_list(self, data):
+        response = ServiceCompanyWorkforceBillManagement().get_workforce_bill_list_api(self.url_path, data)
+        Assertions().assert_mode(response, data)
