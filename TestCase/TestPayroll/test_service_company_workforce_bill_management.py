@@ -25,5 +25,5 @@ class TestServiceCompanyWorkforceBillManagement:
     @pytest.mark.parametrize('data',YamlHandle().read_yaml(
         '/Payroll/ServiceCompanyWorkforceBillManagement/get_workforce_bill_list.yaml'))
     def test_get_workforce_bill_list(self, data):
-        response = ServiceCompanyWorkforceBillManagement().get_workforce_bill_list_api(self.url_path, data)
+        response = ServiceCompanyWorkforceBillManagement().get_laborer_bill_list_api(self.url_path, data)
         Assertions().assert_mode(response, data)
