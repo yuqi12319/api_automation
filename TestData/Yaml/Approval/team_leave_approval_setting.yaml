@@ -1,0 +1,77 @@
+url: /dukang-workflow/api/workflow_setting?timestamp=1596616363712
+Title: 校验设置团队休假审批流orgid为空
+body:
+    coOrgId:
+    name: 测试团队休假审批流
+    type: TEAMLEAVEFORM
+    orgIds:
+    - "687232906640228352"
+    workflowSettingRuleGroupDtoList:
+      - workflowSettingApproverList:
+          - type: SUPERIOR
+            employeeId:
+            sortOrder: 1
+          - type: FIXED
+            employeeId: 617062748924149760,
+            sortOrder: 2
+      - workflowSettingCcList:
+          - 617062748924149760
+expect:
+    assert_type: errcode
+    assert_result: '100002'
+---
+url: /dukang-workflow/api/workflow_setting?timestamp=1596616363712
+Title: 校验设置团队休假审批流type为空
+body:
+    coOrgId: 687232906640228352
+    name: 测试团队休假审批流
+    type:
+    orgIds:
+    - "687232906640228352"
+    workflowSettingRuleGroupDtoList:
+      - workflowSettingApproverList:
+          - type: SUPERIOR
+            employeeId:
+            sortOrder: 1
+          - type: FIXED
+            employeeId: 617062748924149760,
+            sortOrder: 2
+      - workflowSettingCcList:
+          - 617062748924149760
+expect:
+    assert_type: errcode
+    assert_result: '100002'
+---
+url: /dukang-workflow/api/workflow_setting?timestamp=1596616363712
+Title: 新增设置团队休假审批流
+body:
+    coOrgId: 687232906640228352
+    name: 测试团队休假审批流
+    type: TEAMLEAVEFORM
+    orgIds:
+    - "687232906640228352"
+    workflowSettingRuleGroupDtoList:
+      - workflowSettingApproverList:
+          - type: SUPERIOR
+            employeeId:
+            sortOrder: 1
+expect:
+    assert_type: errcode
+    assert_result: '0'
+---
+url: /dukang-workflow/api/workflow_setting?timestamp=1596616363712
+Title: 校验团队休假审批流部门重复
+body:
+    coOrgId: 687232906640228352
+    name: 测试团队休假审批流
+    type: TEAMLEAVEFORM
+    orgIds:
+    - "687232906640228352"
+    workflowSettingRuleGroupDtoList:
+      - workflowSettingApproverList:
+          - type: SUPERIOR
+            employeeId:
+            sortOrder: 1
+expect:
+    assert_type: errcode
+    assert_result: '100103'

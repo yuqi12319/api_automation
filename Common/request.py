@@ -128,6 +128,39 @@ class Request:
                 url, response.request.body, response.status_code))
         return response
 
+    def delete_requests(self, url, params=None, json=None, headers=None, cookies=None, timeout=TIMEOUT):
+        """
+        delete请求
+        :param url:
+        :param data:
+        :param header:
+        :return:
+        """
+        if url.startswith('http://') or url.startswith('https://'):
+            pass
+        else:
+            url = '%s%s' % ('http://', url)
+
+        try:
+            response = requests.delete(url=url, params=params,  headers=headers, cookies=cookies,
+                                    timeout=timeout, verify=False)
+        except requests.exceptions.ConnectTimeout:
+            raise Exception("CONNECTION_TIMEOUT")
+        except requests.exceptions.ConnectionError:
+            raise Exception("CONNECTION_ERROR")
+        except urllib3.exceptions.ProtocolError:
+            raise Exception("CONNECTION_ERROR")
+
+        time_consuming = response.elapsed.microseconds / 1000
+        Common.consts.STRESS_LIST.append(time_consuming)
+        if self.is_json(response.text):
+            self.log.info("URL: %s \n[REQUEST BODY]:%s \n[RESPONSE]:%s \n[CODE]: %s" % (
+                url, response.request.body, response.json(), response.status_code))
+        else:
+            self.log.info("URL: %s \n[REQUEST BODY]:%s \n[RESPONSE EMPTY] \n[CODE]: %s" % (
+                url, response.request.body, response.status_code))
+        return response
+
     def send_request_method(self, method, url, params=None, json=None, headers=None, files=None):
         if headers is None:
             headers = {'Content-type': "application/json",
@@ -135,10 +168,13 @@ class Request:
 
         if method in ['get', 'GET']:
             response = self.get_requests(url=url, params=params, headers=headers)
+        elif method in ['delete', 'DELETE']:
+            response = self.delete_requests(url=url, params=params, headers=headers)
         elif method in ['post', 'POST']:
             response = self.post_requests(url=url, params=params, json=json, headers=headers, files=files)
         elif method in ['put', 'PUT']:
             response = self.put_requests(url, params=params, json=json, headers=headers)
+
         else:
             self.log.error("request method error")
 
