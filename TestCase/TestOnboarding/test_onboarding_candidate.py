@@ -29,15 +29,16 @@ class TestCandidate:
 
     @allure.title("获取人员信息(包含offer和入职资料发送信息)")
     @pytest.mark.parametrize('data', YamlHandle().read_yaml('/Onboarding/get_candidate_detail.yaml'))
-    def test_candidate_detail(self, data):
+    def test_get_candidate_detail(self, data):
         res = OnboardingCandidate().get_candidate_detail_api(self.url_path, data)
         Assertions().assert_mode(res, data)
 
     @allure.title("修改人员信息")
     @pytest.mark.parametrize('data', YamlHandle().read_yaml('/Onboarding/put_candidate_detail.yaml'))
-    def test_candidate_detail(self, data):
+    def test_put_candidate_detail(self, data):
         res = OnboardingCandidate().put_candidate_detail_api(self.url_path, data)
         Assertions().assert_mode(res, data)
 
-    if __name__ == '__main__':
-        pytest.main(["-s", "-v", "test_onboarding_candidate.py"])
+
+if __name__ == '__main__':
+    pytest.main(["-s", "-v", "test_onboarding_candidate.py"])

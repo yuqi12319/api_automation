@@ -29,11 +29,12 @@ class TestApprovalSetting:
     @pytest.mark.parametrize("data", YamlHandle().read_yaml('Approval/get_team_leave_approval_list.yaml'))
     def test_get_team_leave_approval_list(self, data):
 
-        # getlist = res.json()
-        # print(getlist.get("response").get("workflowSettingId"))
+
         # Assertions().assert_mode(res, data)
         print(data)
         res = TeamLeaveApprovalSetting().get_team_leave_approval(self.url_path, data)
+        # getlist = res.json()
+        # print(getlist.get("response").get("workflowSettingId"))
         print(type(res))
         print(res.json())
         print(res.url)

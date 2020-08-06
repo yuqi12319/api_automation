@@ -4,7 +4,7 @@
 from TestApi.consts_api import Const
 
 
-class WorkforceBillManagement(Const):
+class EmployerCompanyWorkforceBillManagement(Const):
 
     # 获取劳务公司列表
     def get_service_company_list_api(self, url_path, data):

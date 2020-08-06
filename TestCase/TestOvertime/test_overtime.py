@@ -2,7 +2,7 @@ import pytest
 from Common.operation_assert import *
 from Common.operation_yaml import YamlHandle
 from Conf.config import Config
-from TestApi.Overtime.Overtimeapply import OvertimeApply
+from TestApi.OvertimeApi.Overtimeapply import OvertimeApply
 
 
 class TestOvertime:

@@ -32,3 +32,7 @@ class TestCandidatePigeonhole:
     def test_put_pigeonhole_reduction(self, data):
         res = OnboardingCandidatePigeonhole().put_pigeonhole_reduction_api(self.url_path, data)
         Assertions().assert_mode(res, data)
+
+
+if __name__ == '__main__':
+    pytest.main(["-s", "-v", "test_onboarding_candidate_pigeonhole.py"])
