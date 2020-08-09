@@ -35,7 +35,6 @@ class TestApprovalSetting:
         res = TeamLeaveApprovalSetting().get_team_leave_approval(self.url_path, data)
         # getlist = res.json()
         # print(getlist.get("response").get("workflowSettingId"))
-        print(type(res))
         print(res.json())
         print(res.url)
         getlist = res.json()
