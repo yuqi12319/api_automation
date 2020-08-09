@@ -1,0 +1,7 @@
+url: /dukang-payroll/employee/salary/head
+params:
+  companyId: 687335987499499520
+
+expect:
+ assert_type: errcode
+ assert_result: '0'

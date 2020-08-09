@@ -1,0 +1,16 @@
+url: /muscat/get_oss_credential
+
+params:
+  bucket: static-litedev
+
+expect:
+  assert_type: errcode
+  assert_result: '0'
+
+oss_data:
+  key: billManager/634034976857260032/
+
+files:
+  name: "/excel_for_uploading_bill_attachment.xlsx"
+  file_path_downloading_to: "../../TestData/downloaded_bill_attachment.xlsx"
+  file_path_for_uploading: "../../TestData/excel_for_uploading_bill_attachment.xlsx"

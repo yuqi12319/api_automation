@@ -25,9 +25,17 @@ class EmployerCompanyWorkforceBillManagement(Const):
         return response
 
     # 上传文件至OSS
-    def upload_file_to_oss(self, url_path, files):
-        response = self.request.send_request_method('post', url_path, headers=self.headers, files=files)
+    def upload_file_to_oss(self, url_path, key, policy, oss_access_key_id, success_action_status, signature, file):
+        form_data = {'key': key, 'policy': policy, 'OSSAccessKeyId': oss_access_key_id,
+                     'success_action_status': success_action_status, 'signature': signature, 'file': file}
+        response = self.request.send_request_method('post', url_path, headers=self.headers, files=form_data)
         return response
+
+    # 下载附件
+    def download_bill_attachment(self, url_path, destination):
+        response = self.request.send_request_method('get', url_path)
+        with open(destination, 'wb') as destination_file:
+            destination_file.write(response.content)
 
     # 获取用工账单列表接口
     def get_bill_list_api(self, url_path, data):

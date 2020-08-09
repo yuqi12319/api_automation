@@ -1,0 +1,15 @@
+url: /dukang-payroll/employee/salaryList
+params:
+  companyId: 687335987499499520
+body:
+  keyword: ''
+  departmentIds:
+  employmentType:
+  employmentStatus:
+    - 1
+  chineseflag:
+  payGroupIds:
+
+expect:
+ assert_type: errcode
+ assert_result: '0'
