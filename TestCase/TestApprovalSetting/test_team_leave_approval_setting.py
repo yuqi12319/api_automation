@@ -30,7 +30,6 @@ class TestApprovalSetting:
     def test_get_team_leave_approval_list(self, data):
 
 
-        # Assertions().assert_mode(res, data)
         print(data)
         res = TeamLeaveApprovalSetting().get_team_leave_approval(self.url_path, data)
         # getlist = res.json()
