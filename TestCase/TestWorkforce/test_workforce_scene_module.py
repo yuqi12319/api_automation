@@ -11,6 +11,8 @@ from Conf.config import Config
 from Common.operation_mysql import *
 from TestApi.WorkforceApi.workforce_apply import WorkforceApply
 from TestApi.WorkforceApi.workforce_require import WorkforceRequire
+from Common.request import Request
+import Common.consts
 
 
 @allure.feature("劳务工场景测试")
@@ -49,9 +51,72 @@ class TestWorkforceScene:
 
         clear_data()
 
+    @pytest.mark.skip
     @allure.story("停止申请")
     @pytest.mark.parametrize('data', YamlHandle().read_yaml('Workforce/WorkforceScene/stop_apply.yaml'))
     def test_stop_apply(self, data):
+
+        def precondition():
+
+            headers = dict()
+            headers['X-Dk-Token'] = Common.consts.ACCESS_TOKEN[0]
+            my_companies_url = 'http://dktest3-workio.bipocloud.com/services/muscat/my_companies'
+            my_companies_res = Request().get_requests(url=my_companies_url, headers=headers)
+            print(my_companies_res.json())
+            for item in my_companies_res.json()['data']:
+                # 判断当前公司是否有关联劳务公司
+                workforce_company_map_url = 'https://dktest3-workio.bipocloud.com/services/dukang-coc/api/company/workforce/map?coOrgId=' + str(
+                    item['company_id'])
+                workforce_company_map_res = Request().get_requests(url=workforce_company_map_url, headers=headers)
+                if workforce_company_map_res.json()['data']:
+                    print(workforce_company_map_res.json())
+                else:
+                    continue
+                # 判断当前公司是否是职位信息
+                positions_url = 'http://dktest3-workio.bipocloud.com/services/dukang-commission/positions?offset=0&limit=0'
+                positions_body = {
+                    'coOrgId': item['company_id']
+                }
+                positions_res = Request().post_requests(url=positions_url, json=positions_body, headers=headers)
+                if positions_res.json()['data']:
+                    print(positions_res.json())
+                else:
+                    continue
+                # 获取当前员工id
+                employeeid_url = 'https://dktest3-workio.bipocloud.com/services/muscat/company/guide/employeeid'
+                employeeid_params = {
+                    'company_id': item['company_id']
+                }
+                employeeid_res = Request().get_requests(url=employeeid_url, params=employeeid_params, headers=headers)
+                # print(type(employeeid_res.json()['data']))
+                # 判断当前公司是否有组织架构
+                organizations_trees_url = 'https://dktest3-workio.bipocloud.com/services/muscat/organizations/' + \
+                                          employeeid_res.json()['data'] + '/trees'
+                organizations_trees_params = {
+                    'coOrgId': item['company_id']
+                }
+                organizations_trees_res = Request().get_requests(url=organizations_trees_url,
+                                                                 params=organizations_trees_params, headers=headers)
+                if organizations_trees_res.json()['data']:
+                    print(organizations_trees_res.json())
+                else:
+                    continue
+
+                # 数据拼接
+                data['send_apply']['body']['coOrgId'] = item['company_id']
+                data['send_apply']['body']['coOrgName'] = item['company_name']
+                data['send_apply']['body']['labourCompanyId'] = workforce_company_map_res.json()['data'][0][
+                    'workforceCompanyId']
+                data['send_apply']['body']['labourCompanyName'] = workforce_company_map_res.json()['data'][0][
+                    'workforceCompanyName']
+                # data['send_apply']['body']['organizationId'] = organizations_trees_res.json()['data'][0]['id']
+                # data['send_apply']['body']['organizationName'] = organizations_trees_res.json()['data'][0]['name']
+                data['send_apply']['body']['positionId'] = positions_res.json()['data']['positionVoList'][0][
+                    'positionId']
+                data['send_apply']['body']['positionName'] = positions_res.json()['data']['positionVoList'][0]['name']
+
+        precondition()
+
         with allure.step('第一步：发送申请单'):
             allure.attach(str(data['send_apply']), "请求数据", allure.attachment_type.JSON)
             send_apply_res = WorkforceApply().send_apply_api(self.url_path, data['send_apply'])
