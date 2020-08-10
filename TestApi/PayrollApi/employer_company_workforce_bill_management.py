@@ -8,19 +8,19 @@ class EmployerCompanyWorkforceBillManagement(Const):
 
     # 获取劳务公司列表
     def get_service_company_list_api(self, url_path, data):
-        url = url_path + data['url']
+        url = url_path + "/dukang-coc/api/company/workforce/map"
         response = self.request.send_request_method('get', url, data['params'], headers=self.headers)
         return response
 
     # 获取员工所在部门面包屑
     def get_employee_department_crumb(self, url_path, data):
-        url = url_path + data['url']['first_half'] + data['url']['employee_id'] + data['url']['second_half']
+        url = url_path + "/dukang-employee/employees/" + data['url']['employee_id'] + "/crumb"
         response = self.request.send_request_method('get', url, headers=self.headers)
         return response
 
     # 获取OSS凭据
     def get_oss_credential(self, url_path, data):
-        url = url_path + data['url']
+        url = url_path + "/muscat/get_oss_credential"
         response = self.request.send_request_method('get', url, data['params'], headers=self.headers)
         return response
 
@@ -63,7 +63,7 @@ class EmployerCompanyWorkforceBillManagement(Const):
 
     # 生成用工账单（暂存）
     def generate_workforce_bill(self, url_path, data):
-        url = url_path + data['url']
+        url = url_path + "/dukang-Payroll/api/bill"
         response = self.request.send_request_method('post', url, json=data['body'], headers=self.headers)
         return response
 
@@ -75,6 +75,6 @@ class EmployerCompanyWorkforceBillManagement(Const):
 
     # 获取待我审批账单个数
     def get_number_of_approval_waiting_for_me(self, url_path, data):
-        url = url_path + data['url']
+        url = url_path + "/dukang-payroll/api/employee/my_approve/num"
         response = self.request.send_request_method('get', url, data['params'], headers=self.headers)
         return response

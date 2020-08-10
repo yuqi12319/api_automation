@@ -4,6 +4,7 @@
 import allure
 import pytest
 
+from Common.operation_assert import Assertions
 from Common.operation_random import random_name, snowflake
 from Common.operation_yaml import YamlHandle
 from Conf.config import Config
@@ -22,6 +23,12 @@ class TestBusinessItemManagement:
             data['body']['factorKey'] = snowflake()
         if data['body']['name'] is None:
             data['body']['name'] = random_name(with_gender=False) + random_name(with_gender=False)
-        print(data)
         response = BusinessItemManagement().save_business_item(self.url_path, data)
-        print(response.json())
+        Assertions().assert_mode(response, data)
+
+    @allure.title('新增保存业务项目：接口校验必填项')
+    @pytest.mark.parametrize('data', YamlHandle().read_yaml(
+        '/Payroll/BusinessItemManagement/check_item_requiring_while_saving_business_item.yaml'))
+    def test_check_item_requiring_while_saving_business_item(self, data):
+        response = BusinessItemManagement().save_business_item(self.url_path, data)
+        Assertions().assert_mode(response, data)
