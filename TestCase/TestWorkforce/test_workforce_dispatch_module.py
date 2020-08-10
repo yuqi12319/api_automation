@@ -67,4 +67,4 @@ class TestAssign:
 
 
 if __name__ == '__main__':
-    pytest.main(["-s", "-v", "test_workforce_dispatch_module.py::TestAssign::test_dispatch"])
+    pytest.main(["-sv", "test_workforce_dispatch_module.py::TestAssign::test_dispatch", "--env", "test3"])

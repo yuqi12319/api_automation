@@ -42,4 +42,4 @@ class TestApply:
 
 
 if __name__ == '__main__':
-    pytest.main(["-s", "-v", "test_workforce_apply_module.py"])
+    pytest.main(["-sv", "test_workforce_apply_module.py", "--env", "test3"])

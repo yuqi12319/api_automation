@@ -168,4 +168,4 @@ class TestWorkforceScene:
 
 
 if __name__ == '__main__':
-    pytest.main(['-s', '-v', 'test_workforce_scene_module.py'])
+    pytest.main(["-sv", "test_workforce_scene_module.py", "--env", "test3"])

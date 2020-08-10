@@ -34,4 +34,4 @@ class TestWorkforceAdd:
 
 
 if __name__ == '__main__':
-    pytest.main(['-s', '-v', 'test_workforce_relation_add.py'])
+    pytest.main(['-sv', 'test_workforce_relation_add.py', "--env", "test3"])

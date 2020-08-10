@@ -35,4 +35,4 @@ class TestRequire:
 
 
 if __name__ == '__main__':
-    pytest.main(['-s', 'test_workforce_require_module.py'])
+    pytest.main(['-sv', 'test_workforce_require_module.py', "--env", "test3"])

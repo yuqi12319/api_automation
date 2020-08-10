@@ -25,4 +25,4 @@ class TestEmployeeStatus:
 
 
 if __name__ == '__main__':
-    pytest.main(['-v', '-s', 'test_query_workforce_status.py'])
+    pytest.main(["-sv", "test_query_workforce_status.py", "--env", "test3"])
