@@ -29,8 +29,9 @@ class Request:
 
     def get_requests(self, url, params=None, headers=None, cookies=None, timeout=TIMEOUT):
         """
+        get请求
         :param url:
-        :param data:
+        :param params:
         :param headers:
         :param cookies:
         :param timeout:
@@ -65,8 +66,12 @@ class Request:
         """
         post请求
         :param url:
-        :param data:
-        :param header:
+        :param params:
+        :param json:
+        :param headers:
+        :param cookies:
+        :param timeout:
+        :param files:
         :return:
         """
         if url.startswith('http://') or url.startswith('https://'):
@@ -99,8 +104,11 @@ class Request:
         """
         put请求
         :param url:
-        :param data:
-        :param header:
+        :param params:
+        :param json:
+        :param headers:
+        :param cookies:
+        :param timeout:
         :return:
         """
         if url.startswith('http://') or url.startswith('https://'):
@@ -132,8 +140,11 @@ class Request:
         """
         delete请求
         :param url:
-        :param data:
-        :param header:
+        :param params:
+        :param json:
+        :param headers:
+        :param cookies:
+        :param timeout:
         :return:
         """
         if url.startswith('http://') or url.startswith('https://'):
@@ -142,7 +153,7 @@ class Request:
             url = '%s%s' % ('http://', url)
 
         try:
-            response = requests.delete(url=url, params=params,  headers=headers, cookies=cookies,
+            response = requests.delete(url=url, params=params, json=json, headers=headers, cookies=cookies,
                                     timeout=timeout, verify=False)
         except requests.exceptions.ConnectTimeout:
             raise Exception("CONNECTION_TIMEOUT")
@@ -168,20 +179,13 @@ class Request:
 
         if method in ['get', 'GET']:
             response = self.get_requests(url=url, params=params, headers=headers)
-        elif method in ['delete', 'DELETE']:
-            response = self.delete_requests(url=url, params=params, headers=headers)
         elif method in ['post', 'POST']:
             response = self.post_requests(url=url, params=params, json=json, headers=headers, files=files)
         elif method in ['put', 'PUT']:
             response = self.put_requests(url, params=params, json=json, headers=headers)
-
+        elif method in ['delete', 'DELETE']:
+            response = self.delete_requests(url=url, params=params, json=json, headers=headers)
         else:
             self.log.error("request method error")
 
         return response
-
-
-if __name__ == '__main__':
-    a = Request()
-    b = a.send_request_method('get', 'http://baidu.com')
-    print(b.text)

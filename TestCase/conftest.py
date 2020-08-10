@@ -23,18 +23,10 @@ def login():
     Common.consts.ACCESS_TOKEN.append(access_token)
 
 
-
-
-
 def pytest_addoption(parser):
-    parser.addoption("--env", action="store",default="test",help="environment")
+    parser.addoption("--env", action="store", default="test", help="environment")
+
 
 @pytest.fixture
 def env(pytestconfig):
     return pytestconfig.getoption('--env')
-
-# def test1():
-#     return token
-#
-# def test2():
-#     return token

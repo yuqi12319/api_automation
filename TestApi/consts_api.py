@@ -12,13 +12,13 @@ class Const(object):
 
     def __init__(self, env):
         self.request = Request()
-        if env == "test1":
+        if env == "test":
+            self.url_path = Config().get_conf('test_env', 'test')
+        elif env == "test1":
             self.url_path = Config().get_conf('test_env', 'test1')
         elif env == "test2":
             self.url_path = Config().get_conf('test_env', 'test2')
         elif env == "test3":
             self.url_path = Config().get_conf('test_env', 'test3')
-        else:
-            self.url_path = Config().get_conf('test_env', 'test')
         self.headers = dict()
         self.headers['X-Dk-Token'] = Common.consts.ACCESS_TOKEN[0]

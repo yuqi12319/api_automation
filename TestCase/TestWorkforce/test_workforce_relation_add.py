@@ -14,21 +14,22 @@ from Conf.config import Config
 
 class TestWorkforceAdd:
 
-    def setup_class(self):
-        self.url_path = Config().get_conf('test_env', 'test3')
+    @pytest.fixture(autouse=True)
+    def env_prepare(self, env):
+        self.env = env
 
     @pytest.skip
     @allure.title("新增公司之间的关联关系")
     @pytest.mark.parametrize('data', YamlHandle().read_yaml('Workforce/CompanyWorkforceMap/company_relation_add.yaml'))
     def test_company_workforce_add(self, data):
-        res = WorkforceApply().company_workforce_add(self.url_path, data)
+        res = WorkforceApply(self.env).company_workforce_add(data)
         Assertions().assert_mode(res, data)
 
     # @pytest.skip
     @allure.title('获取劳务公司')
     @pytest.mark.parametrize('data', YamlHandle().read_yaml(('Workforce/CompanyWorkforceMap/get_workforce_map.yaml')))
     def test_get_workforce(self, data):
-        res = WorkforceApply().get_workforce_map(self.url_path, data)
+        res = WorkforceApply(self.env).get_workforce_map(data)
         Assertions().assert_mode(res, data)
 
 

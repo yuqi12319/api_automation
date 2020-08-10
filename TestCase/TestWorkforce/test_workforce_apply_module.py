@@ -7,35 +7,34 @@ import allure
 from Common.operation_yaml import YamlHandle
 from Common.operation_assert import Assertions
 from TestApi.WorkforceApi.workforce_apply import WorkforceApply
-from Conf.config import Config
 
 
 @allure.feature("甲方劳务工申请模块")
 class TestApply:
 
-    def setup_class(self):
-        self.url_path = Config().get_conf('test_env', 'test3')
+    @pytest.fixture(autouse=True)
+    def env_prepare(self, env):
+        self.env = env
 
     @pytest.mark.skip
     @allure.title("甲方发送劳务工申请")
     @pytest.mark.parametrize('data', YamlHandle().read_yaml('Workforce/WorkforceApply/apply.yaml'))
     def test_send_apply(self, data):
-        res = WorkforceApply().send_apply_api(self.url_path, data)
-        print(res.json())
-        # Assertions().assert_mode(res, data)
+        res = WorkforceApply(self.env).send_apply_api(data)
+        Assertions().assert_mode(res, data)
 
     # @pytest.mark.skip
     @allure.title("甲方劳务工申请列表")
     @pytest.mark.parametrize('data', YamlHandle().read_yaml('Workforce/WorkforceApply/apply_list.yaml'))
     def test_apply_list(self, data):
-        res = WorkforceApply().apply_list_api(self.url_path, data)
+        res = WorkforceApply(self.env).apply_list_api(data)
         Assertions().assert_mode(res, data)
 
-    @pytest.mark.skip
+    # @pytest.mark.skip
     @allure.title("甲方劳务工申请详情")
     @pytest.mark.parametrize('data', YamlHandle().read_yaml('Workforce/WorkforceApply/apply_detail.yaml'))
     def test_apply_detail(self, data):
-        res = WorkforceApply().apply_detail_api(self.url_path, data)
+        res = WorkforceApply(self.env).apply_detail_api(data)
         Assertions().assert_mode(res, data)
 
     def teardown_class(self):
