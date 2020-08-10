@@ -1,5 +1,3 @@
-url: /muscat/get_oss_credential
-
 params:
   bucket: static-litedev
 

@@ -1,5 +1,3 @@
-url: /dukang-payroll/business_item
-
 body:
   coOrgId: "634034976861454336"
   factorKey:
@@ -9,5 +7,5 @@ body:
   source: "OUTSIDE"
 
 expect:
- assert_type: errcode
- assert_result: '0'
+ assert_type: 'errmsg'
+ assert_result: "[factorKey] can't be empty"
