@@ -1,4 +1,3 @@
-url: /dukang-payroll/api/bill/list
 body:
  coOrgId: 687335987499499520
  limit: 10
