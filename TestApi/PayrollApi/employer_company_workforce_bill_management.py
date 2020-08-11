@@ -39,25 +39,25 @@ class EmployerCompanyWorkforceBillManagement(Const):
 
     # 获取用工账单列表接口
     def get_bill_list_api(self, url_path, data):
-        url = url_path + data['url']
+        url = url_path + "/dukang-payroll/api/bill/list"
         response = self.request.send_request_method('post', url, json=data['body'], headers=self.headers)
         return response
 
     # 获取用工账单详情接口
     def get_bill_detail_api(self, url_path, data):
-        url = url_path + data['url']
+        url = url_path + "/dukang-payroll/api/bill"
         response = self.request.send_request_method('get', url, params=data['params'], headers=self.headers)
         return response
 
     # 获取form表单工作流和抄送信息接口
     def get_form_of_workflow_and_cc_api(self, url_path, data):
-        url = url_path + data['url']
+        url = url_path + "/dukang-workflow/api/form/workflow"
         response = self.request.send_request_method('post', url, json=data['body'], headers=self.headers)
         return response
 
     # 点击账单查看详情编辑账单接口
     def edit_bill_by_click_detail_api(self, url_path, data):
-        url = url_path + data['url']
+        url = url_path + "/dukang-payroll/api/bill"
         response = self.request.send_request_method('put', url, json=data['body'], headers=self.headers)
         return response
 
@@ -69,7 +69,7 @@ class EmployerCompanyWorkforceBillManagement(Const):
 
     # 根据部门id和type获取审批流信息
     def get_approval_query_by_department_and_type_api(self, url_path, data):
-        url = url_path + data['url']['first_part'] + data['url']['organizationId'] + data['url']['second_part']
+        url = url_path + "/dukang-workflow/api/organizations/687335987499499520/workflow/approval/query"
         response = self.request.send_request_method('post', url, json=data['body'], headers=self.headers)
         return response
 

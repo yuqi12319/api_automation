@@ -15,15 +15,23 @@ class TestEmployeeSalaryInformation():
 
     @allure.title('获取员工薪资信息列表表头')
     @pytest.mark.parametrize('data', YamlHandle().read_yaml(
-        'Payroll/EmployeeSalaryInformation/employee_salary_information_list_head.yaml'))
+        'Payroll/EmployeeSalaryInformation/get_employee_salary_information_list_head.yaml'))
     def test_employee_salary_employee_information(self, data):
         response = EmployeeSalaryInformation().get_employee_salary_information_list_head_api(self.url_path, data)
         Assertions().assert_mode(response, data)
 
     @allure.title('获取员工薪资信息列表')
     @pytest.mark.parametrize('data', YamlHandle().read_yaml(
-        'Payroll/EmployeeSalaryInformation/employee_salary_information_list.yaml'))
+        'Payroll/EmployeeSalaryInformation/get_employee_salary_information_list.yaml'))
     def test_employee_salary_information_list(self, data):
         response = EmployeeSalaryInformation().get_employee_salary_information_list_api(self.url_path, data)
         Assertions().assert_mode(response, data)
+
+    @allure.title('获取薪资信息个税主体和分部门列表')
+    @pytest.mark.parametrize('data', YamlHandle().read_yaml(
+        'Payroll/EmployeeSalaryInformation/get_itEntitys_and_department_list.yaml'))
+    def test_itEntitys_and_department_list(self, data):
+        response = EmployeeSalaryInformation().get_itEntitys_and_departments_list_api(self.url_path, data)
+        Assertions().assert_mode(response, data)
+
 

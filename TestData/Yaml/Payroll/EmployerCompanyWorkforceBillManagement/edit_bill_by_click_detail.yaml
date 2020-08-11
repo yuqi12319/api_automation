@@ -1,4 +1,3 @@
-url: /dukang-payroll/api/bill
 body:
   attachment: "[{'url':'https://static-litedev.oss-cn-shanghai.aliyuncs.com/billManager/687335987495305216/0.39441676200830145/员工薪资测试用例.xlsx','key':'billManager/687335987495305216/0.39441676200830145/员工薪资测试用例.xlsx','name':'员工薪资测试用例.xlsx'}]"
   billId: 737728154289831936
