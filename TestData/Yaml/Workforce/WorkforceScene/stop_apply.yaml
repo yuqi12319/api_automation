@@ -4,13 +4,15 @@ send_apply:
     recruitmentType: New
     labourCompanyId: 733358092246319104
     labourCompanyName: workforce_company_test01
+    coOrgId: 733358092246319104
+    coOrgName: workforce_company_test01
     provinceId: 500000
     provinceName: 重庆
     cityId: 500100
     cityName: 重庆市
-    organizationId: 737612490304651264
-    organizationName: A仓库
-    address: 工作地址输入框
+    organizationId: 737612786678366208
+    organizationName: A.项目组1
+    address: this is address input
     joinDate: 1606752000000
     probationPeriodExpire: 1609344000000
     positionId: 737611770553696256
@@ -26,8 +28,6 @@ send_apply:
     positionQualification:
     positionQualificationId:
     positionTask:
-    coOrgId: 733358092246319104
-    coOrgName: workforce_company_test01
   expect:
     assert_type: errcode
     assert_result: '0'

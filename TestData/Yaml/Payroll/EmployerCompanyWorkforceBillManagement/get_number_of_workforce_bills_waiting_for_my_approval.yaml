@@ -1,5 +1,3 @@
-url: /dukang-payroll/api/employee/my_approve/num
-
 params:
   employeeId: '634034976857260032'
   formType: BILL

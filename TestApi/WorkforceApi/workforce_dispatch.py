@@ -14,7 +14,7 @@ class WorkforceDispatch(Const):
     # 劳务工派遣接口
     def dispatch_api(self, url_path, data):
         url = url_path + data['url']
-        res = self.request.send_request_method('post', url=url, json=data['body'], headers=self.headers)
+        res = self.request.send_request_method('post',url=url, json=data['body'], headers=self.headers)
         return res
 
     # 获取劳务工派遣列表接口

@@ -13,14 +13,16 @@ from Conf.config import Config
 
 
 class TestEmployeeStatus:
-    def setup_class(self):
-        self.url_path = Config().get_conf('test_env', 'test3')
+
+    @pytest.fixture(autouse=True)
+    def env_prepare(self, env):
+        self.env = env
 
     @pytest.mark.parametrize('data', YamlHandle().read_yaml('Workforce/WorkforceStatus/query_employee_status.yaml'))
     def test_employee_status(self, data):
-        res = QueryEmployeeStatus().test_query_status(self.url_path, data)
-        # Assertions().assert_code(res, 0)
+        res = QueryEmployeeStatus(self.env).test_query_status(data)
+        Assertions().assert_code(res, 0)
 
 
 if __name__ == '__main__':
-    pytest.main(['-v', '-s', 'test_query_workforce_status.py'])
+    pytest.main(["-sv", "test_query_workforce_status.py", "--env", "test3"])

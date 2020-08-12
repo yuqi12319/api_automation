@@ -1,0 +1,6 @@
+url: /dukang-workflow/api/workflow_setting/740919135193530368
+params:
+  timestamp: 1596638491074
+expect:
+  assert_type: errcode
+  assert_result: '0'

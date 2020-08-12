@@ -1,9 +1,5 @@
 url:
-  first_half: /dukang-employee/employees/
   employee_id: '634034976857260032'
-  second_half: /crumb
-
-params:
 
 expect:
   assert_type: errcode

@@ -21,3 +21,12 @@ def login():
     res = Request().send_request_method('post', url=url, json=body)
     access_token = res.json()['data']['accessToken']
     Common.consts.ACCESS_TOKEN.append(access_token)
+
+
+def pytest_addoption(parser):
+    parser.addoption("--env", action="store", default="test", help="environment")
+
+
+@pytest.fixture
+def env(pytestconfig):
+    return pytestconfig.getoption('--env')
