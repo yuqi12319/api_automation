@@ -1,0 +1,123 @@
+{
+  "uid" : "ff40e8aca39eb032",
+  "name" : "派遣关联申请test",
+  "fullName" : "TestCase.TestWorkforce.test_workforce_dispatch_module.TestAssign#test_relevance_apply",
+  "historyId" : "ef274becfd4a615baf5b731d7d571031",
+  "time" : {
+    "start" : 1596189519977,
+    "stop" : 1596189520124,
+    "duration" : 147
+  },
+  "status" : "passed",
+  "flaky" : false,
+  "newFailed" : false,
+  "beforeStages" : [ {
+    "name" : "login",
+    "time" : {
+      "start" : 1596189519524,
+      "stop" : 1596189519976,
+      "duration" : 452
+    },
+    "status" : "passed",
+    "steps" : [ ],
+    "attachments" : [ ],
+    "parameters" : [ ],
+    "stepsCount" : 0,
+    "attachmentsCount" : 0,
+    "shouldDisplayMessage" : false,
+    "hasContent" : false
+  }, {
+    "name" : "_Class__pytest_setup_class",
+    "time" : {
+      "start" : 1596189517223,
+      "stop" : 1596189517224,
+      "duration" : 1
+    },
+    "status" : "passed",
+    "steps" : [ ],
+    "attachments" : [ ],
+    "parameters" : [ ],
+    "stepsCount" : 0,
+    "attachmentsCount" : 0,
+    "shouldDisplayMessage" : false,
+    "hasContent" : false
+  } ],
+  "testStage" : {
+    "status" : "passed",
+    "steps" : [ ],
+    "attachments" : [ {
+      "uid" : "2107b7ffd13e855a",
+      "name" : "log",
+      "source" : "2107b7ffd13e855a.txt",
+      "type" : "text/plain",
+      "size" : 12825
+    } ],
+    "parameters" : [ ],
+    "stepsCount" : 0,
+    "attachmentsCount" : 1,
+    "shouldDisplayMessage" : false,
+    "hasContent" : true
+  },
+  "afterStages" : [ {
+    "name" : "_Class__pytest_setup_class::0",
+    "time" : {
+      "start" : 1596189520126,
+      "stop" : 1596189520126,
+      "duration" : 0
+    },
+    "status" : "passed",
+    "steps" : [ ],
+    "attachments" : [ ],
+    "parameters" : [ ],
+    "stepsCount" : 0,
+    "attachmentsCount" : 0,
+    "shouldDisplayMessage" : false,
+    "hasContent" : false
+  } ],
+  "labels" : [ {
+    "name" : "feature",
+    "value" : "劳务工派遣模块"
+  }, {
+    "name" : "parentSuite",
+    "value" : "TestCase.TestWorkforce"
+  }, {
+    "name" : "suite",
+    "value" : "test_workforce_dispatch_module"
+  }, {
+    "name" : "subSuite",
+    "value" : "TestAssign"
+  }, {
+    "name" : "host",
+    "value" : "liubindeMacBook-Pro.local"
+  }, {
+    "name" : "thread",
+    "value" : "79703-MainThread"
+  }, {
+    "name" : "framework",
+    "value" : "pytest"
+  }, {
+    "name" : "language",
+    "value" : "cpython3"
+  }, {
+    "name" : "package",
+    "value" : "TestCase.TestWorkforce.test_workforce_dispatch_module"
+  }, {
+    "name" : "resultFormat",
+    "value" : "allure2"
+  } ],
+  "parameters" : [ {
+    "name" : "data",
+    "value" : "{'url': '/dukang-workforce/api/workforce/require/ticketCodes', 'params': {'coOrgId': 733358092246319104}, 'expect': {'assert_type': 'errcode', 'assert_result': '0'}}"
+  } ],
+  "links" : [ ],
+  "hidden" : false,
+  "retry" : false,
+  "extra" : {
+    "severity" : "normal",
+    "retries" : [ ],
+    "categories" : [ ],
+    "tags" : [ ]
+  },
+  "source" : "ff40e8aca39eb032.json",
+  "parameterValues" : [ "{'url': '/dukang-workforce/api/workforce/require/ticketCodes', 'params': {'coOrgId': 733358092246319104}, 'expect': {'assert_type': 'errcode', 'assert_result': '0'}}" ]
+}

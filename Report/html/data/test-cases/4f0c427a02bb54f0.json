@@ -1,0 +1,120 @@
+{
+  "uid" : "4f0c427a02bb54f0",
+  "name" : "test_employee_status[data0]",
+  "fullName" : "TestCase.TestWorkforce.test_query_workforce_status.TestEmployeeStatus#test_employee_status",
+  "historyId" : "bbcb0391d9b1dbb7a4411d4d32a14721",
+  "time" : {
+    "start" : 1596189516545,
+    "stop" : 1596189516671,
+    "duration" : 126
+  },
+  "status" : "passed",
+  "flaky" : false,
+  "newFailed" : false,
+  "beforeStages" : [ {
+    "name" : "login",
+    "time" : {
+      "start" : 1596189516143,
+      "stop" : 1596189516541,
+      "duration" : 398
+    },
+    "status" : "passed",
+    "steps" : [ ],
+    "attachments" : [ ],
+    "parameters" : [ ],
+    "stepsCount" : 0,
+    "attachmentsCount" : 0,
+    "shouldDisplayMessage" : false,
+    "hasContent" : false
+  }, {
+    "name" : "_Class__pytest_setup_class",
+    "time" : {
+      "start" : 1596189516143,
+      "stop" : 1596189516143,
+      "duration" : 0
+    },
+    "status" : "passed",
+    "steps" : [ ],
+    "attachments" : [ ],
+    "parameters" : [ ],
+    "stepsCount" : 0,
+    "attachmentsCount" : 0,
+    "shouldDisplayMessage" : false,
+    "hasContent" : false
+  } ],
+  "testStage" : {
+    "status" : "passed",
+    "steps" : [ ],
+    "attachments" : [ {
+      "uid" : "9c6ac2c3ea1a668d",
+      "name" : "log",
+      "source" : "9c6ac2c3ea1a668d.txt",
+      "type" : "text/plain",
+      "size" : 2278
+    } ],
+    "parameters" : [ ],
+    "stepsCount" : 0,
+    "attachmentsCount" : 1,
+    "shouldDisplayMessage" : false,
+    "hasContent" : true
+  },
+  "afterStages" : [ {
+    "name" : "_Class__pytest_setup_class::0",
+    "time" : {
+      "start" : 1596189516674,
+      "stop" : 1596189516674,
+      "duration" : 0
+    },
+    "status" : "passed",
+    "steps" : [ ],
+    "attachments" : [ ],
+    "parameters" : [ ],
+    "stepsCount" : 0,
+    "attachmentsCount" : 0,
+    "shouldDisplayMessage" : false,
+    "hasContent" : false
+  } ],
+  "labels" : [ {
+    "name" : "parentSuite",
+    "value" : "TestCase.TestWorkforce"
+  }, {
+    "name" : "suite",
+    "value" : "test_query_workforce_status"
+  }, {
+    "name" : "subSuite",
+    "value" : "TestEmployeeStatus"
+  }, {
+    "name" : "host",
+    "value" : "liubindeMacBook-Pro.local"
+  }, {
+    "name" : "thread",
+    "value" : "79703-MainThread"
+  }, {
+    "name" : "framework",
+    "value" : "pytest"
+  }, {
+    "name" : "language",
+    "value" : "cpython3"
+  }, {
+    "name" : "package",
+    "value" : "TestCase.TestWorkforce.test_query_workforce_status"
+  }, {
+    "name" : "resultFormat",
+    "value" : "allure2"
+  } ],
+  "parameters" : [ {
+    "name" : "data",
+    "value" : "{'url': '/dukang-workforce/api/relation/employee/status', 'body': {'employeeIds': 733365230570045440}, 'expect': {'assert_type': 'errcode', 'assert_result': '0'}}"
+  } ],
+  "links" : [ ],
+  "hidden" : false,
+  "retry" : false,
+  "extra" : {
+    "severity" : "normal",
+    "retries" : [ ],
+    "categories" : [ ],
+    "tags" : [ ]
+  },
+  "source" : "4f0c427a02bb54f0.json",
+  "parameterValues" : [ "{'url': '/dukang-workforce/api/relation/employee/status', 'body': {'employeeIds': 733365230570045440}, 'expect': {'assert_type': 'errcode', 'assert_result': '0'}}" ]
+}

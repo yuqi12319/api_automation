@@ -1,0 +1,155 @@
+{
+  "uid" : "83edc06c07f9ae9e47eb6dd1b683e4e2",
+  "name" : "packages",
+  "children" : [ {
+    "name" : "TestCase.TestWorkforce",
+    "children" : [ {
+      "name" : "test_query_workforce_status",
+      "children" : [ {
+        "name" : "test_employee_status[data0]",
+        "uid" : "4f0c427a02bb54f0",
+        "parentUid" : "7dd3b8063c3b772551fe0b9763412da7",
+        "status" : "passed",
+        "time" : {
+          "start" : 1596189516545,
+          "stop" : 1596189516671,
+          "duration" : 126
+        },
+        "flaky" : false,
+        "newFailed" : false,
+        "parameters" : [ "{'url': '/dukang-workforce/api/relation/employee/status', 'body': {'employeeIds': 733365230570045440}, 'expect': {'assert_type': 'errcode', 'assert_result': '0'}}" ]
+      } ],
+      "uid" : "7dd3b8063c3b772551fe0b9763412da7"
+    }, {
+      "name" : "test_workforce_apply_module",
+      "children" : [ {
+        "name" : "甲方发送劳务工申请",
+        "uid" : "4cadc4e82edcc58d",
+        "parentUid" : "5b83cad1f8a23435de0a91ee17d72048",
+        "status" : "skipped",
+        "time" : {
+          "start" : 1596189516677,
+          "stop" : 1596189516677,
+          "duration" : 0
+        },
+        "flaky" : false,
+        "newFailed" : false,
+        "parameters" : [ "{'url': '/dukang-workforce/api/workforce/apply', 'body': {'recruitmentType': 'New', 'labourCompanyId': 733358092246319104, 'labourCompanyName': 'workforce_company_test01', 'provinceId': 130000, 'provinceName': '河北省', 'cityId': 130300, 'cityName': '秦皇岛市', 'organizationId': 733402522529562624, 'organizationName': '总部/华东区', 'address': 'osjsdjkasj', 'joinDate': 1595520000000, 'probationPeriodExpire': 1596124800000, 'positionId': 733424452708073472, 'positionName': '叉车工', 'demandPersonCount': 9, 'workforcePayrollDtos': [], 'contactEmail': '123@163.com', 'contactMobile': 18811223344, 'contactPerson': 'admin', 'projectId': None, 'projectName': None, 'positionObligation': None, 'positionQualification': None, 'positionQualificationId': None, 'positionTask': None, 'coOrgId': 733365230582628352, 'coOrgName': '测试公司3'}, 'expect': {'assert_type': 'errcode', 'assert_result': '0'}}" ]
+      }, {
+        "name" : "甲方劳务工申请列表",
+        "uid" : "2ed0e2c4dd341723",
+        "parentUid" : "5b83cad1f8a23435de0a91ee17d72048",
+        "status" : "passed",
+        "time" : {
+          "start" : 1596189517067,
+          "stop" : 1596189517215,
+          "duration" : 148
+        },
+        "flaky" : false,
+        "newFailed" : false,
+        "parameters" : [ "{'url': '/dukang-workforce/api/workforce/form/list', 'params': {'offset': 0, 'limit': 20}, 'body': {'coOrgId': 733365230582628352}, 'expect': {'assert_type': 'errcode', 'assert_result': '0'}}" ]
+      }, {
+        "name" : "甲方劳务工申请详情",
+        "uid" : "dfd2a452d402e982",
+        "parentUid" : "5b83cad1f8a23435de0a91ee17d72048",
+        "status" : "skipped",
+        "time" : {
+          "start" : 1596189517219,
+          "stop" : 1596189517219,
+          "duration" : 0
+        },
+        "flaky" : false,
+        "newFailed" : false,
+        "parameters" : [ "{'url': '/dukang-workforce/api/workforce/apply/detail/', 'applicationId': 737365907680002048, 'expect': {'assert_type': 'data', 'assert_result': 'workforce_company_test01'}}" ]
+      } ],
+      "uid" : "5b83cad1f8a23435de0a91ee17d72048"
+    }, {
+      "name" : "test_workforce_dispatch_module",
+      "children" : [ {
+        "name" : "劳务工派遣接口test",
+        "uid" : "e2729112959326d2",
+        "parentUid" : "8921f9820deef246f37d8f7d6180903a",
+        "status" : "passed",
+        "time" : {
+          "start" : 1596189517674,
+          "stop" : 1596189518224,
+          "duration" : 550
+        },
+        "flaky" : false,
+        "newFailed" : false,
+        "parameters" : [ "{'url': '/dukang-workforce/api/relation/dispatch', 'body': {'beginTime': 1595779200000, 'coOrgId': 733358092246319104, 'dispatchCoOrgId': 733365230582628352, 'employeeIds': ['735086906294927360', '735086906290733056'], 'endTime': 1596038400000, 'workforceRequestId': 737254455392600064}, 'expect': {'assert_type': 'errcode', 'assert_result': '0'}, 'clear': True}" ]
+      }, {
+        "name" : "劳务工派遣列表test",
+        "uid" : "b3ae9929fa7c5252",
+        "parentUid" : "8921f9820deef246f37d8f7d6180903a",
+        "status" : "passed",
+        "time" : {
+          "start" : 1596189518742,
+          "stop" : 1596189518907,
+          "duration" : 165
+        },
+        "flaky" : false,
+        "newFailed" : false,
+        "parameters" : [ "{'url': '/dukang-workforce/api/assign/search', 'params': {'coOrgId': 733358092246319104, 'offset': 0, 'limit': 20}, 'expect': {'assert_type': 'errcode', 'assert_result': '0'}}" ]
+      }, {
+        "name" : "劳务工派遣详情test",
+        "uid" : "2bf250b951ef2ad",
+        "parentUid" : "8921f9820deef246f37d8f7d6180903a",
+        "status" : "passed",
+        "time" : {
+          "start" : 1596189519365,
+          "stop" : 1596189519520,
+          "duration" : 155
+        },
+        "flaky" : false,
+        "newFailed" : false,
+        "parameters" : [ "{'url': '/dukang-workforce/api/receive/details', 'params': {'ticketId': 735445611213488128, 'workforceWorkingAssignId': 735445955146416128}, 'expect': {'assert_type': 'errcode', 'assert_result': '0'}}" ]
+      }, {
+        "name" : "派遣关联申请test",
+        "uid" : "ff40e8aca39eb032",
+        "parentUid" : "8921f9820deef246f37d8f7d6180903a",
+        "status" : "passed",
+        "time" : {
+          "start" : 1596189519977,
+          "stop" : 1596189520124,
+          "duration" : 147
+        },
+        "flaky" : false,
+        "newFailed" : false,
+        "parameters" : [ "{'url': '/dukang-workforce/api/workforce/require/ticketCodes', 'params': {'coOrgId': 733358092246319104}, 'expect': {'assert_type': 'errcode', 'assert_result': '0'}}" ]
+      } ],
+      "uid" : "8921f9820deef246f37d8f7d6180903a"
+    }, {
+      "name" : "test_workforce_require_module",
+      "children" : [ {
+        "name" : "乙方劳务工需求列表",
+        "uid" : "57905f1d1e30ae13",
+        "parentUid" : "c1e3caad3248109b6adcff472d117330",
+        "status" : "passed",
+        "time" : {
+          "start" : 1596189520487,
+          "stop" : 1596189520644,
+          "duration" : 157
+        },
+        "flaky" : false,
+        "newFailed" : false,
+        "parameters" : [ "{'url': '/dukang-workforce/api/workforce/require/form/ticket', 'body': {'coOrgId': 733358092246319104, 'limit': None, 'offset': 0}, 'expect': {'assert_type': 'errcode', 'assert_result': '0'}}" ]
+      }, {
+        "name" : "乙方劳务工需求详情",
+        "uid" : "1f54cf3e3e7b9daa",
+        "parentUid" : "c1e3caad3248109b6adcff472d117330",
+        "status" : "passed",
+        "time" : {
+          "start" : 1596189520991,
+          "stop" : 1596189521144,
+          "duration" : 153
+        },
+        "flaky" : false,
+        "newFailed" : false,
+        "parameters" : [ "{'url': '/dukang-workforce/api/workforce/require/detail/', 'applicationId': 735445611213488128, 'expect': {'assert_type': 'errcode', 'assert_result': '0'}}" ]
+      } ],
+      "uid" : "c1e3caad3248109b6adcff472d117330"
+    } ],
+    "uid" : "TestCase.TestWorkforce"
+  } ]
+}

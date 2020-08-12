@@ -1,0 +1,3 @@
+url: http://dktest-openapi.bipocloud.com/services/oauth/refresh_open_token
+body:
+  refreshOpenToken:

@@ -19,3 +19,6 @@ RESULT_LIST = []
 
 # 登陆token
 ACCESS_TOKEN = []
+
+# OpenApi登录Token
+OPENAPI_ACCESS_TOKEN = []

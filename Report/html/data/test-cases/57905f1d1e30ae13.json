@@ -1,0 +1,123 @@
+{
+  "uid" : "57905f1d1e30ae13",
+  "name" : "乙方劳务工需求列表",
+  "fullName" : "TestCase.TestWorkforce.test_workforce_require_module.TestRequire#test_require_list",
+  "historyId" : "55d36a744ba44c0b0f22f89ce78a2ec0",
+  "time" : {
+    "start" : 1596189520487,
+    "stop" : 1596189520644,
+    "duration" : 157
+  },
+  "status" : "passed",
+  "flaky" : false,
+  "newFailed" : false,
+  "beforeStages" : [ {
+    "name" : "_Class__pytest_setup_class",
+    "time" : {
+      "start" : 1596189520129,
+      "stop" : 1596189520129,
+      "duration" : 0
+    },
+    "status" : "passed",
+    "steps" : [ ],
+    "attachments" : [ ],
+    "parameters" : [ ],
+    "stepsCount" : 0,
+    "attachmentsCount" : 0,
+    "shouldDisplayMessage" : false,
+    "hasContent" : false
+  }, {
+    "name" : "login",
+    "time" : {
+      "start" : 1596189520130,
+      "stop" : 1596189520486,
+      "duration" : 356
+    },
+    "status" : "passed",
+    "steps" : [ ],
+    "attachments" : [ ],
+    "parameters" : [ ],
+    "stepsCount" : 0,
+    "attachmentsCount" : 0,
+    "shouldDisplayMessage" : false,
+    "hasContent" : false
+  } ],
+  "testStage" : {
+    "status" : "passed",
+    "steps" : [ ],
+    "attachments" : [ {
+      "uid" : "b5545aad2338e3a7",
+      "name" : "log",
+      "source" : "b5545aad2338e3a7.txt",
+      "type" : "text/plain",
+      "size" : 48402
+    } ],
+    "parameters" : [ ],
+    "stepsCount" : 0,
+    "attachmentsCount" : 1,
+    "shouldDisplayMessage" : false,
+    "hasContent" : true
+  },
+  "afterStages" : [ {
+    "name" : "_Class__pytest_setup_class::0",
+    "time" : {
+      "start" : 1596189521147,
+      "stop" : 1596189521147,
+      "duration" : 0
+    },
+    "status" : "passed",
+    "steps" : [ ],
+    "attachments" : [ ],
+    "parameters" : [ ],
+    "stepsCount" : 0,
+    "attachmentsCount" : 0,
+    "shouldDisplayMessage" : false,
+    "hasContent" : false
+  } ],
+  "labels" : [ {
+    "name" : "feature",
+    "value" : "乙方劳务工需求模块"
+  }, {
+    "name" : "parentSuite",
+    "value" : "TestCase.TestWorkforce"
+  }, {
+    "name" : "suite",
+    "value" : "test_workforce_require_module"
+  }, {
+    "name" : "subSuite",
+    "value" : "TestRequire"
+  }, {
+    "name" : "host",
+    "value" : "liubindeMacBook-Pro.local"
+  }, {
+    "name" : "thread",
+    "value" : "79703-MainThread"
+  }, {
+    "name" : "framework",
+    "value" : "pytest"
+  }, {
+    "name" : "language",
+    "value" : "cpython3"
+  }, {
+    "name" : "package",
+    "value" : "TestCase.TestWorkforce.test_workforce_require_module"
+  }, {
+    "name" : "resultFormat",
+    "value" : "allure2"
+  } ],
+  "parameters" : [ {
+    "name" : "data",
+    "value" : "{'url': '/dukang-workforce/api/workforce/require/form/ticket', 'body': {'coOrgId': 733358092246319104, 'limit': None, 'offset': 0}, 'expect': {'assert_type': 'errcode', 'assert_result': '0'}}"
+  } ],
+  "links" : [ ],
+  "hidden" : false,
+  "retry" : false,
+  "extra" : {
+    "severity" : "normal",
+    "retries" : [ ],
+    "categories" : [ ],
+    "tags" : [ ]
+  },
+  "source" : "57905f1d1e30ae13.json",
+  "parameterValues" : [ "{'url': '/dukang-workforce/api/workforce/require/form/ticket', 'body': {'coOrgId': 733358092246319104, 'limit': None, 'offset': 0}, 'expect': {'assert_type': 'errcode', 'assert_result': '0'}}" ]
+}
