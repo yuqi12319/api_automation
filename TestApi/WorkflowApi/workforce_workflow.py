@@ -1,4 +1,4 @@
-# Name:workflow.py.py
+# Name:workforce_workflow.py.py
 # Author:lin
 # Time:2020/8/5 10:28 上午
 
@@ -6,7 +6,7 @@
 from TestApi.consts_api import Const
 
 
-class Workflow(Const):
+class WorkforceWorkflow(Const):
     def __init__(self, env):
         super().__init__(env)
 
@@ -37,11 +37,11 @@ class Workflow(Const):
     # 节点审批(同意，拒绝)
     def workflow_node_approve_api(self, data):
         url = self.url_path + data['url']
-        res = self.request.send_request_method('put',url=url,json=data['body'],headers=self.headers)
+        res = self.request.send_request_method('put', url=url, json=data['body'], headers=self.headers)
         return res
 
     # 批量节点审批(同意，拒绝)
     def workflow_batch_node_approve_api(self, data):
         url = self.url_path + data['url']
-        res = self.request.send_request_method('put',url=url,json=data['body'],headers=self.headers)
+        res = self.request.send_request_method('put', url=url, json=data['body'], headers=self.headers)
         return res

@@ -12,7 +12,7 @@ from Common.request import Request
 import Common.consts
 from TestApi.WorkforceApi.workforce_apply import WorkforceApply
 from TestApi.WorkforceApi.workforce_require import WorkforceRequire
-from TestApi.WorkflowApi.workflow import Workflow
+from TestApi.WorkflowApi.workforce_workflow import WorkforceWorkflow
 
 
 @allure.feature("劳务工场景测试")
@@ -255,7 +255,7 @@ class TestWorkforceScene:
             data['approve_node']['body']['formWorkflowId'] = apply_detail_res.json()['data']['formWorkflowId']
             data['approve_node']['body']['processInstanceId'] = apply_detail_res.json()['data']['processInstanceId']
             allure.attach(str(data['approve_node']), "请求数据", allure.attachment_type.JSON)
-            approve_res = Workflow(self.env).workflow_node_approve_api(data['approve_node'])
+            approve_res = WorkforceWorkflow(self.env).workflow_node_approve_api(data['approve_node'])
             allure.attach(approve_res.text, "workflow_node_approve_api返回结果", allure.attachment_type.JSON)
             Assertions().assert_mode(approve_res, data['approve_node'])
 
