@@ -51,29 +51,13 @@ apply_detail:
   expect:
     assert_type: errcode
     assert_result: '0'
-# 审批流接口数据
-approve_node:
-  url: /dukang-workflow/api/task/complete
-  body:
-    employeeId:
-    formId:
-    formType: WORKFORCEAPPLICATION
-    formWorkflowId:
-    processInstanceId:
-    result: AGREED
-  expect:
-    assert_type: errcode
-    assert_result: '0'
-# 需求单列表接口数据
-require_list:
-  url: /dukang-workforce/api/workforce/require/form/ticket
-  body:
-    coOrgId:
-    limit:
-    offset: 0
-stop_apply:
-  url: /dukang-workforce/api/workforce/stop/
+# 撤销申请单单接口数据
+withdraw_apply:
+  url: /dukang-workforce/api/workforce/withdraw/
   application_id:
+  body:
+    form_workflow_id:
+    process_instance_id:
   expect:
     assert_type: errcode
     assert_result: '0'
