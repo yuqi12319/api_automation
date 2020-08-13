@@ -6,7 +6,7 @@ import pytest
 import allure
 from Common.operation_yaml import YamlHandle
 from Common.operation_assert import Assertions
-from TestApi.WorkflowApi.application_workflow import Workflow
+from TestApi.WorkflowApi.registration_workflow import Workflow
 
 # 登记审批流相关接口
 class TestRegistrationWorkfolw:
