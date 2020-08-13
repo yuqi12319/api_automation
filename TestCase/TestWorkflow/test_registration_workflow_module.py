@@ -8,8 +8,9 @@ from Common.operation_yaml import YamlHandle
 from Common.operation_assert import Assertions
 from TestApi.WorkflowApi.registration_workflow import Workflow
 
+
 # 登记审批流相关接口
-class TestRegistrationWorkfolw:
+class TestRegistrationWorkflow:
 
     @pytest.fixture(autouse=True)
     def env_prepare(self, env):
@@ -18,7 +19,7 @@ class TestRegistrationWorkfolw:
     @pytest.mark.skip
     @allure.title("待我审批")
     @pytest.mark.parametrize('data', YamlHandle().read_yaml(
-        'Workforce_Workflow/ApplicationWorkflow/workflow_registration_await.yaml'))
+        'Workforce_Workflow/RegistrationWorkflow/workflow_registration_await.yaml'))
     def test_workflow_registration_await(self, data):
         res = Workflow(self.env).workflow_registration_await_list_api(data)
         Assertions().assert_mode(res, data)
@@ -39,11 +40,20 @@ class TestRegistrationWorkfolw:
         res = Workflow(self.env).workflow_registration_pass_list_api(data)
         Assertions().assert_mode(res, data)
 
+    @pytest.mark.skip
     @allure.title('我拒绝的')
     @pytest.mark.parametrize('data', YamlHandle().read_yaml(
         'Workforce_Workflow/RegistrationWorkflow/workflow_registration_refuse.yaml'))
     def test_workflow_registration_refuse(self, data):
         res = Workflow(self.env).workflow_registration_refuse_list_api(data)
+        Assertions().assert_mode(res, data)
+
+    @allure.title('已有公司添加用工申请默认审批流')
+    @pytest.mark.parametrize('data',
+                             YamlHandle().read_yaml('Workforce/WorkflowDefault/registration_workflow_default.yaml'))
+    def test_registration_workflow_setting_default(self, data):
+        print(111)
+        res = Workflow(self.env).registration_workflow_setting_default_api(data)
         Assertions().assert_mode(res, data)
 
 

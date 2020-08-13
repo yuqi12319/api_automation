@@ -33,3 +33,10 @@ class Workflow(Const):
         res = self.request.send_request_method('post', url=url, params=data['params'], json=data['body'],
                                                headers=self.headers)
         return res
+
+        # 已有公司添加默认用工登记审批流
+    def registration_workflow_setting_default_api(self, data):
+        url = self.url_path + data['url']
+        print(url)
+        res = self.request.send_request_method('post', url=url, params=data['params'], headers=self.headers)
+        return res
