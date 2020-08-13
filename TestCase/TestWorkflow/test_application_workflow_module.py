@@ -6,7 +6,7 @@ import pytest
 import allure
 from Common.operation_yaml import YamlHandle
 from Common.operation_assert import Assertions
-from TestApi.WorkflowApi.workflow import Workflow
+from TestApi.WorkflowApi.application_workflow import Workflow
 
 
 class TestApplicationWorkfolw:
@@ -17,27 +17,27 @@ class TestApplicationWorkfolw:
 
     @pytest.mark.skip
     @allure.title("待我审批")
-    @pytest.mark.parametrize('data', YamlHandle().read_yaml('Workflow/ApplicationWorkflow/workflow_application.yaml'))
+    @pytest.mark.parametrize('data', YamlHandle().read_yaml('Workforce_Workflow/ApplicationWorkflow/workflow_application_await.yaml'))
     def test_workflow_application_await(self, data):
         res = Workflow(self.env).workflow_application_await_list_api(data)
         Assertions().assert_mode(res, data)
 
     @pytest.mark.skip
     @allure.title("抄送我的")
-    @pytest.mark.parametrize('data', YamlHandle().read_yaml('Workflow/ApplicationWorkflow/workflow_application.yaml'))
+    @pytest.mark.parametrize('data', YamlHandle().read_yaml('Workforce_Workflow/ApplicationWorkflow/workflow_application_await.yaml'))
     def test_workflow_application_cc(self, data):
         res = Workflow(self.env).workflow_application_cc_list_api(data)
         Assertions().assert_mode(res, data)
 
     @pytest.mark.skip
     @allure.title('我通过的')
-    @pytest.mark.parametrize('data', YamlHandle().read_yaml('Workflow/ApplicationWorkflow/workflow_application.yaml'))
+    @pytest.mark.parametrize('data', YamlHandle().read_yaml('Workforce_Workflow/ApplicationWorkflow/workflow_application_await.yaml'))
     def test_workflow_application_pass(self, data):
         res = Workflow(self.env).workflow_application_pass_list_api(data)
         Assertions().assert_mode(res, data)
 
     @allure.title('我拒绝的')
-    @pytest.mark.parametrize('data', YamlHandle().read_yaml('Workflow/ApplicationWorkflow/workflow_application.yaml'))
+    @pytest.mark.parametrize('data', YamlHandle().read_yaml('Workforce_Workflow/ApplicationWorkflow/workflow_application_await.yaml'))
     def test_workflow_application_refuse(self, data):
         res = Workflow(self.env).workflow_application_refuse_list_api(data)
         Assertions().assert_mode(res, data)

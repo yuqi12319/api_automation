@@ -12,7 +12,7 @@ from Common.request import Request
 import Common.consts
 from TestApi.WorkforceApi.workforce_apply import WorkforceApply
 from TestApi.WorkforceApi.workforce_require import WorkforceRequire
-from TestApi.WorkflowApi.workflow import Workflow
+from TestApi.WorkflowApi.application_workflow import Workflow
 
 
 @allure.feature("劳务工场景测试")
