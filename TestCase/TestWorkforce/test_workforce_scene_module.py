@@ -15,6 +15,7 @@ from TestApi.WorkforceApi.workforce_require import WorkforceRequire
 from TestApi.WorkflowApi.workforce_workflow import WorkforceWorkflow
 
 
+
 @allure.feature("劳务工场景测试")
 class TestWorkforceScene:
 
