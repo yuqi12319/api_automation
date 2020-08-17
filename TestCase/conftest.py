@@ -7,7 +7,7 @@ from Common.request import *
 from Conf.config import Config
 
 
-@pytest.fixture(autouse=True)
+@pytest.fixture(scope="module", autouse=True)
 def login():
     url = Config().get_conf('test_env', 'test3') + '/dukang-user/login'
     body = {
@@ -27,6 +27,6 @@ def pytest_addoption(parser):
     parser.addoption("--env", action="store", default="test", help="environment")
 
 
-@pytest.fixture
+@pytest.fixture(scope="class")
 def env(pytestconfig):
     return pytestconfig.getoption('--env')

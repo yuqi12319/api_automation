@@ -23,8 +23,8 @@ send_apply:
     contactEmail: 123@abc.com
     contactMobile: 18818811881
     contactPerson: admin
-#    projectId:
-#    projectName:
+    projectId:
+    projectName:
 #    positionObligation:
 #    positionQualification:
 #    positionQualificationId:
@@ -33,6 +33,7 @@ send_apply:
     approverList: []
     ccList: []
     workflowDeploymentId:
+    remark: this is remark
   expect:
     assert_type: errcode
     assert_result: '0'
@@ -60,20 +61,7 @@ approve_node:
     formType: WORKFORCEAPPLICATION
     formWorkflowId:
     processInstanceId:
-    result: AGREED
-  expect:
-    assert_type: errcode
-    assert_result: '0'
-# 需求单列表接口数据
-require_list:
-  url: /dukang-workforce/api/workforce/require/form/ticket
-  body:
-    coOrgId:
-    limit: 20
-    offset: 0
-stop_apply:
-  url: /dukang-workforce/api/workforce/stop/
-  application_id:
+    result: REFUSED
   expect:
     assert_type: errcode
     assert_result: '0'
