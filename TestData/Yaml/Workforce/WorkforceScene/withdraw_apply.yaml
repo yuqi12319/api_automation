@@ -1,3 +1,4 @@
+
 #申请接口数据
 send_apply:
   url: /dukang-workforce/api/workforce/apply
@@ -23,8 +24,8 @@ send_apply:
     contactEmail: 123@abc.com
     contactMobile: 18818811881
     contactPerson: admin
-#    projectId:
-#    projectName:
+    projectId:
+    projectName:
 #    positionObligation:
 #    positionQualification:
 #    positionQualificationId:
@@ -33,6 +34,7 @@ send_apply:
     approverList: []
     ccList: []
     workflowDeploymentId:
+    remark: this is remark
   expect:
     assert_type: errcode
     assert_result: '0'

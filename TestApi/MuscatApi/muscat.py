@@ -8,10 +8,10 @@ from TestApi.consts_api import Const
 
 
 class Muscat(Const):
-    def __init__(self):
-        super().__init__()
+    def __init__(self, env):
+        super().__init__(env)
 
-    def get_my_companies_api(self):
-        url = "http://dktest3-workio.bipocloud.com/services/muscat/my_companies"
+    def get_my_companies_api(self, data):
+        url = self.url_path + data['url']
         res = self.request.send_request_method('get', url=url, headers=self.headers)
         return res
