@@ -22,3 +22,10 @@ class WorkflowDomain(Const):
         url = self.url_path + '/dukang-workflow/api/task/batchcomplete'
         res = self.request.send_request_method('put', url=url, json=data['body'], headers=self.headers)
         return res
+
+    # 根据组织架构节点获取对应审批流
+    def workflow_approval_query(self, data):
+        url = self.url_path + '/dukang-workflow/api/organizations/' + data[
+            'organizationId'] + "/workflow/approval/query"
+        res = self.request.send_request_method('post', url=url, json=data['body'], headers=self.headers)
+        return res

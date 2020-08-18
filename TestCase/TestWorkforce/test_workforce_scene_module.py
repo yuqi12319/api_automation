@@ -9,10 +9,8 @@ import Common.consts
 from Common.operation_yaml import YamlHandle
 from Common.operation_assert import Assertions
 from Common.operation_mysql import *
-from Common.request import Request
 from TestApi.WorkforceApi.workforce_apply import WorkforceApply
 from TestApi.WorkforceApi.workforce_require import WorkforceRequire
-from TestApi.WorkforceApi.workforce_workflow import WorkforceWorkflow
 from TestApi.MuscatApi.muscat import Muscat
 from TestApi.CocApi.coc import Coc
 from TestApi.CommissionApi.commission import Commission
@@ -67,13 +65,11 @@ class TestWorkforceScene:
                 continue
 
             # 根据组织架构节点获取对应审批流
-            approval_url = "https://dktest3-workio.bipocloud.com/services/dukang-workflow/api/organizations/" + \
-                           organizations_trees_res.json()['data'][0]['id'] + "/workflow/approval/query"
-            approval_body = {
-                "employeeId": employeeid_res.json()['data'],
-                "type": "WORKFORCEAPPLICATION"
-            }
-            approval_res = Request().post_requests(url=approval_url, json=approval_body, headers=headers)
+            approval_data = YamlHandle().read_yaml('Workflow/workflow_approval_query.yaml')[0]
+            approval_data['organizationId'] = organizations_trees_res.json()['data'][0]['id']
+            approval_data['body']['employeeId'] = employeeid_res.json()['data']
+            approval_data['body']['type'] = 'WORKFORCEAPPLICATION'
+            approval_res = WorkflowDomain(env).workflow_approval_query(approval_data)
             data_dict['approval'] = approval_res.json()['data']
 
             # 判断是否有项目
@@ -142,7 +138,7 @@ class TestWorkforceScene:
 
         clear_data()
 
-    # @pytest.mark.skip
+    @pytest.mark.skip
     @allure.story("撤销申请")
     @pytest.mark.parametrize('data', YamlHandle().read_yaml('Workforce/WorkforceScene/withdraw_apply.yaml'))
     def test_withdraw_apply(self, data, precondition):
@@ -224,7 +220,7 @@ class TestWorkforceScene:
         #
         # clear_data()
 
-    @pytest.mark.skip
+    # @pytest.mark.skip
     @allure.story("停止申请")
     @pytest.mark.parametrize('data', YamlHandle().read_yaml('Workforce/WorkforceScene/stop_apply.yaml'))
     def test_stop_apply(self, data, precondition):
