@@ -12,7 +12,7 @@ from Common.operation_mysql import *
 from Common.request import Request
 from TestApi.WorkforceApi.workforce_apply import WorkforceApply
 from TestApi.WorkforceApi.workforce_require import WorkforceRequire
-from TestApi.WorkflowApi.workforce_workflow import WorkforceWorkflow
+from TestApi.WorkforceApi.workforce_workflow import WorkforceWorkflow
 from TestApi.MuscatApi.muscat import Muscat
 from TestApi.CocApi.coc import Coc
 from TestApi.CommissionApi.commission import Commission
