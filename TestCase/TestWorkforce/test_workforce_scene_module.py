@@ -29,8 +29,7 @@ class TestWorkforceScene:
         self.env = env
         headers = dict()
         headers['X-Dk-Token'] = Common.consts.ACCESS_TOKEN[0]
-        my_companies_data = YamlHandle().read_yaml('Muscat/get_my_companies.yaml')[0]
-        my_companies_res = Muscat(env).get_my_companies_api(my_companies_data)
+        my_companies_res = Muscat(env).get_my_companies_api()
         for item in my_companies_res.json()['data']:
             data_dict = dict()
             data_dict['my_company'] = item

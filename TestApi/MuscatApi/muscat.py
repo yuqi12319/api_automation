@@ -11,13 +11,13 @@ class Muscat(Const):
     def __init__(self, env):
         super().__init__(env)
 
-    def get_my_companies_api(self, data):
-        url = self.url_path + data['url']
+    def get_my_companies_api(self):
+        url = self.url_path + '/muscat/my_companies'
         res = self.request.send_request_method('get', url=url, headers=self.headers)
         return res
 
     def company_guide_employeeid(self, data):
-        url = self.url_path + data['url']
+        url = self.url_path + '/muscat/company/guide/employeeid'
         res = self.request.send_request_method('get', url=url, params=data['params'], headers=self.headers)
         return res
 

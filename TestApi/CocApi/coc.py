@@ -13,6 +13,6 @@ class Coc(Const):
         super().__init__(env)
 
     def workforce_company_map_api(self, data):
-        url = self.url_path + data['url']
+        url = self.url_path + '/dukang-coc/api/company/workforce/map'
         res = self.request.send_request_method('get', url=url, params=data['params'], headers=self.headers)
         return res

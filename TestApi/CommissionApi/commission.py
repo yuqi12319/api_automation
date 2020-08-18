@@ -13,7 +13,7 @@ class Commission(Const):
         super().__init__(env)
 
     def positions(self, data):
-        url = self.url_path + data['url']
+        url = self.url_path + '/dukang-commission/positions'
         res = self.request.send_request_method('post', url=url, params=data['params'], json=data['body'],
                                                headers=self.headers)
         return res
