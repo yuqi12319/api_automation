@@ -17,6 +17,7 @@ from TestApi.MuscatApi.muscat import Muscat
 from TestApi.CocApi.coc import Coc
 from TestApi.CommissionApi.commission import Commission
 from TestApi.ContingentProjectApi.contingent_project import ContingentProject
+from TestApi.WorkflowApi.workflow_domain import WorkflowDomain
 
 
 @allure.feature("劳务工场景测试")
@@ -116,7 +117,7 @@ class TestWorkforceScene:
             data['send_apply']['body']['workflowDeploymentId'] = data_dict['approval']['workflowDeploymentId']
             # data['send_apply']['body']['joinDate'] =
             # data['send_apply']['body']['probationPeriodExpire'] =
-            send_apply_res = WorkforceApply().send_apply_api(data['send_apply'])
+            send_apply_res = WorkforceApply(self.env).send_apply_api(data['send_apply'])
             Assertions().assert_mode(send_apply_res, data['send_apply'])
 
         with allure.step('第二步：获取申请列表'):
@@ -288,7 +289,7 @@ class TestWorkforceScene:
             data['approve_node']['body']['formWorkflowId'] = apply_detail_res.json()['data']['formWorkflowId']
             data['approve_node']['body']['processInstanceId'] = apply_detail_res.json()['data']['processInstanceId']
             allure.attach(str(data['approve_node']), "请求数据", allure.attachment_type.JSON)
-            approve_res = WorkforceWorkflow(self.env).workflow_node_approve_api(data['approve_node'])
+            approve_res = WorkflowDomain(self.env).workflow_node_approve_api(data['approve_node'])
             allure.attach(approve_res.text, "workflow_node_approve_api返回结果", allure.attachment_type.JSON)
             Assertions().assert_mode(approve_res, data['approve_node'])
 
@@ -410,7 +411,7 @@ class TestWorkforceScene:
             data['approve_node']['body']['formWorkflowId'] = apply_detail_res.json()['data']['formWorkflowId']
             data['approve_node']['body']['processInstanceId'] = apply_detail_res.json()['data']['processInstanceId']
             allure.attach(str(data['approve_node']), "请求数据", allure.attachment_type.JSON)
-            approve_res = WorkforceWorkflow(self.env).workflow_node_approve_api(data['approve_node'])
+            approve_res = WorkflowDomain(self.env).workflow_node_approve_api(data['approve_node'])
             allure.attach(approve_res.text, "workflow_node_approve_api返回结果", allure.attachment_type.JSON)
             Assertions().assert_mode(approve_res, data['approve_node'])
 
