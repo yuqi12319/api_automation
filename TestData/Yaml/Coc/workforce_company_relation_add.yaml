@@ -1,4 +1,3 @@
-url: /dukang-coc/api/company/workforce/add
 body:
   coOrgId: '0001'
   workforceCoOrgId: '0002'

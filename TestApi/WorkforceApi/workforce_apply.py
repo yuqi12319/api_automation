@@ -40,15 +40,3 @@ class WorkforceApply(Const):
         url = self.url_path + data['url'] + str(data['application_id'])
         res = self.request.send_request_method('put', url=url, json=data['body'], headers=self.headers)
         return res
-
-    # 新增公司关联关系
-    def company_workforce_add(self, data):
-        url = self.url_path + data['url']
-        res = self.request.send_request_method('post', url=url, json=data['body'], headers=self.headers)
-        return res
-
-    # 获取劳务公司关联关系
-    def get_workforce_map(self, data):
-        url = self.url_path + data['url']
-        res = self.request.send_request_method('get', url=url, params=data['body'], headers=self.headers)
-        return res
