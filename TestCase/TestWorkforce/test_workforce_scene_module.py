@@ -14,29 +14,30 @@ from TestApi.WorkforceApi.workforce_apply import WorkforceApply
 from TestApi.WorkforceApi.workforce_require import WorkforceRequire
 from TestApi.WorkflowApi.workforce_workflow import WorkforceWorkflow
 from TestApi.MuscatApi.muscat import Muscat
+from TestApi.CocApi.coc import Coc
+from TestApi.CommissionApi.commission import Commission
+from TestApi.ContingentProjectApi.contingent_project import ContingentProject
 
 
 
 @allure.feature("劳务工场景测试")
 class TestWorkforceScene:
 
+
     @pytest.fixture(autouse=True)
     def precondition(self, env):
         self.env = env
         headers = dict()
         headers['X-Dk-Token'] = Common.consts.ACCESS_TOKEN[0]
-        # my_companies_url = 'http://dktest3-workio.bipocloud.com/services/muscat/my_companies'
-        # my_companies_res = Request().get_requests(url=my_companies_url, headers=headers)
-        my_companies = dict()
-        my_companies['url'] = '/muscat/my_companies'
-        my_companies_res = Muscat(env).get_my_companies_api(my_companies)
+        my_companies_data = YamlHandle().read_yaml('Muscat/get_my_companies.yaml')[0]
+        my_companies_res = Muscat(env).get_my_companies_api(my_companies_data)
         for item in my_companies_res.json()['data']:
             data_dict = dict()
             data_dict['my_company'] = item
             # 判断当前公司是否有关联劳务公司
-            workforce_company_map_url = 'https://dktest3-workio.bipocloud.com/services/dukang-coc/api/company/workforce/map?coOrgId=' + str(
-                item['company_id'])
-            workforce_company_map_res = Request().get_requests(url=workforce_company_map_url, headers=headers)
+            workforce_company_map_data = YamlHandle().read_yaml('Coc/workforce_company_map.yaml')[0]
+            workforce_company_map_data['params']['coOrgId'] = item['company_id']
+            workforce_company_map_res = Coc(env).workforce_company_map_api(workforce_company_map_data)
             if workforce_company_map_res.json()['data']:
                 data_dict['workforce_company_map'] = workforce_company_map_res.json()['data']
                 # print("关联公司信息：" + str(workforce_company_map_res.json()))
@@ -44,11 +45,9 @@ class TestWorkforceScene:
                 continue
 
             # 判断当前公司是否是职位信息
-            positions_url = 'http://dktest3-workio.bipocloud.com/services/dukang-commission/positions?offset=0&limit=0'
-            positions_body = {
-                'coOrgId': item['company_id']
-            }
-            positions_res = Request().post_requests(url=positions_url, json=positions_body, headers=headers)
+            positions_data = YamlHandle().read_yaml('Commission/position.yaml')[0]
+            positions_data['body']['coOrgId'] = item['company_id']
+            positions_res = Commission(env).positions(positions_data)
             if positions_res.json()['data']:
                 data_dict['position'] = positions_res.json()['data']
                 # print("职位信息：" + str(positions_res.json()))
@@ -56,22 +55,17 @@ class TestWorkforceScene:
                 continue
 
             # 获取当前员工id
-            employeeid_url = 'https://dktest3-workio.bipocloud.com/services/muscat/company/guide/employeeid'
-            employeeid_params = {
-                'company_id': item['company_id']
-            }
-            employeeid_res = Request().get_requests(url=employeeid_url, params=employeeid_params, headers=headers)
+            employeeid_data = YamlHandle().read_yaml('Muscat/company_guide_employeeid.yaml')[0]
+            employeeid_data['params']['company_id'] = item['company_id']
+            employeeid_res = Muscat(env).company_guide_employeeid(employeeid_data)
             data_dict['employee'] = employeeid_res.json()['data']
             # print("当前员工id：" + employeeid_res.json()['data'])
 
             # 判断当前公司是否有组织架构
-            organizations_trees_url = 'https://dktest3-workio.bipocloud.com/services/muscat/organizations/' + \
-                                      employeeid_res.json()['data'] + '/trees'
-            organizations_trees_params = {
-                'coOrgId': item['company_id']
-            }
-            organizations_trees_res = Request().get_requests(url=organizations_trees_url,
-                                                             params=organizations_trees_params, headers=headers)
+            organizations_trees_data = YamlHandle().read_yaml('Muscat/organizations.yaml')[0]
+            organizations_trees_data['employeeid'] = employeeid_res.json()['data']
+            organizations_trees_data['params']['coOrgId'] = item['company_id']
+            organizations_trees_res = Muscat(env).organizations(organizations_trees_data)
             if organizations_trees_res.json()['data']:
                 data_dict['organizations_trees'] = organizations_trees_res.json()['data']
                 # print("组织架构：" + str(organizations_trees_res.json()))
@@ -90,23 +84,13 @@ class TestWorkforceScene:
             # print("审批流：" + str(approval_res.json()))
 
             # 判断是否有项目
-            project_url = 'http://dktest3-workio.bipocloud.com/services/dukang-contingent-project/api/project'
-            project_params = {
-                "coOrgId": item['company_id'],
-                "offset": 0,
-                "limit": 0
-            }
-            project_body = {
-                "coOrgId": item['company_id']
-            }
-            project_res = Request().post_requests(url=project_url, params=project_params, json=project_body,
-                                                  headers=headers)
+            project_data = YamlHandle().read_yaml('ContingentProject/project.yaml')[0]
+            project_data['params']['coOrgId'] = item['company_id']
+            project_data['body']['coOrgId'] = item['company_id']
+            project_res = ContingentProject(env).project(project_data)
             if project_res.json()['data']:
                 data_dict['project'] = project_res.json()['data']['list'][0]
             return data_dict
-
-    # def test_a(self, precondition):
-    #     print(self.env)
 
     @pytest.mark.skip
     @allure.story("主流程")
@@ -165,7 +149,7 @@ class TestWorkforceScene:
 
         clear_data()
 
-    # @pytest.mark.skip
+    @pytest.mark.skip
     @allure.story("撤销申请")
     @pytest.mark.parametrize('data', YamlHandle().read_yaml('Workforce/WorkforceScene/withdraw_apply.yaml'))
     def test_withdraw_apply(self, data, precondition):
@@ -247,7 +231,7 @@ class TestWorkforceScene:
         #
         # clear_data()
 
-    # @pytest.mark.skip
+    @pytest.mark.skip
     @allure.story("停止申请")
     @pytest.mark.parametrize('data', YamlHandle().read_yaml('Workforce/WorkforceScene/stop_apply.yaml'))
     def test_stop_apply(self, data, precondition):

@@ -15,3 +15,13 @@ class Muscat(Const):
         url = self.url_path + data['url']
         res = self.request.send_request_method('get', url=url, headers=self.headers)
         return res
+
+    def company_guide_employeeid(self, data):
+        url = self.url_path + data['url']
+        res = self.request.send_request_method('get', url=url, params=data['params'], headers=self.headers)
+        return res
+
+    def organizations(self, data):
+        url = self.url_path + '/muscat/organizations/' + str(data['employeeid']) + '/trees'
+        res = self.request.send_request_method('get', url=url, params=data['params'], headers=self.headers)
+        return res
