@@ -141,7 +141,7 @@ class TestWorkforceScene:
 
         clear_data()
 
-    @pytest.mark.skip
+    # @pytest.mark.skip
     @allure.story("撤销申请")
     @pytest.mark.parametrize('data', YamlHandle().read_yaml('Workforce/WorkforceScene/withdraw_apply.yaml'))
     def test_withdraw_apply(self, data, precondition):
@@ -423,10 +423,11 @@ class TestWorkforceScene:
                     Assertions().assert_text(item['workflowStatus'], 'REFUSED')
                     break
 
-    @allure.story("拒绝登记(登记审批流拒绝)")
-    @pytest.mark.parametrize('data',YamlHandle().read_yaml('Workforce/WorkforceScene/refuse_register_approve.yaml'))
-    def test_refuse_register_approve(self, data, precondition):
-        pass
+    # @pytest.mark.skip
+    # @allure.story("拒绝登记(登记审批流拒绝)")
+    # @pytest.mark.parametrize('data',YamlHandle().read_yaml('Workforce/WorkforceScene/refuse_register_approve.yaml'))
+    # def test_refuse_register_approve(self, data, precondition):
+    #     pass
 
 
 if __name__ == '__main__':
