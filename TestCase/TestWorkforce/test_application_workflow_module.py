@@ -6,7 +6,7 @@ import pytest
 import allure
 from Common.operation_yaml import YamlHandle
 from Common.operation_assert import Assertions
-from TestApi.WorkflowApi.workforce_workflow import WorkforceWorkflow
+from TestApi.WorkforceApi.workforce_workflow import WorkforceWorkflow
 
 
 class TestApplicationWorkflow:
