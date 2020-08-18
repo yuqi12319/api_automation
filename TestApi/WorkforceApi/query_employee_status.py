@@ -10,6 +10,6 @@ class QueryEmployeeStatus(Const):
         super().__init__(env)
 
     def test_query_status(self, data):
-        url = self.url_path + data['url']
+        url = self.url_path + '/dukang-workforce/api/relation/employee/status'
         res = self.request.send_request_method(method='get', url=url, params=data['body'], headers=self.headers)
         return res
