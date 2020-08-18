@@ -1,4 +1,4 @@
-# Name:test_workforce_workflow_module.py
+# Name:test_application_workflow_module.py
 # Author:lin
 # Time:2020/8/5 10:18 上午
 
@@ -56,4 +56,4 @@ class TestApplicationWorkflow:
 
 
 if __name__ == '__main__':
-    pytest.main(['-s', '-v', 'test_workforce_workflow_module.py'])
+    pytest.main(['-s', '-v', 'test_application_workflow_module.py'])

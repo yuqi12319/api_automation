@@ -5,11 +5,11 @@
 # Description:劳务工场景case
 
 import pytest, allure
+import Common.consts
 from Common.operation_yaml import YamlHandle
 from Common.operation_assert import Assertions
 from Common.operation_mysql import *
 from Common.request import Request
-import Common.consts
 from TestApi.WorkforceApi.workforce_apply import WorkforceApply
 from TestApi.WorkforceApi.workforce_require import WorkforceRequire
 from TestApi.WorkflowApi.workforce_workflow import WorkforceWorkflow
@@ -19,10 +19,8 @@ from TestApi.CommissionApi.commission import Commission
 from TestApi.ContingentProjectApi.contingent_project import ContingentProject
 
 
-
 @allure.feature("劳务工场景测试")
 class TestWorkforceScene:
-
 
     @pytest.fixture(autouse=True)
     def precondition(self, env):
@@ -39,7 +37,6 @@ class TestWorkforceScene:
             workforce_company_map_res = Coc(env).workforce_company_map_api(workforce_company_map_data)
             if workforce_company_map_res.json()['data']:
                 data_dict['workforce_company_map'] = workforce_company_map_res.json()['data']
-                # print("关联公司信息：" + str(workforce_company_map_res.json()))
             else:
                 continue
 
@@ -49,7 +46,6 @@ class TestWorkforceScene:
             positions_res = Commission(env).positions(positions_data)
             if positions_res.json()['data']:
                 data_dict['position'] = positions_res.json()['data']
-                # print("职位信息：" + str(positions_res.json()))
             else:
                 continue
 
@@ -58,7 +54,6 @@ class TestWorkforceScene:
             employeeid_data['params']['company_id'] = item['company_id']
             employeeid_res = Muscat(env).company_guide_employeeid(employeeid_data)
             data_dict['employee'] = employeeid_res.json()['data']
-            # print("当前员工id：" + employeeid_res.json()['data'])
 
             # 判断当前公司是否有组织架构
             organizations_trees_data = YamlHandle().read_yaml('Muscat/organizations.yaml')[0]
@@ -67,7 +62,6 @@ class TestWorkforceScene:
             organizations_trees_res = Muscat(env).organizations(organizations_trees_data)
             if organizations_trees_res.json()['data']:
                 data_dict['organizations_trees'] = organizations_trees_res.json()['data']
-                # print("组织架构：" + str(organizations_trees_res.json()))
             else:
                 continue
 
@@ -80,7 +74,6 @@ class TestWorkforceScene:
             }
             approval_res = Request().post_requests(url=approval_url, json=approval_body, headers=headers)
             data_dict['approval'] = approval_res.json()['data']
-            # print("审批流：" + str(approval_res.json()))
 
             # 判断是否有项目
             project_data = YamlHandle().read_yaml('ContingentProject/project.yaml')[0]
@@ -94,7 +87,7 @@ class TestWorkforceScene:
     @pytest.mark.skip
     @allure.story("主流程")
     @pytest.mark.parametrize('data', YamlHandle().read_yaml('Workforce/WorkforceScene/main_scene.yaml'))
-    def test_main_scene(self, data):
+    def test_main_scene(self, data, precondition):
         data_dict = self.precondition()
         with allure.step('第一步：发送申请单'):
             # 数据拼接
@@ -352,10 +345,10 @@ class TestWorkforceScene:
 
         # clear_data()
 
-    # @pytest.mark.skip
+    @pytest.mark.skip
     @allure.story("拒绝申请(申请审批流拒绝)")
-    @pytest.mark.parametrize('data', YamlHandle().read_yaml('Workforce/WorkforceScene/refuse_apply.yaml'))
-    def test_refuse_apply(self, data, precondition):
+    @pytest.mark.parametrize('data', YamlHandle().read_yaml('Workforce/WorkforceScene/refuse_apply_approve.yaml'))
+    def test_refuse_apply_approve(self, data, precondition):
 
         with allure.step('第一步：发送申请单'):
             # 数据拼接
@@ -429,6 +422,11 @@ class TestWorkforceScene:
                 if item['code'] == code:
                     Assertions().assert_text(item['workflowStatus'], 'REFUSED')
                     break
+
+    @allure.story("拒绝登记(登记审批流拒绝)")
+    @pytest.mark.parametrize('data',YamlHandle().read_yaml('Workforce/WorkforceScene/refuse_register_approve.yaml'))
+    def test_refuse_register_approve(self, data, precondition):
+        pass
 
 
 if __name__ == '__main__':
