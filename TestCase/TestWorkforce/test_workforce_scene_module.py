@@ -220,7 +220,7 @@ class TestWorkforceScene:
         #
         # clear_data()
 
-    # @pytest.mark.skip
+    @pytest.mark.skip
     @allure.story("停止申请")
     @pytest.mark.parametrize('data', YamlHandle().read_yaml('Workforce/WorkforceScene/stop_apply.yaml'))
     def test_stop_apply(self, data, precondition):
@@ -421,10 +421,94 @@ class TestWorkforceScene:
                     break
 
     # @pytest.mark.skip
-    # @allure.story("拒绝登记(登记审批流拒绝)")
-    # @pytest.mark.parametrize('data',YamlHandle().read_yaml('Workforce/WorkforceScene/refuse_register_approve.yaml'))
-    # def test_refuse_register_approve(self, data, precondition):
-    #     pass
+    @allure.story("拒绝登记(登记审批流拒绝)")
+    @pytest.mark.parametrize('data', YamlHandle().read_yaml('Workforce/WorkforceScene/refuse_register_approve.yaml'))
+    def test_refuse_register_approve(self, data, precondition):
+
+        with allure.step('第一步：发送申请单'):
+            # 数据拼接
+            data['send_apply']['body']['coOrgId'] = precondition['my_company']['company_id']
+            data['send_apply']['body']['coOrgName'] = precondition['my_company']['company_name']
+            data['send_apply']['body']['labourCompanyId'] = precondition['workforce_company_map'][0][
+                'workforceCompanyId']
+            data['send_apply']['body']['labourCompanyName'] = precondition['workforce_company_map'][0][
+                'workforceCompanyName']
+            data['send_apply']['body']['organizationId'] = precondition['organizations_trees'][0]['id']
+            data['send_apply']['body']['organizationName'] = precondition['organizations_trees'][0]['name']
+            data['send_apply']['body']['positionId'] = precondition['position']['positionVoList'][0][
+                'positionId']
+            data['send_apply']['body']['positionName'] = precondition['position']['positionVoList'][0]['name']
+            data['send_apply']['body']['projectId'] = precondition['project']['id']
+            data['send_apply']['body']['projectName'] = precondition['project']['name']
+            data['send_apply']['body']['applyEmployeeId'] = precondition['employee']
+            employeeVoList = precondition['approval']['employeeVoList']
+            del (employeeVoList[0])
+            for approver in employeeVoList:
+                approver['employeeId'] = approver['id']
+            data['send_apply']['body']['approverList'] = employeeVoList
+            new_ccVoList = []
+            ccVoList = precondition['approval']['ccVoList']
+            for ccVo in ccVoList:
+                new_ccVoList.append(ccVo['employeeId'])
+            data['send_apply']['body']['ccList'] = new_ccVoList
+            data['send_apply']['body']['workflowDeploymentId'] = precondition['approval']['workflowDeploymentId']
+            # data['send_apply']['body']['joinDate'] =
+            # data['send_apply']['body']['probationPeriodExpire'] =
+            # print(data['send_apply'])
+            allure.attach(str(data['send_apply']), "请求数据", allure.attachment_type.JSON)
+            send_apply_res = WorkforceApply(self.env).send_apply_api(data['send_apply'])
+            allure.attach(send_apply_res.text, "send_apply_api返回结果", allure.attachment_type.JSON)
+            Assertions().assert_mode(send_apply_res, data['send_apply'])
+
+        with allure.step('第二步：获取申请列表,判断是否有当前申请单'):
+            allure.attach(str(data['apply_list']), "请求数据", allure.attachment_type.JSON)
+            apply_list_res = WorkforceApply(self.env).apply_list_api(data['apply_list'])
+            allure.attach(apply_list_res.text, "apply_list_api返回结果", allure.attachment_type.JSON)
+            Assertions().assert_code(apply_list_res.status_code, 200)
+            Assertions().assert_in_text(apply_list_res.json()['data'], str(data['send_apply']['body']['joinDate']))
+            for item in apply_list_res.json()['data']:
+                if item['joinDate'] == data['send_apply']['body']['joinDate']:
+                    code = item['code']  # 获取申请id
+                    application_id = item['applicationId']
+                    break
+
+        with allure.step('第三步：获取申请单详情'):
+            data['apply_detail']['application_id'] = application_id
+            allure.attach(str(data['apply_detail']), "请求数据", allure.attachment_type.JSON)
+            apply_detail_res = WorkforceApply(self.env).apply_detail_api(data['apply_detail'])
+            allure.attach(apply_detail_res.text, "apply_detail_api返回结果", allure.attachment_type.JSON)
+            Assertions().assert_mode(apply_detail_res, data['apply_detail'])
+
+        with allure.step('第四步：审批流通过'):
+            data['approve_node']['body']['employeeId'] = employeeVoList[0]['id']
+            data['approve_node']['body']['formId'] = apply_detail_res.json()['data']['workforceApplicationId']
+            data['approve_node']['body']['formWorkflowId'] = apply_detail_res.json()['data']['formWorkflowId']
+            data['approve_node']['body']['processInstanceId'] = apply_detail_res.json()['data']['processInstanceId']
+            allure.attach(str(data['approve_node']), "请求数据", allure.attachment_type.JSON)
+            approve_res = WorkflowDomain(self.env).workflow_node_approve_api(data['approve_node'])
+            allure.attach(approve_res.text, "workflow_node_approve_api返回结果", allure.attachment_type.JSON)
+            Assertions().assert_mode(approve_res, data['approve_node'])
+
+        with allure.step('第五步：获取申请列表，判断当前申请单状态是否变更为已通过'):
+            allure.attach(str(data['apply_list']), "请求数据", allure.attachment_type.JSON)
+            apply_list_res = WorkforceApply(self.env).apply_list_api(data['apply_list'])
+            allure.attach(apply_list_res.text, "apply_list_api返回结果", allure.attachment_type.JSON)
+            for item in apply_list_res.json()['data']:
+                if item['code'] == code:
+                    Assertions().assert_text(item['workflowStatus'], 'AGREED')
+                    break
+
+        with allure.step('第六步：获取需求列表，判断乙方是否对应生成需求单'):
+            data['require_list']['body']['coOrgId'] = precondition['workforce_company_map'][0][
+                'workforceCompanyId']
+            allure.attach(str(data['require_list']), "请求数据", allure.attachment_type.JSON)
+            require_list_res = WorkforceRequire(self.env).require_list_api(data['require_list'])
+            allure.attach(require_list_res.text, "require_list_api返回结果", allure.attachment_type.JSON)
+            Assertions().assert_code(require_list_res.status_code, 200)
+            Assertions().assert_in_text(require_list_res.json(), str(code))
+
+        with allure.step('第七步：根据需求时间查询空闲员工'):
+            pass
 
 
 if __name__ == '__main__':
