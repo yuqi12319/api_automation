@@ -5,25 +5,57 @@ from TestApi.consts_api import Const
 
 class EmployeeSalaryInformation(Const):
 
+    def __init_(self, env):
+        super.__init__(env)
+
     # 获取员工薪资信息列表表头接口
-    def get_employee_salary_information_list_head_api(self, url_path, data):
-        url = url_path + "/dukang-payroll/employee/salary/head"
+    def get_employee_salary_information_list_head_api(self, data):
+        url = self.url_path + "/dukang-payroll/employee/salary/head"
         response = self.request.send_request_method('get', url, params=data['params'], headers=self.headers)
         return response
 
     # 获取员工薪资信息列表接口
-    def get_employee_salary_information_list_api(self, url_path, data):
-        url = url_path + "/dukang-payroll/employee/salaryList"
+    def get_employee_salary_information_list_api(self, data):
+        url = self.url_path + "/dukang-payroll/employee/salaryList"
         self.headers["X-Page-Size"] = "20"
         self.headers["x-current-page"] = "1"
         response = self.request.send_request_method('post', url, params=data['params'], json=data['body'], headers=self.headers)
         return response
 
-    # 获取薪资信息个税主体和分部门列表
-    def get_itEntitys_and_departments_list_api(self, url_path, data):
-        url = url_path + "/dukang-its/payroll/itEntitys"
+    # 获取薪资信息个税主体和分部门列表接口
+    def get_itEntitys_and_departments_list_api(self, data):
+        url = self.url_path + "/dukang-its/payroll/itEntitys"
         response = self.request.send_request_method('get', url, params=data['params'], headers=self.headers)
         return response
+
+    # 获取薪资账套列表接口
+    def get_paygroup_list_api(self, data):
+        url = self.url_path + "/dukang-payroll/paygroup"
+        self.headers["X-Page-Size"] = "20"
+        self.headers["x-current-page"] = "1"
+        response = self.request.send_request_method('get', url, params=data['params'], headers=self.headers)
+        return response
+
+    # 获取固定工资列表接口
+    def get_baseSalary_list_api(self, data):
+        url = self.url_path + "/dukang-payroll/baseSalary"
+        response = self.request.send_request_method('get', url, params=data['params'], headers=self.headers)
+        return response
+
+    # 获取员工薪资信息中薪资项目列表接口
+    def get_payrollItem_list_api(self, data):
+        url = self.url_path + "/dukang-payroll/employee/payrollItem"
+        print(url)
+        print(111)
+        response = self.request.send_request_method('get', url, params=data['params'], headers=self.headers)
+        return response
+
+    # 获取员工薪资信息详情接口
+    def get_employee_salary_detail_api(self, data):
+        url = self.url_path + "/dukang-payroll/employee/salary"
+        response = self.request.send_request_method('get', url, params=data['params'], headers=self.headers)
+        return response
+
 
 
 
