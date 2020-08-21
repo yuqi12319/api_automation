@@ -38,28 +38,28 @@ class TestEmployeeSalaryInformation:
 
     @allure.title('获取薪资账套列表')
     @pytest.mark.parametrize('data', YamlHandle().read_yaml(
-        'Payroll/EmployeeSalaryInformation/get_paygroup_list.yaml'))
+        'SingleInterfaceData/Payroll/EmployeeSalaryInformation/get_paygroup_list.yaml'))
     def test_get_paygroup_list(self, data):
         response = EmployeeSalaryInformation(self.env).get_paygroup_list_api(data)
         Assertions().assert_mode(response, data)
 
     @allure.title('获取固定工资列表')
     @pytest.mark.parametrize('data',YamlHandle().read_yaml(
-        'Payroll/EmployeeSalaryInformation/get_baseSalary_list.yaml'))
+        'SingleInterfaceData/Payroll/EmployeeSalaryInformation/get_baseSalary_list.yaml'))
     def test_get_baseSalary_list(self, data):
         response = EmployeeSalaryInformation(self.env).get_baseSalary_list_api(data)
         Assertions().assert_mode(response, data)
 
     @allure.title('获取员工薪资信息中薪资项目列表')
     @pytest.mark.parametrize('data', YamlHandle().read_yaml(
-        'Payroll/EmployeeSalaryInformation/get_payrollItem_list.yaml'))
+        'SingleInterfaceData/Payroll/EmployeeSalaryInformation/get_payrollItem_list.yaml'))
     def test_get_payrollItem_list(self, data):
         response = EmployeeSalaryInformation(self.env).get_payrollItem_list_api(data)
         Assertions().assert_mode(response, data)
 
     @allure.title('获取员工薪资信息详情')
     @pytest.mark.parametrize('data', YamlHandle().read_yaml(
-        'Payroll/EmployeeSalaryInformation/get_employee_salary_detail.yaml'))
+        'SingleInterfaceData/Payroll/EmployeeSalaryInformation/get_employee_salary_detail.yaml'))
     def test_get_employee_salary_detail(self, data):
         response = EmployeeSalaryInformation(self.env).get_employee_salary_detail_api(data)
         Assertions().assert_mode(response, data)
