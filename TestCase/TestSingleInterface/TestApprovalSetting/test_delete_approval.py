@@ -10,14 +10,15 @@ from TestApi.Approval_Api.teamleaveform_setting import TeamLeaveApprovalSetting
 
 
 class TestDeleteApproval:
-    def setup_class(self):
-        self.url_path = Config().get_conf('test_env', 'test1')
+
+    @pytest.fixture(autouse=True)
+    def env_prepare(self, env):
+        self.env = env
 
     @allure.title("删除团队休假审批列表")
-    @pytest.mark.parametrize("data",YamlHandle().read_yaml('Approval/delete_team_leave_approval.yaml'))
+    @pytest.mark.parametrize("data",YamlHandle().read_yaml('SingleInterfaceData/Approval/delete_team_leave_approval.yaml'))
     def test_team_leave_approval_setting(self, data):
-        print(data)
-        res = TeamLeaveApprovalSetting().delete_team_leave_approval(self.url_path, data)
+        res = TeamLeaveApprovalSetting(self.env).delete_team_leave_approval(data)
         print(type(res))
         print(res.json())
         print(res.url)

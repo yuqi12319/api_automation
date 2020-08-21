@@ -20,7 +20,7 @@ class Test_init_payrollItem:
         self.url_path = Config().get_conf('test_env', 'test3')
 
     @allure.title('新建公司时，初始化薪资项')
-    @pytest.mark.parametrize('data', YamlHandle().read_yaml('payroll/init_payrollItem.yaml'))
+    @pytest.mark.parametrize('data', YamlHandle().read_yaml('SingleInterfaceData/Payroll/init_payrollItem.yaml'))
     def test_init_payrollItem(self, data):
         res = InitPayrollItem().init_payrollItem(self.url_path, data)
         Assertions().assert_mode(res, data)

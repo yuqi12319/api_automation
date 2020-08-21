@@ -7,12 +7,12 @@ from TestApi.consts_api import Const
 
 class ThirdParty(Const):
 
-    def __init__(self):
-        super().__init__()
+    def __init__(self, env):
+        super().__init__(env)
 
     # 获取access_token接口
-    def get_access_token_api(self, url_path, data):
-        url = url_path + data['url']
+    def get_access_token_api(self, data):
+        url = self.url_path + data['url']
         res = self.request.send_request_method('post', url=url, json=data['body'])
         return res
 

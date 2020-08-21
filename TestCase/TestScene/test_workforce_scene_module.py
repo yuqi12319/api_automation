@@ -35,7 +35,7 @@ class TestWorkforceScene:
             data_dict = dict()
             data_dict['my_company'] = item
             # 判断当前公司是否有关联劳务公司
-            workforce_company_map_data = YamlHandle().read_yaml('Coc/workforce_company_map.yaml')[0]
+            workforce_company_map_data = YamlHandle().read_yaml('SingleInterfaceData/Coc/workforce_company_map.yaml')[0]
             workforce_company_map_data['params']['coOrgId'] = item['company_id']
             workforce_company_map_res = Coc(env).workforce_company_map_api(workforce_company_map_data)
             if workforce_company_map_res.json()['data']:
@@ -44,7 +44,7 @@ class TestWorkforceScene:
                 continue
 
             # 判断当前公司是否是职位信息
-            positions_data = YamlHandle().read_yaml('Commission/position.yaml')[0]
+            positions_data = YamlHandle().read_yaml('SingleInterfaceData/Commission/position.yaml')[0]
             positions_data['body']['coOrgId'] = item['company_id']
             positions_res = Commission(env).positions(positions_data)
             if positions_res.json()['data']:
@@ -54,13 +54,13 @@ class TestWorkforceScene:
                 continue
 
             # 获取当前员工id
-            employeeid_data = YamlHandle().read_yaml('Muscat/company_guide_employeeid.yaml')[0]
+            employeeid_data = YamlHandle().read_yaml('SingleInterfaceData/Muscat/company_guide_employeeid.yaml')[0]
             employeeid_data['params']['company_id'] = item['company_id']
             employeeid_res = Muscat(env).company_guide_employeeid(employeeid_data)
             data_dict['employee'] = employeeid_res.json()['data']
 
             # 判断当前公司是否有组织架构
-            organizations_trees_data = YamlHandle().read_yaml('Muscat/organizations.yaml')[0]
+            organizations_trees_data = YamlHandle().read_yaml('SingleInterfaceData/Muscat/organizations.yaml')[0]
             organizations_trees_data['employeeid'] = employeeid_res.json()['data']
             organizations_trees_data['params']['coOrgId'] = item['company_id']
             organizations_trees_res = Muscat(env).organizations(organizations_trees_data)
@@ -70,7 +70,7 @@ class TestWorkforceScene:
                 continue
 
             # 根据组织架构节点获取对应审批流
-            approval_data = YamlHandle().read_yaml('Workflow/workflow_approval_query.yaml')[0]
+            approval_data = YamlHandle().read_yaml('SingleInterfaceData/Workflow/workflow_approval_query.yaml')[0]
             approval_data['organizationId'] = organizations_trees_res.json()['data'][0]['id']
             approval_data['body']['employeeId'] = employeeid_res.json()['data']
             approval_data['body']['type'] = 'WORKFORCEAPPLICATION'
@@ -78,7 +78,7 @@ class TestWorkforceScene:
             data_dict['approval'] = approval_res.json()['data']
 
             # 判断是否有项目
-            project_data = YamlHandle().read_yaml('ContingentProject/project.yaml')[0]
+            project_data = YamlHandle().read_yaml('SingleInterfaceData/ContingentProject/project.yaml')[0]
             project_data['params']['coOrgId'] = item['company_id']
             project_data['body']['coOrgId'] = item['company_id']
             project_res = ContingentProject(env).project(project_data)
@@ -88,7 +88,7 @@ class TestWorkforceScene:
 
     @pytest.mark.skip
     @allure.story("主流程")
-    @pytest.mark.parametrize('data', YamlHandle().read_yaml('Workforce/WorkforceScene/main_scene.yaml'))
+    @pytest.mark.parametrize('data', YamlHandle().read_yaml('SceneData/WorkforceScene/main_scene.yaml'))
     def test_main_scene(self, data, precondition):
         data_dict = self.precondition()
         with allure.step('第一步：发送申请单'):
@@ -145,7 +145,7 @@ class TestWorkforceScene:
 
     # @pytest.mark.skip
     @allure.story("撤销申请")
-    @pytest.mark.parametrize('data', YamlHandle().read_yaml('Workforce/WorkforceScene/withdraw_apply.yaml'))
+    @pytest.mark.parametrize('data', YamlHandle().read_yaml('SceneData/WorkforceScene/withdraw_apply.yaml'))
     def test_withdraw_apply(self, data, precondition):
 
         with allure.step('第一步：发送申请单'):
@@ -225,9 +225,9 @@ class TestWorkforceScene:
         #
         # clear_data()
 
-    # @pytest.mark.skip
+    @pytest.mark.skip
     @allure.story("停止申请")
-    @pytest.mark.parametrize('data', YamlHandle().read_yaml('Workforce/WorkforceScene/stop_apply.yaml'))
+    @pytest.mark.parametrize('data', YamlHandle().read_yaml('SceneData/WorkforceScene/stop_apply.yaml'))
     def test_stop_apply(self, data, precondition):
 
         with allure.step('第一步：发送申请单'):
@@ -347,9 +347,10 @@ class TestWorkforceScene:
 
         # clear_data()
 
-    # @pytest.mark.skip
+    @pytest.mark.skip
     @allure.story("拒绝申请(申请审批流拒绝)")
-    @pytest.mark.parametrize('data', YamlHandle().read_yaml('Workforce/WorkforceScene/refuse_apply_approve.yaml'))
+    @pytest.mark.parametrize('data',
+                             YamlHandle().read_yaml('SceneData/WorkforceScene/refuse_apply_approve.yaml'))
     def test_refuse_apply_approve(self, data, precondition):
 
         with allure.step('第一步：发送申请单'):
@@ -427,7 +428,8 @@ class TestWorkforceScene:
 
     @pytest.mark.skip
     @allure.story("拒绝登记(登记审批流拒绝)")
-    @pytest.mark.parametrize('data', YamlHandle().read_yaml('Workforce/WorkforceScene/refuse_register_approve.yaml'))
+    @pytest.mark.parametrize('data',
+                             YamlHandle().read_yaml('SceneData/WorkforceScene/refuse_register_approve.yaml'))
     def test_refuse_register_approve(self, data, precondition):
 
         with allure.step('第一步：发送申请单'):
@@ -532,7 +534,6 @@ class TestWorkforceScene:
         #
         # with allure.step('第八步：根据需求单派遣一个员工'):
         #     data['dispatch']['body']['beginTime'] = 1
-
 
 
 if __name__ == '__main__':

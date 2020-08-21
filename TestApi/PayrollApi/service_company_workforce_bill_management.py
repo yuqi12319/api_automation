@@ -7,13 +7,13 @@ from TestApi.consts_api import Const
 class ServiceCompanyWorkforceBillManagement(Const):
 
     # 提出账单异议
-    def submit_dissent_workforce_bill_form(self, url_path, data):
-        url = url_path + data['url']
+    def submit_dissent_workforce_bill_form(self, data):
+        url = self.url_path + data['url']
         response = self.request.send_request_method('put', url, json=data['body'], headers=self.headers)
         return response
 
     # 获取劳务工账单列表接口
-    def get_laborer_bill_list_api(self, url_path, data):
-        url = url_path + data['url']
+    def get_laborer_bill_list_api(self, data):
+        url = self.url_path + data['url']
         response = self.request.send_request_method('post', url, params=data['params'], headers=self.headers)
         return response

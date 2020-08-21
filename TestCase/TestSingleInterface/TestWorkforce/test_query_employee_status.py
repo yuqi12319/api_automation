@@ -15,7 +15,8 @@ class TestEmployeeStatus:
     def env_prepare(self, env):
         self.env = env
 
-    @pytest.mark.parametrize('data', YamlHandle().read_yaml('Workforce/QueryEmployeeStatus/query_employee_status.yaml'))
+    @pytest.mark.parametrize('data', YamlHandle().read_yaml(
+        'SingleInterfaceData/Workforce/QueryEmployeeStatus/query_employee_status.yaml'))
     def test_employee_status(self, data):
         res = QueryEmployeeStatus(self.env).test_query_status(data)
         Assertions().assert_code(res, 0)
