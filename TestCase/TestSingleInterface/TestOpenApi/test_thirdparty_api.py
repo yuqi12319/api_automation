@@ -11,12 +11,15 @@ from TestApi.OpenApi.api_thirdparty import ThirdParty
 
 
 class TestThirdpartyApi:
-    def setup_class(self):
-        self.url_path = Config().get_conf('open_api_env', 'test')
 
-    @pytest.mark.parametrize('data', YamlHandle().read_yaml('OpenApi/Thirdparty/get_access_token.yaml'))
+    @pytest.fixture(autouse=True)
+    def env_prepare(self, env):
+        self.env = env
+
+    @pytest.mark.parametrize('data',
+                             YamlHandle().read_yaml('SingleInterfaceData/OpenApi/Thirdparty/get_access_token.yaml'))
     def test_get_access_token(self, data):
-        res = ThirdParty().get_access_token_api(self.url_path, data)
+        res = ThirdParty(self.env).get_access_token_api(data)
         Assertions().assert_mode(res, data)
 
 

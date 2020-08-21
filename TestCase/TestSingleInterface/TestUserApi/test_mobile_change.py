@@ -16,7 +16,7 @@ from Common.request import Request
 
 
 class TestChange:
-    @pytest.mark.parametrize('data', YamlHandle().read_yaml('TestApi/mobile_change.yaml'))
+    @pytest.mark.parametrize('data', YamlHandle().read_yaml('SingleInterfaceData/TestUserApi/mobile_change.yaml'))
     def test_mobile_change(self, data):
         url = Config().get_conf('test_env', 'test3') + data['url']
         body = data['body']

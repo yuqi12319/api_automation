@@ -20,7 +20,7 @@ class TestAssign:
 
     @pytest.mark.skip
     @allure.story("劳务工派遣接口test")
-    @pytest.mark.parametrize('data', YamlHandle().read_yaml('Workforce/WorkforceDispatch/dispatch.yaml'))
+    @pytest.mark.parametrize('data', YamlHandle().read_yaml('SingleInterfaceData/Workforce/WorkforceDispatch/dispatch.yaml'))
     def test_dispatch(self, data):
         res = WorkforceDispatch(self.env).dispatch_api(data)
         Assertions().assert_mode(res, data)
@@ -45,21 +45,21 @@ class TestAssign:
             pass
 
     @allure.story("劳务工派遣列表test")
-    @pytest.mark.parametrize('data', YamlHandle().read_yaml('Workforce/WorkforceDispatch/dispatch_list.yaml'))
+    @pytest.mark.parametrize('data', YamlHandle().read_yaml('SingleInterfaceData/Workforce/WorkforceDispatch/dispatch_list.yaml'))
     def test_dispatch_list(self, data):
         res = WorkforceDispatch(self.env).dispatch_list_api(data)
         allure.attach(res.text, "返回结果", allure.attachment_type.JSON)
         Assertions().assert_mode(res, data)
 
     @allure.story("劳务工派遣详情test")
-    @pytest.mark.parametrize('data', YamlHandle().read_yaml('Workforce/WorkforceDispatch/dispatch_detail.yaml'))
+    @pytest.mark.parametrize('data', YamlHandle().read_yaml('SingleInterfaceData/Workforce/WorkforceDispatch/dispatch_detail.yaml'))
     def test_dispatch_detail(self, data):
         res = WorkforceDispatch(self.env).dispatch_detail_api(data)
         allure.attach(res.text, "返回结果", allure.attachment_type.JSON)
         Assertions().assert_mode(res, data)
 
     @allure.story("派遣关联申请test")
-    @pytest.mark.parametrize('data', YamlHandle().read_yaml('Workforce/WorkforceDispatch/relevance_apply.yaml'))
+    @pytest.mark.parametrize('data', YamlHandle().read_yaml('SingleInterfaceData/Workforce/WorkforceDispatch/relevance_apply.yaml'))
     def test_relevance_apply(self, data):
         res = WorkforceDispatch(self.env).relevance_apply_api(data)
         allure.attach(res.text, "返回结果", allure.attachment_type.JSON)

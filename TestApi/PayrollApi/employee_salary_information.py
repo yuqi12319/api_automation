@@ -3,6 +3,7 @@
 # @Time:2020/8/6 1:59 下午
 from TestApi.consts_api import Const
 
+
 class EmployeeSalaryInformation(Const):
 
     def __init_(self, env):
@@ -19,7 +20,8 @@ class EmployeeSalaryInformation(Const):
         url = self.url_path + "/dukang-payroll/employee/salaryList"
         self.headers["X-Page-Size"] = "20"
         self.headers["x-current-page"] = "1"
-        response = self.request.send_request_method('post', url, params=data['params'], json=data['body'], headers=self.headers)
+        response = self.request.send_request_method('post', url, params=data['params'], json=data['body'],
+                                                    headers=self.headers)
         return response
 
     # 获取薪资信息个税主体和分部门列表接口
@@ -55,10 +57,4 @@ class EmployeeSalaryInformation(Const):
         url = self.url_path + "/dukang-payroll/employee/salary"
         response = self.request.send_request_method('get', url, params=data['params'], headers=self.headers)
         return response
-
-
-
-
-
-
 

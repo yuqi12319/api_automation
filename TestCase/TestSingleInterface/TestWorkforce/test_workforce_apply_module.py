@@ -18,21 +18,21 @@ class TestApply:
 
     @pytest.mark.skip
     @allure.title("甲方发送劳务工申请")
-    @pytest.mark.parametrize('data', YamlHandle().read_yaml('Workforce/WorkforceApply/apply.yaml'))
+    @pytest.mark.parametrize('data', YamlHandle().read_yaml('SingleInterfaceData/Workforce/WorkforceApply/apply.yaml'))
     def test_send_apply(self, data):
         res = WorkforceApply(self.env).send_apply_api(data)
         Assertions().assert_mode(res, data)
 
     # @pytest.mark.skip
     @allure.title("甲方劳务工申请列表")
-    @pytest.mark.parametrize('data', YamlHandle().read_yaml('Workforce/WorkforceApply/apply_list.yaml'))
+    @pytest.mark.parametrize('data', YamlHandle().read_yaml('SingleInterfaceData/Workforce/WorkforceApply/apply_list.yaml'))
     def test_apply_list(self, data):
         res = WorkforceApply(self.env).apply_list_api(data)
         Assertions().assert_mode(res, data)
 
     # @pytest.mark.skip
     @allure.title("甲方劳务工申请详情")
-    @pytest.mark.parametrize('data', YamlHandle().read_yaml('Workforce/WorkforceApply/apply_detail.yaml'))
+    @pytest.mark.parametrize('data', YamlHandle().read_yaml('SingleInterfaceData/Workforce/WorkforceApply/apply_detail.yaml'))
     def test_apply_detail(self, data):
         res = WorkforceApply(self.env).apply_detail_api(data)
         Assertions().assert_mode(res, data)

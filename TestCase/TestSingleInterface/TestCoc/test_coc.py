@@ -19,14 +19,15 @@ class TestCoc:
 
     @pytest.mark.skip
     @allure.title('获取关联劳务公司')
-    @pytest.mark.parametrize('data', YamlHandle().read_yaml('Coc/workforce_company_map.yaml'))
+    @pytest.mark.parametrize('data', YamlHandle().read_yaml('SingleInterfaceData/Coc/workforce_company_map.yaml'))
     def test_workforce_company_map(self, data):
         res = Coc(self.env).workforce_company_map_api(data)
         Assertions().assert_mode(res, data)
 
     # @pytest.skip
     @allure.title("新增公司之间的关联关系")
-    @pytest.mark.parametrize('data', YamlHandle().read_yaml('Coc/workforce_company_relation_add.yaml'))
+    @pytest.mark.parametrize('data',
+                             YamlHandle().read_yaml('SingleInterfaceData/Coc/workforce_company_relation_add.yaml'))
     def test_workforce_company_workforce_add(self, data):
         res = Coc(self.env).workforce_company_workforce_add(data)
         Assertions().assert_mode(res, data)

@@ -18,14 +18,14 @@ class TestRequire:
 
     # @pytest.mark.skip
     @allure.title("乙方劳务工需求列表")
-    @pytest.mark.parametrize('data', YamlHandle().read_yaml('Workforce/WorkforceRequire/require_list.yaml'))
+    @pytest.mark.parametrize('data', YamlHandle().read_yaml('SingleInterfaceData/Workforce/WorkforceRequire/require_list.yaml'))
     def test_require_list(self, data):
         res = WorkforceRequire(self.env).require_list_api(data)
         Assertions().assert_mode(res, data)
 
     # @pytest.mark.skip
     @allure.title("乙方劳务工需求详情")
-    @pytest.mark.parametrize('data', YamlHandle().read_yaml('Workforce/WorkforceRequire/require_detail.yaml'))
+    @pytest.mark.parametrize('data', YamlHandle().read_yaml('SingleInterfaceData/Workforce/WorkforceRequire/require_detail.yaml'))
     def test_require_detail(self, data):
         res = WorkforceRequire(self.env).require_detail_api(data)
         Assertions().assert_mode(res, data)
