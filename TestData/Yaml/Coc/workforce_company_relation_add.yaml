@@ -1,6 +1,6 @@
 body:
-  coOrgId: '0001'
-  workforceCoOrgId: '0002'
+  coOrgId: 746069754980073472
+  workforceCoOrgId: 746069754980073472
 expect:
  assert_type: errcode
  assert_result: '0'

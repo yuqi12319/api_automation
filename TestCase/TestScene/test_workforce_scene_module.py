@@ -9,6 +9,7 @@ import Common.consts
 from Common.operation_yaml import YamlHandle
 from Common.operation_assert import Assertions
 from Common.operation_mysql import *
+from Common import log
 from TestApi.WorkforceApi.workforce_apply import WorkforceApply
 from TestApi.WorkforceApi.workforce_require import WorkforceRequire
 from TestApi.MuscatApi.muscat import Muscat
@@ -16,6 +17,8 @@ from TestApi.CocApi.coc import Coc
 from TestApi.CommissionApi.commission import Commission
 from TestApi.ContingentProjectApi.contingent_project import ContingentProject
 from TestApi.WorkflowApi.workflow_domain import WorkflowDomain
+from TestApi.EmployeeApi.workforce_employee_domain import WorkforceEmployeeDomain
+from TestApi.WorkforceApi.workforce_dispatch import WorkforceDispatch
 
 
 @allure.feature("劳务工场景测试")
@@ -24,6 +27,7 @@ class TestWorkforceScene:
     @pytest.fixture(autouse=True)
     def precondition(self, env):
         self.env = env
+        self.log = log.MyLog()
         headers = dict()
         headers['X-Dk-Token'] = Common.consts.ACCESS_TOKEN[0]
         my_companies_res = Muscat(env).get_my_companies_api()
@@ -46,6 +50,7 @@ class TestWorkforceScene:
             if positions_res.json()['data']:
                 data_dict['position'] = positions_res.json()['data']
             else:
+                self.log.error("当前公司没有职位信息")
                 continue
 
             # 获取当前员工id
@@ -138,7 +143,7 @@ class TestWorkforceScene:
 
         clear_data()
 
-    @pytest.mark.skip
+    # @pytest.mark.skip
     @allure.story("撤销申请")
     @pytest.mark.parametrize('data', YamlHandle().read_yaml('Workforce/WorkforceScene/withdraw_apply.yaml'))
     def test_withdraw_apply(self, data, precondition):
@@ -220,7 +225,7 @@ class TestWorkforceScene:
         #
         # clear_data()
 
-    @pytest.mark.skip
+    # @pytest.mark.skip
     @allure.story("停止申请")
     @pytest.mark.parametrize('data', YamlHandle().read_yaml('Workforce/WorkforceScene/stop_apply.yaml'))
     def test_stop_apply(self, data, precondition):
@@ -342,7 +347,7 @@ class TestWorkforceScene:
 
         # clear_data()
 
-    @pytest.mark.skip
+    # @pytest.mark.skip
     @allure.story("拒绝申请(申请审批流拒绝)")
     @pytest.mark.parametrize('data', YamlHandle().read_yaml('Workforce/WorkforceScene/refuse_apply_approve.yaml'))
     def test_refuse_apply_approve(self, data, precondition):
@@ -420,7 +425,7 @@ class TestWorkforceScene:
                     Assertions().assert_text(item['workflowStatus'], 'REFUSED')
                     break
 
-    # @pytest.mark.skip
+    @pytest.mark.skip
     @allure.story("拒绝登记(登记审批流拒绝)")
     @pytest.mark.parametrize('data', YamlHandle().read_yaml('Workforce/WorkforceScene/refuse_register_approve.yaml'))
     def test_refuse_register_approve(self, data, precondition):
@@ -506,9 +511,28 @@ class TestWorkforceScene:
             allure.attach(require_list_res.text, "require_list_api返回结果", allure.attachment_type.JSON)
             Assertions().assert_code(require_list_res.status_code, 200)
             Assertions().assert_in_text(require_list_res.json(), str(code))
+            for item in require_list_res.json()['data']:
+                if item['applicationCode'] == code:
+                    requirement_id = item['id']
+                    break
+
+        with allure.step('第七步：获取关联申请,判断是否存在生成的需求单'):
+            data['relevance_apply']['params']['coOrgId'] = precondition['workforce_company_map'][0][
+                'workforceCompanyId']
+            relevance_apply_res = WorkforceDispatch(self.env).relevance_apply_api(data['relevance_apply'])
+            Assertions().assert_in_text(relevance_apply_res.json(), str(code))
 
         with allure.step('第七步：根据需求时间查询空闲员工'):
-            pass
+            data['free_employee']['body']['beginTime'] = data['send_apply']['body']['joinDate']
+            data['free_employee']['body']['endTime'] = data['send_apply']['body']['probationPeriodExpire']
+            data['free_employee']['body']['coOrgId'] = data['send_apply']['body']['labourCompanyId']
+            workforce_employees_free_res = WorkforceEmployeeDomain(self.env).workforce_employees_free(
+                data['free_employee'])
+            Assertions().assert_mode(workforce_employees_free_res, data['free_employee'])
+        #
+        # with allure.step('第八步：根据需求单派遣一个员工'):
+        #     data['dispatch']['body']['beginTime'] = 1
+
 
 
 if __name__ == '__main__':

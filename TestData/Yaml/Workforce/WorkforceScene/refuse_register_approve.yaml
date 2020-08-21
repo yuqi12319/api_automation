@@ -1,0 +1,102 @@
+#申请接口数据
+send_apply:
+  url: /dukang-workforce/api/workforce/apply
+  body:
+    recruitmentType: New
+    labourCompanyId:
+    labourCompanyName:
+    coOrgId:
+    coOrgName:
+    provinceId: 500000
+    provinceName: 重庆
+    cityId: 500100
+    cityName: 重庆市
+    organizationId:
+    organizationName:
+    address: this is address input
+    joinDate: 1605869338000
+    probationPeriodExpire: 1606646938000
+    positionId:
+    positionName:
+    demandPersonCount: 10
+    workforcePayrollDtos: []
+    contactEmail: 123@abc.com
+    contactMobile: 18818811881
+    contactPerson: admin
+#    projectId:
+#    projectName:
+#    positionObligation:
+#    positionQualification:
+#    positionQualificationId:
+#    positionTask:
+    applyEmployeeId:
+    approverList: []
+    ccList: []
+    workflowDeploymentId:
+  expect:
+    assert_type: errcode
+    assert_result: '0'
+# 申请单列表接口数据
+apply_list:
+  url: /dukang-workforce/api/workforce/form/list
+  params:
+    offset: 0
+    limit: 20
+  body:
+    coOrgId: 733358092246319104
+#申请单详情页接口数据
+apply_detail:
+  url: /dukang-workforce/api/workforce/apply/detail/
+  application_id:
+  expect:
+    assert_type: errcode
+    assert_result: '0'
+# 审批流接口数据
+approve_node:
+  url: /dukang-workflow/api/task/complete
+  body:
+    employeeId:
+    formId:
+    formType: WORKFORCEAPPLICATION
+    formWorkflowId:
+    processInstanceId:
+    result: AGREED
+  expect:
+    assert_type: errcode
+    assert_result: '0'
+# 需求单列表接口数据
+require_list:
+  url: /dukang-workforce/api/workforce/require/form/ticket
+  body:
+    coOrgId:
+    limit: 20
+    offset: 0
+# 获取关联申请
+relevance_apply:
+  url: /dukang-workforce/api/workforce/require/ticketCodes
+  params:
+    coOrgId:
+# 根据需求时间查询空闲员工
+free_employee:
+  url: /dukang-employee/api/workforce/employees/free
+  params:
+    page: 0
+    size: 20
+  body:
+    beginTime:
+    endTime:
+    coOrgId:
+    name:
+  expect:
+    assert_type: errcode
+    assert_result: '0'
+# 根据需求单派遣一个员工
+dispatch:
+  url: /dukang-workforce/api/relation/dispatch
+  body:
+    beginTime:
+    coOrgId:
+    dispatchCoOrgId:
+    employeeIds: []
+    endTime:
+    workforceRequestId:
