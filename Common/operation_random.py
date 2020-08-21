@@ -56,6 +56,15 @@ def random_name(with_gender=True):
         return [firstName_name + name_1 + boy_name, '男'] if with_gender else firstName_name + name_1 + boy_name
 
 
+# 通过身份证号获取校验码
+def get_check_digit(credit_num):
+    check_sum = 0
+    for i in range(0, 17):
+        check_sum += ((1 << (17 - i)) % 11) * int(credit_num[i])
+    check_digit = (12 - (check_sum % 11)) % 11
+    return check_digit if check_digit < 10 else "X"
+
+
 # 随机生成身份证函数
 def random_idcard():
     discode = []
@@ -70,17 +79,22 @@ def random_idcard():
     month = (datetime.today() + timedelta(days=(random.randint(0, 365)))).strftime('%m%d')
     id = str(random.randint(100, 299))
     creditnum = code + year + month + id
-    # 权重位计算
-    i = 0
-    count = 0
-    weight = [7, 9, 10, 5, 8, 4, 2, 1, 6, 3, 7, 9, 10, 5, 8, 4, 2]
-    checkcode = {'0': '1', '1': '0', '2': 'X', '3': '9', '4': '8', '5': '7', '6': '6', '7': '5', '8': '4', '9': '3',
-                 '10': '2'}  # 检验码映射
-    for i in range(0, len(creditnum)):
-        count = count + int(creditnum[i] * weight[i])
-    last = str(count % 11)
-    lastcode = checkcode[last]
-    credit = creditnum + ''.join(lastcode)
+
+    # 原"权重位计算"方法有误，改用get_check_digit方法
+    # # 权重位计算
+    # i = 0
+    # count = 0
+    # weight = [7, 9, 10, 5, 8, 4, 2, 1, 6, 3, 7, 9, 10, 5, 8, 4, 2]
+    # checkcode = {'0': '1', '1': '0', '2': 'X', '3': '9', '4': '8', '5': '7', '6': '6', '7': '5', '8': '4', '9': '3',
+    #              '10': '2'}  # 检验码映射
+    # for i in range(0, len(creditnum)):
+    #     count = count + int(creditnum[i] * weight[i])
+    # last = str(count % 11)
+    # lastcode = checkcode[last]
+    # credit = creditnum + ''.join(lastcode)
+
+    credit = creditnum + str(get_check_digit(creditnum))
+
     return credit
 
 
