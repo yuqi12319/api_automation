@@ -23,8 +23,8 @@ send_apply:
     contactEmail: 123@abc.com
     contactMobile: 18818811881
     contactPerson: admin
-#    projectId:
-#    projectName:
+    projectId:
+    projectName:
 #    positionObligation:
 #    positionQualification:
 #    positionQualificationId:

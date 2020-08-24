@@ -69,7 +69,6 @@ class WorkforceWorkflow(Const):
     # 已有公司添加默认用工申请审批流
     def application_workflow_setting_default_api(self, data):
         url = self.url_path + '/dukang-workforce/mapi/application/workflow_setting/default'
-        print(url)
         res = self.request.send_request_method('post', url=url, params=data['params'], headers=self.headers)
         return res
 

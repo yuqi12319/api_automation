@@ -1,4 +1,3 @@
-url: /dukang-workforce/api/receive/details
 params:
   ticketId: 735445611213488128
   workforceWorkingAssignId: 735445955146416128

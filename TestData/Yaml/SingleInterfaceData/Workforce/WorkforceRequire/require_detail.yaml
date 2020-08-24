@@ -1,4 +1,3 @@
-url: /dukang-workforce/api/workforce/require/detail/
 applicationId: 735445611213488128
 expect:
   assert_type: errcode

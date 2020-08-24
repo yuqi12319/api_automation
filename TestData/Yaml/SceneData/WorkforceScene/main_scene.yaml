@@ -22,10 +22,10 @@ send_apply:
     contactPerson: admin
     projectId:
     projectName:
-    positionObligation:
-    positionQualification:
-    positionQualificationId:
-    positionTask:
+#    positionObligation:
+#    positionQualification:
+#    positionQualificationId:
+#    positionTask:
     coOrgId: 733358092246319104
     coOrgName: workforce_company_test01
   expect:

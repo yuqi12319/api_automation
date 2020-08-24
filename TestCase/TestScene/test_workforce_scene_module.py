@@ -19,6 +19,7 @@ from TestApi.ContingentProjectApi.contingent_project import ContingentProject
 from TestApi.WorkflowApi.workflow_domain import WorkflowDomain
 from TestApi.EmployeeApi.workforce_employee_domain import WorkforceEmployeeDomain
 from TestApi.WorkforceApi.workforce_dispatch import WorkforceDispatch
+from TestApi.WorkforceApi.workforce_receive import WorkforceRecevice
 
 
 @allure.feature("劳务工场景测试")
@@ -427,9 +428,9 @@ class TestWorkforceScene:
                     break
 
     @pytest.mark.skip
-    @allure.story("拒绝登记(登记审批流拒绝)")
+    @allure.story("拒绝接收")
     @pytest.mark.parametrize('data',
-                             YamlHandle().read_yaml('SceneData/WorkforceScene/refuse_register_approve.yaml'))
+                             YamlHandle().read_yaml('SceneData/WorkforceScene/refuse_receive.yaml'))
     def test_refuse_register_approve(self, data, precondition):
 
         with allure.step('第一步：发送申请单'):
@@ -518,22 +519,46 @@ class TestWorkforceScene:
                     requirement_id = item['id']
                     break
 
-        with allure.step('第七步：获取关联申请,判断是否存在生成的需求单'):
+        with allure.step('第七步：获取需求单详情'):
+            data['require_detail']['applicationId'] = requirement_id
+            allure.attach(str(data['require_detail']), "请求数据", allure.attachment_type.JSON)
+            require_detail_res = WorkforceRequire(self.env).require_detail_api(data['require_detail'])
+            allure.attach(require_list_res.text, "require_detail_api返回结果", allure.attachment_type.JSON)
+            Assertions().assert_mode(require_detail_res, data['require_detail'])
+
+        with allure.step('第八步：获取关联申请,判断是否存在生成的需求单'):
             data['relevance_apply']['params']['coOrgId'] = precondition['workforce_company_map'][0][
                 'workforceCompanyId']
             relevance_apply_res = WorkforceDispatch(self.env).relevance_apply_api(data['relevance_apply'])
             Assertions().assert_in_text(relevance_apply_res.json(), str(code))
 
-        with allure.step('第七步：根据需求时间查询空闲员工'):
-            data['free_employee']['body']['beginTime'] = data['send_apply']['body']['joinDate']
-            data['free_employee']['body']['endTime'] = data['send_apply']['body']['probationPeriodExpire']
-            data['free_employee']['body']['coOrgId'] = data['send_apply']['body']['labourCompanyId']
+        with allure.step('第九步：根据需求时间查询空闲员工'):
+            data['free_employee']['body']['beginTime'] = require_detail_res.json()['data']['organization']['expectJoinDate']
+            data['free_employee']['body']['endTime'] = require_detail_res.json()['data']['organization']['probationPeriodExpire']
+            data['free_employee']['body']['coOrgId'] = precondition['workforce_company_map'][0][
+                'workforceCompanyId']
             workforce_employees_free_res = WorkforceEmployeeDomain(self.env).workforce_employees_free(
                 data['free_employee'])
             Assertions().assert_mode(workforce_employees_free_res, data['free_employee'])
-        #
-        # with allure.step('第八步：根据需求单派遣一个员工'):
-        #     data['dispatch']['body']['beginTime'] = 1
+
+        with allure.step('第十步：乙方根据需求单派遣一个员工'):
+            data['dispatch']['body']['beginTime'] = require_detail_res.json()['data']['organization']['expectJoinDate']
+            data['dispatch']['body']['endTime'] = require_detail_res.json()['data']['organization']['probationPeriodExpire']
+            data['dispatch']['body']['coOrgId'] = require_detail_res.json()['data']['coOrgId']['companyId']
+            data['dispatch']['body']['dispatchCoOrgId'] = require_detail_res.json()['data']['demandCompany']['companyId']
+            data['dispatch']['body']['workforceRequestId'] = require_detail_res.json()['data']['id']
+            data['dispatch']['body']['employeeIds'].append(workforce_employees_free_res.json()['data'][0]['id'])
+            allure.attach(str(data['dispatch']), "请求数据", allure.attachment_type.JSON)
+            dispatch_res = WorkforceDispatch(self.env).dispatch_api(data['dispatch'])
+            allure.attach(require_list_res.text, "dispatch_api返回结果", allure.attachment_type.JSON)
+            Assertions().assert_mode(dispatch_res, data['dispatch'])
+
+        with allure.step('第十一步：获取接收列表，判断是否生成接收单'):
+            data['recevice_list']['params']['coOrgId'] = precondition['my_company']['company_id']
+            allure.attach(str(data['recevice_list']), "请求数据", allure.attachment_type.JSON)
+            recevice_list_res = WorkforceRecevice(self.env).recevice_list_api(data['recevice_list'])
+            allure.attach(require_list_res.text, "recevice_list_api返回结果", allure.attachment_type.JSON)
+            # Assertions().assert_mode(recevice_list_res, )
 
 
 if __name__ == '__main__':

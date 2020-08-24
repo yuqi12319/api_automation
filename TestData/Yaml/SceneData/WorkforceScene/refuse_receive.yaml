@@ -23,8 +23,8 @@ send_apply:
     contactEmail: 123@abc.com
     contactMobile: 18818811881
     contactPerson: admin
-#    projectId:
-#    projectName:
+    projectId:
+    projectName:
 #    positionObligation:
 #    positionQualification:
 #    positionQualificationId:
@@ -71,6 +71,12 @@ require_list:
     coOrgId:
     limit: 20
     offset: 0
+# 需求单详情
+require_detail:
+  applicationId:
+  expect:
+    assert_type: errcode
+    assert_result: '0'
 # 获取关联申请
 relevance_apply:
   url: /dukang-workforce/api/workforce/require/ticketCodes
@@ -78,7 +84,6 @@ relevance_apply:
     coOrgId:
 # 根据需求时间查询空闲员工
 free_employee:
-  url: /dukang-employee/api/workforce/employees/free
   params:
     page: 0
     size: 20
@@ -92,7 +97,6 @@ free_employee:
     assert_result: '0'
 # 根据需求单派遣一个员工
 dispatch:
-  url: /dukang-workforce/api/relation/dispatch
   body:
     beginTime:
     coOrgId:
@@ -100,3 +104,12 @@ dispatch:
     employeeIds: []
     endTime:
     workforceRequestId:
+  expect:
+    assert_type: errcode
+    assert_result: '0'
+# 获取接收单列表
+recevice_list:
+  params:
+    coOrgId:
+    offset: 0
+    limit: 20

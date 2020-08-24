@@ -29,3 +29,21 @@ class WorkflowDomain(Const):
             'organizationId'] + "/workflow/approval/query"
         res = self.request.send_request_method('post', url=url, json=data['body'], headers=self.headers)
         return res
+
+    # 账单审批流列表接口
+    def bill_approval_list_api(self, data):
+        url = self.url_path + '/dukang-workflow/api/workflow_setting/list'
+        res = self.request.send_request_method('get', url=url, params=data['params'], headers=self.headers)
+        return res
+
+    # 用工申请审批流列表接口
+    def workforce_apply_approval_list_api(self, data):
+        url = self.url_path + '/dukang-workflow/api/workflow_setting/list'
+        res = self.request.send_request_method('get', url=url, params=data['params'], headers=self.headers)
+        return res
+
+    # 用工登记审批流列表接口
+    def workforce_register_approval_list_api(self, data):
+        url = self.url_path + '/dukang-workflow/api/workflow_setting/list'
+        res = self.request.send_request_method('get', url=url, params=data['params'], headers=self.headers)
+        return res

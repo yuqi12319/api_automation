@@ -1,0 +1,68 @@
+# 发送验证码
+vcode:
+  params:
+    mobileAreaCode: 86
+    mobile_number: 18373280066
+    scene: REGISTER_COMPANY
+  headers:
+    x-flow-id:
+  expect:
+    assert_type: errcode
+    assert_result: '0'
+# 校验验证码
+vcode_check:
+  params:
+    country_code: 86
+    mobile_number: 18373280066
+    vcode: 6666
+  headers:
+    x-flow-id:
+  expect:
+    assert_type: errcode
+    assert_result: '0'
+# 注册公司
+register_company:
+  body:
+    address: 上海/上海市
+    admin:
+      mobile: 18373280066
+      mobileAreaCode: 86
+      name: admin
+      password: 12345678
+    area: CN
+    name: workforce_company_test08
+    size_max: 200
+    size_min: 101
+  headers:
+    x-flow-id:
+  expect:
+    assert_type: errcode
+    assert_result: '0'
+# 默认账单审批流
+default_bill_approval:
+  params:
+    coOrgId:
+    offset: 0
+    limit: 10
+    type: BILL
+# 默认用工申请审批流
+default_workforce_apply_approval:
+  params:
+    coOrgId:
+    offset: 0
+    limit: 10
+    type: WORKFORCEAPPLICATION
+# 默认用工登记审批流
+default_workforce_register_approval:
+  params:
+    coOrgId:
+    offset: 0
+    limit: 10
+    type: WORKFORCEREGISTER
+
+# 解散公司
+dissolve_company:
+  companyId:
+  expect:
+    assert_type: errcode
+    assert_result: '0'

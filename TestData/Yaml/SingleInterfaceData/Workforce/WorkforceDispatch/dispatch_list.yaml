@@ -1,4 +1,3 @@
-url: /dukang-workforce/api/assign/search
 params:
   coOrgId: 733358092246319104
   offset: 0
