@@ -59,6 +59,26 @@ default_workforce_register_approval:
     offset: 0
     limit: 10
     type: WORKFORCEREGISTER
+# 默认报销审批流
+default_claim_approval:
+  params:
+    coOrgId:
+    offset: 0
+    limit: 10
+# 默认请假审批流
+default_leave_approval:
+  params:
+    coOrgId:
+# 默认加班，补卡，外出，离职审批流
+default_attendance_approval:
+  params:
+    company_id: 11
+# 默认薪资项
+default_payroll_item:
+  params:
+    coOrgId:
+    limit: 10
+    offset: 0
 
 # 解散公司
 dissolve_company:

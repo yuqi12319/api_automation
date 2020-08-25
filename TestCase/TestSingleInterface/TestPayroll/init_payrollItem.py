@@ -16,15 +16,16 @@ from Common.operation_assert import Assertions
 
 class Test_init_payrollItem:
 
-    def setup_class(self):
-        self.url_path = Config().get_conf('test_env', 'test3')
+    @pytest.fixture(autouse=True)
+    def env_prepare(self, env):
+        self.env = env
 
     @allure.title('新建公司时，初始化薪资项')
     @pytest.mark.parametrize('data', YamlHandle().read_yaml('SingleInterfaceData/Payroll/init_payrollItem.yaml'))
     def test_init_payrollItem(self, data):
-        res = InitPayrollItem().init_payrollItem(self.url_path, data)
+        res = InitPayrollItem(self.env).init_payrollItem(data)
         Assertions().assert_mode(res, data)
 
 
 if __name__ == '__main__':
-    pytest.main(['-s', '-v', 'init_payrollItem.py'])
+    pytest.main(['-s', '-v', 'init_payrollItem.py', '--env', 'test3'])

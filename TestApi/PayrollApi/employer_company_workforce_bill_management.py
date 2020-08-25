@@ -6,6 +6,9 @@ from TestApi.consts_api import Const
 
 class EmployerCompanyWorkforceBillManagement(Const):
 
+    def __init__(self, env):
+        super().__init__(env)
+
     # 获取劳务公司列表
     def get_service_company_list_api(self, data):
         url = self.url_path + "/dukang-coc/api/company/workforce/map"
