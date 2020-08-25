@@ -5,13 +5,11 @@
 # Description:
 
 import pytest, allure
-from Common.request import Request
 from Common.operation_yaml import YamlHandle
 from Common.operation_assert import Assertions
-import Common.consts
 from TestApi.MuscatApi.muscat import Muscat
 from TestApi.WorkflowApi.workflow_domain import WorkflowDomain
-import Common.consts
+from TestApi.PayrollApi.payroll_setting import PayrollSetting
 
 
 class TestRegisterCompanyScene:
@@ -60,6 +58,40 @@ class TestRegisterCompanyScene:
             workforce_register_approval_list_res = WorkflowDomain(self.env).workforce_register_approval_list_api(
                 data['default_workforce_register_approval'])
             Assertions().assert_in_text(workforce_register_approval_list_res.json()['data'], '默认用工登记审批流')
+
+            # 默认报销审批流判断
+            data['default_claim_approval']['params']['coOrgId'] = regist_company_res.json()['data']['company_id']
+            claim_approval_list_res = WorkflowDomain(self.env).claim_approval_list_api(data['default_claim_approval'])
+            Assertions().assert_in_text(claim_approval_list_res.json()['data'], '默认报销审批流')
+
+            # 默认请假审批流判断
+            data['default_leave_approval']['params']['coOrgId'] = regist_company_res.json()['data']['company_id']
+            leave_approval_list_res = WorkflowDomain(self.env).leave_approval_list_api(data['default_leave_approval'])
+            Assertions().assert_in_text(leave_approval_list_res.json()['data'], '默认请假审批流')
+
+            # 默认加班,补卡,外出,离职审批流判断
+            data['default_attendance_approval']['params']['company_id'] = regist_company_res.json()['data'][
+                'company_id']
+            attendance_approval_list_res = WorkflowDomain(self.env).attendance_approval_list_api(
+                data['default_attendance_approval'])
+            Assertions().assert_in_text(attendance_approval_list_res.json()['data'], '默认加班审批流')
+            Assertions().assert_in_text(attendance_approval_list_res.json()['data'], '默认外出审批流')
+            Assertions().assert_in_text(attendance_approval_list_res.json()['data'], '默认补卡审批流')
+            Assertions().assert_in_text(attendance_approval_list_res.json()['data'], '默认离职审批流')
+
+        with allure.step('第三步：校验是否生成默认薪资项'):
+            data['default_payroll_item']['params']['coOrgId'] = regist_company_res.json()['data']['company_id']
+            payroll_item_list_res = PayrollSetting(self.env).payroll_item_list_api(data['default_payroll_item'])
+            Assertions().assert_in_text(payroll_item_list_res.json()['data'], '基本工资')
+            Assertions().assert_in_text(payroll_item_list_res.json()['data'], '工作日加班费')
+            Assertions().assert_in_text(payroll_item_list_res.json()['data'], '休息日加班费')
+            Assertions().assert_in_text(payroll_item_list_res.json()['data'], '法定假日加班费')
+            Assertions().assert_in_text(payroll_item_list_res.json()['data'], '事假')
+            Assertions().assert_in_text(payroll_item_list_res.json()['data'], '病假')
+            Assertions().assert_in_text(payroll_item_list_res.json()['data'], '缺勤')
+
+        with allure.step('第四步：校验是否生成默认考勤组'):
+            pass
 
         with allure.step('解散公司'):
             data['dissolve_company']['companyId'] = regist_company_res.json()['data']['company_id']

@@ -47,3 +47,22 @@ class WorkflowDomain(Const):
         url = self.url_path + '/dukang-workflow/api/workflow_setting/list'
         res = self.request.send_request_method('get', url=url, params=data['params'], headers=self.headers)
         return res
+
+    # 报销审批流列表接口
+    def claim_approval_list_api(self, data):
+        url = self.url_path + '/dukang-claim/workflow_setting/list'
+        res = self.request.send_request_method('get', url=url, params=data['params'], headers=self.headers)
+        return res
+
+    # 请假审批流列表接口
+    def leave_approval_list_api(self, data):
+        url = self.url_path + '/leave/leave_workflow_setting'
+        res = self.request.send_request_method('get', url=url, params=data['params'], headers=self.headers)
+        return res
+
+    # 加班，补卡，外出，离职审批流列表接口
+    def attendance_approval_list_api(self, data):
+        url = self.url_path + '/dukang-attendance/api/workflow_settings?type='
+        res = self.request.send_request_method('get', url=url, params=data['params'], headers=self.headers)
+        return res
+
