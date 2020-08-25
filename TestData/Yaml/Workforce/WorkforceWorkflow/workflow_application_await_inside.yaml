@@ -1,0 +1,6 @@
+body:
+  coOrgId: 738107635944914944
+  employeeId: 738107635936526336
+expect:
+ assert_type: errcode
+ assert_result: '0'
