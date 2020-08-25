@@ -51,6 +51,12 @@ class Muscat(Const):
         res = self.request.send_request_method('post', url=url, json=data['body'], headers=data['headers'])
         return res
 
+    # 公司初始化接口
+    def initsetting_api(self, data):
+        url = self.url_path + '/muscat/company/guide/complete/initsetting'
+        res = self.request.send_request_method('post', url=url, json=data['body'], headers=self.headers)
+        return res
+
     # 解散公司
     def dissolve_company(self, data):
         url = self.url_path + '/muscat/companies/' + str(data['companyId']) + '/dissolvation'

@@ -5,11 +5,14 @@
 # Description:
 
 import pytest, allure
+import Common.consts
 from Common.operation_yaml import YamlHandle
 from Common.operation_assert import Assertions
 from TestApi.MuscatApi.muscat import Muscat
 from TestApi.WorkflowApi.workflow_domain import WorkflowDomain
 from TestApi.PayrollApi.payroll_setting import PayrollSetting
+from TestApi.AttendanceApi.attendance_setting import AttendanceSetting
+from TestApi.LeaveApi.leave_setting import LeaveSetting
 
 
 class TestRegisterCompanyScene:
@@ -38,6 +41,12 @@ class TestRegisterCompanyScene:
             data['register_company']['headers']['x-flow-id'] = flow_id_res.json()['data']
             regist_company_res = Muscat(self.env).register_comapny_api(data['register_company'])
             Assertions().assert_mode(regist_company_res, data['register_company'])
+            Common.consts.COMPANY_INFORMATION.append(regist_company_res.json()['data'])
+
+            # 公司初始化完成
+            data['initsetting']['body']['companyId'] = regist_company_res.json()['data']['company_id']
+            initsetting_res = Muscat(self.env).initsetting_api(data['initsetting'])
+            Assertions().assert_mode(initsetting_res, data['initsetting'])
 
         with allure.step('第二步：校验是否生成默认审批流'):
             # 默认账单审批流判断
@@ -91,7 +100,15 @@ class TestRegisterCompanyScene:
             Assertions().assert_in_text(payroll_item_list_res.json()['data'], '缺勤')
 
         with allure.step('第四步：校验是否生成默认考勤组'):
-            pass
+            data['default_attendance_group']['params']['company_id'] = regist_company_res.json()['data']['company_id']
+            data['default_attendance_group']['params']['employeeId'] = regist_company_res.json()['data']['employee_id']
+            attendance_group_res = AttendanceSetting(self.env).get_attendance_group_api(data['default_attendance_group'])
+            Assertions().assert_in_text(attendance_group_res.json()['data'], '默认考勤组')
+
+        with allure.step('第五步：校验是否生成默认休假组'):
+            data['default_leave_group']['params']['companyId'] = regist_company_res.json()['data']['company_id']
+            leave_group_res = LeaveSetting(self.env).get_leave_group_api(data['default_leave_group'])
+            Assertions().assert_in_text(leave_group_res.json()['data'], '默认休假组')
 
         with allure.step('解散公司'):
             data['dissolve_company']['companyId'] = regist_company_res.json()['data']['company_id']

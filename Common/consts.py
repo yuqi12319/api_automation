@@ -22,3 +22,6 @@ ACCESS_TOKEN = []
 
 # OpenApi登录Token
 OPENAPI_ACCESS_TOKEN = []
+
+# 公司信息
+COMPANY_INFORMATION = []

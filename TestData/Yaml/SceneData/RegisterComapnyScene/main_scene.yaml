@@ -38,6 +38,16 @@ register_company:
   expect:
     assert_type: errcode
     assert_result: '0'
+# 公司初始化
+initsetting:
+  body:
+    clockSwitch: false
+    companyId:
+    offWorkTime: 64800
+    toWorkTime: 32400
+  expect:
+    assert_type: errcode
+    assert_result: '0'
 # 默认账单审批流
 default_bill_approval:
   params:
@@ -79,7 +89,19 @@ default_payroll_item:
     coOrgId:
     limit: 10
     offset: 0
-
+# 默认考勤组
+default_attendance_group:
+  params:
+    company_id:
+    limit: 10
+    offset: 0
+    employeeId:
+# 默认休假组
+default_leave_group:
+  params:
+    companyId:
+    limit: 10
+    offset: 1
 # 解散公司
 dissolve_company:
   companyId:
