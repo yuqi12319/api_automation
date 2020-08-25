@@ -17,3 +17,9 @@ class WorkforceEmployeeDomain(Const):
         res = self.request.send_request_method('post', url=url, params=data['params'], json=data['body'],
                                                headers=self.headers)
         return res
+
+    def employee_unactice(self, data):
+        url = self.url_path + '/dukang-employee/employee/unActive'
+        print(data['headers'])
+        res = self.request.send_request_method('get', url=url, params=data['params'], headers=data['headers'])
+        return res

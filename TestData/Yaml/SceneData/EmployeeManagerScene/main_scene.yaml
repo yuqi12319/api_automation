@@ -1,0 +1,30 @@
+# 获取员工未激活集合
+unactvie:
+  params:
+    companyId: 746063265821360128
+  headers:
+    x-current-page: 1
+    x-page-size: 20
+    x-dk-token:
+# 发送验证码
+vcode:
+  params:
+    mobileAreaCode: 86
+    mobile_number: 18373280066
+    scene: INVITE_JOIN_COMPANY
+  headers:
+    x-flow-id:
+  expect:
+    assert_type: errcode
+    assert_result: '0'
+# 校验验证码
+vcode_check:
+  params:
+    country_code: 86
+    mobile_number: 18373280066
+    vcode: 6666
+  headers:
+    x-flow-id:
+  expect:
+    assert_type: errcode
+    assert_result: '0'
