@@ -1,0 +1,41 @@
+url: /dukang-attendance/api/teamovertime
+Title: 校验申请组织为空
+headers:
+    X-Dk-Token:
+body:
+  attendanceGroupId: 617062749159030784
+  startTime: 1593972000000
+  endTime: 1593977400000
+  employeeId: 617062748924149760
+  orgId:
+  orgName: 小龙虾
+  teamOvertimeDate: 1593964800000
+  teamOvertimeEmployeeIdList:
+   - 617062748924149760
+  timeZone: Asia/Shanghai
+expect:
+    assert_type: errmsg
+    assert_result: error
+    assert_data: 组织部门ID不能为空
+---
+url: /dukang-attendance/api/teamovertime
+Title: 校验考勤组id为空
+headers:
+    X-Dk-Token:
+body:
+  attendanceGroupId:
+  startTime: 1593972000000
+  endTime: 1593977400000
+  employeeId: 617062748924149760
+  orgId: 617062172182183936
+  orgName: 小龙虾
+  teamOvertimeDate: 1593964800000
+  teamOvertimeEmployeeIdList:
+   - 617062748924149760
+  timeZone: Asia/Shanghai
+expect:
+    assert_type: errmsg
+    assert_result: error
+    assert_data: 考勤组ID不能为空
+
+

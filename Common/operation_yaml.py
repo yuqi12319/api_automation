@@ -54,5 +54,6 @@ class YamlHandle:
 
 if __name__ == '__main__':
     aa = YamlHandle()
-    b = aa.read_yaml('Approval/get_team_leave_approval_list.yaml')
+    b = aa.read_yaml('Attendance/Team_OverTime_Apply.yaml')
     print(b)
+    print(type(b))

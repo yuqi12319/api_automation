@@ -1,0 +1,11 @@
+url: /dukang-workflow/api/workflow_setting/list
+Title: 获取团队休假审批流列表
+params:
+  coOrgId: 687232906640228352
+  offset: 0
+  limit: 10
+  type: TEAMLEAVEFORM
+  timestamp: 1596635166503
+expect:
+    assert_type: errcode
+    assert_result: '0'
