@@ -20,6 +20,15 @@ class WorkforceEmployeeDomain(Const):
 
     def employee_unactice(self, data):
         url = self.url_path + '/dukang-employee/employee/unActive'
-        print(data['headers'])
         res = self.request.send_request_method('get', url=url, params=data['params'], headers=data['headers'])
+        return res
+
+    def check_active_mobile(self, data):
+        url = 'https://dktest3-freesia.bipocloud.com/services/dukang-employee/invitation/checkActiveMobile'
+        res = self.request.send_request_method('post', url=url, params=data['params'], headers=self.headers)
+        return res
+
+    def invitation_active_employee(self, data):
+        url = self.url_path + '/dukang-employee/invitation/activeEmployee'
+        res = self.request.send_request_method('post', url=url, params=data['params'], headers=self.headers)
         return res

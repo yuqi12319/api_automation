@@ -1,16 +1,16 @@
 # 获取员工未激活集合
-unactvie:
+unactive:
   params:
-    companyId: 746063265821360128
+    companyId: 733365230582628352
   headers:
-    x-current-page: 1
-    x-page-size: 20
+    x-current-page: '1'
+    x-page-size: '3'
     x-dk-token:
 # 发送验证码
 vcode:
   params:
     mobileAreaCode: 86
-    mobile_number: 18373280066
+    mobile_number:
     scene: INVITE_JOIN_COMPANY
   headers:
     x-flow-id:
@@ -21,10 +21,38 @@ vcode:
 vcode_check:
   params:
     country_code: 86
-    mobile_number: 18373280066
+    mobile_number:
     vcode: 6666
   headers:
     x-flow-id:
   expect:
     assert_type: errcode
     assert_result: '0'
+# 校验员工能否通过邀请链接加入公司
+check:
+  params:
+    mobile:
+    companyId: 733365230582628352
+  expect:
+    assert_type: errcode
+    assert_result: '0'
+#员工注册
+employee_register:
+  body:
+    areaCode: 86
+    mobile:
+    mobileAreaCode: 86
+    password: 12345678
+  expect:
+    assert_type: errcode
+    assert_result: '0'
+#员工激活
+employee_active:
+  params:
+    mobile:
+    companyId: 733365230582628352
+    areaCode: 86
+  expect:
+    assert_type: errcode
+    assert_result: '0'
+#查询员工激活状态

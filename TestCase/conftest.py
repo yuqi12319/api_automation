@@ -14,8 +14,8 @@ def login():
         "areaCode": 86,
         "clientId": "gardenia",
         "password": 12345678,
-        "username": 18373280066
-        # "username": 13300001234
+        # "username": 18373280066
+        "username": 13300001234
     }
 
     res = Request().send_request_method('post', url=url, json=body)
