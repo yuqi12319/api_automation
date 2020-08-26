@@ -2,7 +2,7 @@ import pytest
 from Common.operation_assert import *
 from Common.operation_yaml import YamlHandle
 from Conf.config import Config
-from TestApi.OvertimeApi.Overtimeapply import OvertimeApply
+from TestApi.AttendanceApi.Overtimeapply import OvertimeApply
 
 
 class TestOvertime:
@@ -10,7 +10,7 @@ class TestOvertime:
     def setup_class(self):
         self.url_path = Config().get_conf('test_env', 'test1')
 
-    @pytest.mark.parametrize("data", YamlHandle().read_yaml('OvertimeApply/overtime.yaml'))
+    @pytest.mark.parametrize("data", YamlHandle().read_yaml('Attendance/overtime.yaml'))
     def test_apply_overtime(self, data):
         print(data)
         res = OvertimeApply().send_apply_api(self.url_path, data)
@@ -23,7 +23,7 @@ class TestOvertime:
         else:
             print("请求未成功请检查，status_code= %s" % status_code)
 
-    @pytest.mark.parametrize("data", YamlHandle().read_yaml('OvertimeApply/Team_OverTime_Apply.yaml'))
+    @pytest.mark.parametrize("data", YamlHandle().read_yaml('Attendance/Team_OverTime_Apply.yaml'))
     def test_team_overtime_apply(self, data):
         print(data)
         res = OvertimeApply().send_apply_api(self.url_path, data)
@@ -42,4 +42,4 @@ class TestOvertime:
 
 
 if __name__ == '__main__':
-    pytest.main(['-s', 'test_overtime.py'])
+    pytest.main(['-s', 'test_overtime_apply.py'])

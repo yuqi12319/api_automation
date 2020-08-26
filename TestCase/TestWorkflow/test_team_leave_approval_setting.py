@@ -6,7 +6,7 @@ import allure
 from Common.operation_assert import *
 from Common.operation_yaml import YamlHandle
 from Conf.config import Config
-from TestApi.Approval_Api.teamleaveform_setting import TeamLeaveApprovalSetting
+from TestApi.WorkflowApi.teamleaveform_setting import TeamLeaveApprovalSetting
 
 
 @allure.feature('团队休假审批流设置')
@@ -15,7 +15,7 @@ class TestApprovalSetting:
         self.url_path = Config().get_conf('test_env', 'test1')
 
     @allure.title("新增团队休假审批")
-    @pytest.mark.parametrize("data", YamlHandle().read_yaml('Approval/team_leave_approval_setting.yaml'))
+    @pytest.mark.parametrize("data", YamlHandle().read_yaml('Workflow/team_leave_approval_setting.yaml'))
     def test_team_leave_approval_setting(self, data):
         print(data)
         res = TeamLeaveApprovalSetting().creat_team_leave_approval(self.url_path, data)
@@ -26,9 +26,8 @@ class TestApprovalSetting:
         Assertions().assert_mode(res, data)
 
     @allure.title("获取团队休假审批列表")
-    @pytest.mark.parametrize("data", YamlHandle().read_yaml('Approval/get_team_leave_approval_list.yaml'))
+    @pytest.mark.parametrize("data", YamlHandle().read_yaml('Workflow/get_team_leave_approval_list.yaml'))
     def test_get_team_leave_approval_list(self, data):
-
 
         print(data)
         res = TeamLeaveApprovalSetting().get_team_leave_approval(self.url_path, data)
@@ -43,8 +42,8 @@ class TestApprovalSetting:
             w_id = getlist['data']['workflowSettingVoList'][0]['workflowSettingId']
             print(w_id)
             # print("workflowSettingId= %s" % getlist['data']['workflowSettingVoList'][0]['workflowSettingId'])
-            # a = YamlHandle().read_yaml('Approval/delete_team_leave_approval.yaml')
-            YamlHandle().write_yaml('Approval/delete_team_leave_approval.yaml', 'url', '/dukang-workflow/api/workflow_setting/'+w_id)
+            # a = YamlHandle().read_yaml('Workflow/delete_team_leave_approval.yaml')
+            YamlHandle().write_yaml('Workflow/delete_team_leave_approval.yaml', 'url', '/dukang-workflow/api/workflow_setting/'+w_id)
             Assertions().assert_mode(res, data)
         else:
             print("团队休假列表为空，请检查")
@@ -54,5 +53,5 @@ class TestApprovalSetting:
 
 
 if __name__ == '__main__':
-    pytest.main(['-s', 'test_overtime.py'])
+    pytest.main(['-s', 'test_overtime_apply.py'])
 

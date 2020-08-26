@@ -1,0 +1,125 @@
+Title: "校验休假申请申请部门为空"
+body:
+  approverList:
+  - employee_id: 636239483070578688
+  - sort_order: 1
+  attendanceGroupType: FIXED
+  beginDate: 1597334400000
+  beginDateHalfDay: FIRSTHALF
+  endDate: 1597334400000
+  endDateHalfDay: SECONDHALF
+  employeeId: 636239483070578688
+  leaveType: COMPASSIONATE_LEAVE
+  orgId:
+  timeZone: Asia/Shanghai
+expect:
+  assert_type: errmsg
+  assert_result: orgId
+---
+Title: "校验休假申请开始时间为空"
+body:
+  approverList:
+  - employee_id: 636239483070578688
+  - sort_order: 1
+  attendanceGroupType: FIXED
+  beginDate:
+  beginDateHalfDay: FIRSTHALF
+  endDate: 1597334400000
+  endDateHalfDay: SECONDHALF
+  employeeId: 636239483070578688
+  leaveType: COMPASSIONATE_LEAVE
+  orgId: 687232906640228352
+  timeZone: Asia/Shanghai
+expect:
+  assert_type: errmsg
+  assert_result: beginDate
+---
+Title: "校验休假申请结束时间为空"
+body:
+  approverList:
+  - employee_id: 636239483070578688
+  - sort_order: 1
+  attendanceGroupType: FIXED
+  beginDate: 1597334400000
+  beginDateHalfDay: FIRSTHALF
+  endDate:
+  endDateHalfDay: SECONDHALF
+  employeeId: 636239483070578688
+  leaveType: COMPASSIONATE_LEAVE
+  orgId: 687232906640228352
+  timeZone: Asia/Shanghai
+expect:
+  assert_type: errmsg
+  assert_result: endDate
+---
+Title: "校验休假时段重复"
+body:
+  approverList:
+  - employee_id: 687232906623451136
+  - sort_order: 1
+  attendanceGroupType: FIXED
+  beginDate: 1597593600000
+  beginDateHalfDay: FIRSTHALF
+  endDate: 1597593600000
+  endDateHalfDay: SECONDHALF
+  employeeId: 687232906623451136
+  leaveType: COMPASSIONATE_LEAVE
+  orgId: 687232906640228352
+  timeZone: Asia/Shanghai
+expect:
+  assert_type: errmsg
+  assert_result: 所选时段已有重复记录
+---
+Title: "校验休假额度不足"
+body:
+  approverList:
+  - employee_id: 687232906623451136
+  - sort_order: 1
+  attendanceGroupType: FIXED
+  beginDate: 1597680000000
+  beginDateHalfDay: FIRSTHALF
+  endDate: 1597680000000
+  endDateHalfDay: SECONDHALF
+  employeeId: 745303907088990208
+  leaveType: ANNUAL_LEAVE
+  orgId: 687232906640228352
+  timeZone: Asia/Shanghai
+expect:
+  assert_type: errmsg
+  assert_result: 年假余额不足
+---
+Title: "校验休假时长为0"
+body:
+  approverList:
+  - employee_id: 687232906623451136
+  - sort_order: 1
+  attendanceGroupType: FIXED
+  beginDate: 1597593600000
+  beginDateHalfDay: FIRSTHALF
+  endDate: 1597593600000
+  endDateHalfDay: SECONDHALF
+  employeeId: 745303907088990208
+  leaveType: COMPASSIONATE_LEAVE
+  orgId: 687232906640228352
+  timeZone: Asia/Shanghai
+expect:
+  assert_type: errmsg
+  assert_result: 休假时长不能为0
+---
+Title: "校验申请年假"
+body:
+  approverList:
+  - employee_id: 687232906623451136
+  - sort_order: 1
+  attendanceGroupType: FIXED
+  beginDate: 1597593600000
+  beginDateHalfDay: FIRSTHALF
+  endDate: 1597593600000
+  endDateHalfDay: SECONDHALF
+  employeeId: 745303907088990208
+  leaveType: COMPASSIONATE_LEAVE
+  orgId: 687232906640228352
+  timeZone: Asia/Shanghai
+expect:
+  assert_type: errmsg
+  assert_result: 休假时长不能为0
