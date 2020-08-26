@@ -38,6 +38,16 @@ register_company:
   expect:
     assert_type: errcode
     assert_result: '0'
+# 登陆公司
+login:
+  body:
+    areaCode: 86
+    clientId: gardenia
+    password:
+    username:
+  expect:
+    assert_type: errcode
+    assert_result: '0'
 # 公司初始化
 initsetting:
   body:

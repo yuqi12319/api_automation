@@ -13,6 +13,7 @@ from TestApi.WorkflowApi.workflow_domain import WorkflowDomain
 from TestApi.PayrollApi.payroll_setting import PayrollSetting
 from TestApi.AttendanceApi.attendance_setting import AttendanceSetting
 from TestApi.LeaveApi.leave_setting import LeaveSetting
+from TestApi.UserApi.token import Token
 
 
 class TestRegisterCompanyScene:
@@ -21,6 +22,7 @@ class TestRegisterCompanyScene:
     def env_prepare(self, env):
         self.env = env
 
+    @pytest.mark.main
     @pytest.mark.parametrize('data', YamlHandle().read_yaml('SceneData/RegisterComapnyScene/main_scene.yaml'))
     def test_main_scene(self, data):
         with allure.step('第一步：创建公司'):
@@ -42,6 +44,13 @@ class TestRegisterCompanyScene:
             regist_company_res = Muscat(self.env).register_comapny_api(data['register_company'])
             Assertions().assert_mode(regist_company_res, data['register_company'])
             Common.consts.COMPANY_INFORMATION.append(regist_company_res.json()['data'])
+
+            # 登陆公司
+            data['login']['body']['password'] = data['register_company']['body']['admin']['password']
+            data['login']['body']['username'] = data['register_company']['body']['admin']['mobile']
+            login_res = Token(self.env).login(data['login'])
+            Assertions().assert_mode(login_res, data['login'])
+            Common.consts.ACCESS_TOKEN[0] = login_res.json()['data']['accessToken']
 
             # 公司初始化完成
             data['initsetting']['body']['companyId'] = regist_company_res.json()['data']['company_id']
