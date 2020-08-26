@@ -1,0 +1,11 @@
+brief_profile:
+  params:
+    company_id:
+# 获取web气泡数量接口
+get_web_buttles:
+  params:
+    employeeId:
+    coOrgId:
+  expect:
+    assert_type: errcode
+    assert_result: '0'

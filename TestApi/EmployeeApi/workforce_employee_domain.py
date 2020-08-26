@@ -37,3 +37,4 @@ class WorkforceEmployeeDomain(Const):
         url = self.url_path + '/dukang-employee/invitation/activeQRcode'
         res = self.request.send_request_method('get', url=url, params=data['params'], headers=self.headers)
         return res
+
