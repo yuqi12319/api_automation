@@ -4,7 +4,7 @@ unactive:
     companyId: 733365230582628352
   headers:
     x-current-page: '1'
-    x-page-size: '3'
+    x-page-size: '20'
     x-dk-token:
   expect:
     assert_type: errcode

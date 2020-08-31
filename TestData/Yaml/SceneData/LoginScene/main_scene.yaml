@@ -9,3 +9,34 @@ get_web_buttles:
   expect:
     assert_type: errcode
     assert_result: '0'
+# 发送验证码
+vcode:
+  params:
+    mobileAreaCode: 86
+    mobile_number: 18373280067
+    scene: LOOK_FOR_PASSWORD
+  headers:
+    x-flow-id:
+  expect:
+    assert_type: errcode
+    assert_result: '0'
+# 校验验证码
+vcode_check:
+  params:
+    country_code: 86
+    mobile_number:
+    vcode: 6666
+  headers:
+    x-flow-id:
+  expect:
+    assert_type: errcode
+    assert_result: '0'
+# 修改手机号
+change_phone_number:
+  body:
+    areaCode: 86
+    employeeId:
+    newNumber:
+  expect:
+    assert_type: errcode
+    assert_result: '0'

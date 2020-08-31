@@ -1,0 +1,259 @@
+get_employee_manager_list:
+  headers:
+    x-current-page: '1'
+    x-page-size: '20'
+  params:
+    company_id:
+  body:
+    administrator_auth:
+    birth_date:
+    confirmed_date:
+    department_ids:
+    employment_role:
+    employment_status: [1]
+    employment_type:
+    first_work_date:
+    gender_value:
+    join_date:
+    keyword:
+    laborContractExpiringDates:
+    last_working_date:
+    marital_status_value:
+    nationality_value:
+    probation_date:
+    probation_period:
+  expect:
+    assert_type: errcode
+    assert_result: '0'
+
+add_rank:
+  body:
+    coOrgId:
+    name: p8
+  expect:
+    assert_type: errcode
+    assert_result: '0'
+get_rank:
+  params:
+    coOrgId:
+add_position:
+  body:
+    coOrgId:
+    name: ppaodsapdjaod
+  expect:
+    assert_type: errcode
+    assert_result: '0'
+get_position:
+  params:
+    offset: 0
+    limit: 0
+  body:
+    coOrgId:
+add_laborcontractparties:
+  body:
+    coOrgId:
+    companyAddress:
+    dutyParagraph:
+    name: adkadaida
+  expect:
+    assert_type: errcode
+    assert_result: '0'
+get_laborcontractparties:
+  params:
+    coOrgId:
+add_costcenter:
+  body:
+    coOrgId:
+    name: asdadadadadadaada
+  expect:
+    assert_type: errcode
+    assert_result: '0'
+get_costcenter:
+  params:
+    coOrgId:
+
+# 获取员工组织信息
+get_employee_organization:
+  employee_id:
+  params:
+    company_id:
+  expect:
+    assert_type: errcode
+    assert_result: '0'
+# 更新员工组织信息
+update_employee_organization:
+  employee_id:
+  body:
+    commissionOrgnizationIdList: []
+    commissionOrgnizationList: []
+    companyEmail:
+    companyTelephone:
+    confirmed_date:
+    costCenterName:
+    country:
+    department_ids: []
+    department_infos: []
+    employeeStatus: "inservice"
+    employeeType:
+    employee_code:
+    employee_id:
+    employment_type: "FULL_TIME"
+    endLandTime:
+    first_work_date:
+    is_admin: true
+    join_date:
+    laborContractExpiringDate:
+    laborContractPartiesName:
+    last_working_date:
+    personEmail:
+    position:
+    position_name:
+    postionIdList: []
+    postionList: []
+    probationDueDate:
+    probation_period:
+    rankId:
+    rankName:
+    resignAgainJoinFlag: false
+    resignReason:
+    submit_resignation_date:
+    workCity: ""
+  expect:
+    assert_type: errcode
+    assert_result: '0'
+# 获取员工个人信息
+get_employee_information:
+  employee_id:
+  expect:
+    assert_type: errcode
+    assert_result: '0'
+# 更新员工个人信息
+update_employee_information:
+  body:
+    address:
+    avatar:
+    birth_date:
+    companyEmail:
+    created_time:
+    criminal_descr:
+    criminal_record:
+    criminal_record_value:
+    displayName:
+    emergency_contact: []
+    employeeId:
+    ethnic_name:
+    ethnic_value:
+    family_contact: []
+    gender_name:
+    gender_value:
+    health_condition:
+    health_condition_value:
+    health_descr:
+    height:
+    identity_no:
+    identity_type_name:
+    identity_type_value:
+    legalName:
+    marital_status:
+    marital_status_value:
+    marriage_date:
+    mobile_area_code:
+    nationality_name:
+    nationality_value:
+    native_place:
+    natives: []
+    personEmail: "123@123.com"
+    phone_number:
+    political_status:
+    political_status_value:
+    registered_permanent_residence:
+    updated_time: 1598600262000
+    weight:
+  expect:
+    assert_type: errcode
+    assert_result: '0'
+# 更新员工教育信息
+update_employee_education:
+  body:
+    educations:
+      - admission_date: 1564588800000
+        education_background_id:
+        education_background_value: BACHELOR
+        education_id: ""
+        graduate_from: 上海大学
+        graduation_date: 1596211200000
+        major: 计算机
+    employeeId:
+  expect:
+    assert_type: errcode
+    assert_result: '0'
+# 获取员工教育信息
+get_employee_education:
+  employee_id:
+# 更新员工的工作经历
+update_employee_work_experience:
+  body:
+    employeeId:
+    work_experiences:
+      - company:
+        job_description:
+        position:
+        work_end_date:
+        work_id:
+        work_start_date:
+  expect:
+    assert_type: errcode
+    assert_result: '0'
+# 获取员工的工作经历
+get_employee_work_experience:
+  employee_id:
+# 修改员工的证件信息
+update_employee_certificate:
+  body:
+    employeeId:
+    photo:
+    employeeBankcardProfileDto:
+      employeeId:
+      employeeBankcardDto:
+        bankName:
+        employeeId:
+        name:
+        number:
+        subbranch:
+    employeeCertificateProfileDto:
+      employeeId:
+      employeeCertificateDtoList:
+        - employeeId:
+          name:
+          number:
+          photo: "[]"
+          type: IDCard
+    employeeSocialSecurityProvidentFundProfileDto:
+      employeeId:
+      employeeSocialSecurityProvidentFundDto:
+        employeeId:
+        providentFund:
+        socialSecurity:
+  expect:
+    assert_type: errcode
+    assert_result: '0'
+# 获取员工的证件信息
+get_employee_certificate:
+  params:
+    employeeId:
+# 修改员工合同信息
+update_employee_contract:
+  body:
+    employeeId:
+    employeeContractDtos:
+      - beginTime:
+        endTime:
+        laborContractPartiesId:
+        pathContract: "[]"
+  expect:
+    assert_type: errcode
+    assert_result: '0'
+# 获取员工合同信息
+get_employee_contract:
+  params:
+    employeeId:

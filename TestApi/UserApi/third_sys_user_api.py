@@ -14,3 +14,9 @@ class ThirdSysUserApi(Const):
         url = 'https://dktest3-freesia.bipocloud.com/services/dukang-user/users/activeEmployeeRegister'
         res = self.request.send_request_method('post', url=url, json=data['body'], headers=self.headers)
         return res
+
+    # 修改手机号
+    def change_phone_number_api(self, data):
+        url = self.url_path + '/dukang-user/phoneNumber/change'
+        res = self.request.send_request_method('put', url=url, json=data['body'], headers=self.headers)
+        return res
