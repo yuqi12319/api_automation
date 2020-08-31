@@ -18,7 +18,7 @@ class TestLeaveFormApply:
         self.env = env
 
     @allure.title("按天休假")
-    @pytest.mark.parametrize('data', YamlHandle().read_yaml('Leave/LeaveForm/leave_form_by_day_apply.yaml'))
+    @pytest.mark.parametrize('data', YamlHandle().read_yaml('SingleInterfaceData/Leave/LeaveForm/leave_form_by_day_apply.yaml'))
     def test_leave_form_by_day_apply(self, data):
         print(data)
         # millis = int(round(time.time() * 1000))

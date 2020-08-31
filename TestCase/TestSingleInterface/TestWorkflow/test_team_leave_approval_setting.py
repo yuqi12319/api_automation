@@ -11,30 +11,20 @@ from TestApi.WorkflowApi.teamleaveform_setting import TeamLeaveApprovalSetting
 
 @allure.feature('团队休假审批流设置')
 class TestApprovalSetting:
-    def setup_class(self):
-        self.url_path = Config().get_conf('test_env', 'test1')
+    @pytest.fixture(autouse=True)
+    def env_prepare(self, env):
+        self.env = env
 
     @allure.title("新增团队休假审批")
-    @pytest.mark.parametrize("data", YamlHandle().read_yaml('Workflow/team_leave_approval_setting.yaml'))
+    @pytest.mark.parametrize("data", YamlHandle().read_yaml('SingleInterfaceData/Workflow/team_leave_approval_setting.yaml'))
     def test_team_leave_approval_setting(self, data):
-        print(data)
-        res = TeamLeaveApprovalSetting().creat_team_leave_approval(self.url_path, data)
-        print(type(res))
-        print(res.json())
-        print(res.url)
-        print(res.request)
+        res = TeamLeaveApprovalSetting(self.env).creat_team_leave_approval(data)
         Assertions().assert_mode(res, data)
 
     @allure.title("获取团队休假审批列表")
-    @pytest.mark.parametrize("data", YamlHandle().read_yaml('Workflow/get_team_leave_approval_list.yaml'))
+    @pytest.mark.parametrize("data", YamlHandle().read_yaml('SingleInterfaceData/Workflow/get_team_leave_approval_list.yaml'))
     def test_get_team_leave_approval_list(self, data):
-
-        print(data)
-        res = TeamLeaveApprovalSetting().get_team_leave_approval(self.url_path, data)
-        # getlist = res.json()
-        # print(getlist.get("response").get("workflowSettingId"))
-        print(res.json())
-        print(res.url)
+        res = TeamLeaveApprovalSetting(self.env).get_team_leave_approval(data)
         getlist = res.json()
         num = getlist['data']['totalNum']
         if num is None:
@@ -53,5 +43,5 @@ class TestApprovalSetting:
 
 
 if __name__ == '__main__':
-    pytest.main(['-s', 'test_overtime_apply.py'])
+    pytest.main(['-s', 'test_overtime_apply.py', '--env', 'test1'])
 
