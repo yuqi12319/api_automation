@@ -21,7 +21,7 @@ class TestEmployeeActive:
     def env_prepare(self, env):
         self.env = env
 
-    @pytest.mark.parametrize('data', YamlHandle().read_yaml('SceneData/EmployeeManagerScene/main_scene.yaml'))
+    @pytest.mark.parametrize('data', YamlHandle().read_yaml('SceneData/EmployeeManagerActivateScene/main_scene.yaml'))
     def test_main_sence(self, data):
         # with allure.step('第一步，获取未激活员工'):
 
@@ -105,4 +105,4 @@ class TestEmployeeActive:
 
 
 if __name__ == '__main__':
-    pytest.main(['-s', '-v', 'test_employee_manager.py', '--env', 'test3'])
+    pytest.main(['-s', '-v', 'test_employee_manager_activate.py', '--env', 'test3'])

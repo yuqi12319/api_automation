@@ -25,3 +25,7 @@ OPENAPI_ACCESS_TOKEN = []
 
 # 公司信息
 COMPANY_INFORMATION = []
+
+# company_id & employee_id
+COMPANY_ID = []
+EMPLOYEE_ID =[]
