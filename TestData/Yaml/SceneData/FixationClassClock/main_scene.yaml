@@ -1,0 +1,93 @@
+# 获取考勤组列表
+get_attendance_group_list:
+  params:
+    company_id:
+    limit: 10
+    offset: 0
+    employeeId:
+# 添加坐标打卡位置信息
+add_pincoordinate:
+  body:
+    address_detail: 延安中路841号
+    address_name: 东方海外大厦
+    company_id:
+    distance: "300"
+    latitude: 31.22336
+    longitude: 121.45441
+    shortName:
+  expect:
+    assert_type: errcode
+    assert_result: '0'
+# 查询公司班次列表
+get_company_shift:
+  params:
+    company_id:
+    attendanceId:
+  expect:
+    assert_type: errcode
+    assert_result: '0'
+# 获取加班规则列表
+get_overtime_rule_list:
+  params:
+    company_id:
+  expect:
+    assert_type: errcode
+    assert_result: '0'
+# 获取假期规则列表
+get_holiday_plan_list:
+  expect:
+    assert_type: errcode
+    assert_result: '0'
+# 获取默认考勤组详情
+get_default_attendance_group_information:
+  attendancegroupId:
+  params:
+    attendancegroupId:
+  expect:
+    assert_type: errcode
+    assert_result: '0'
+# 修改默认考勤组
+update_default_attendance_group:
+  body:
+    attendanceDeductionSettingDto:
+    attendanceGroupLeader: null
+    clockInMachineGroupCodes: ""
+    clockSwitch: true
+    companyId:
+    employeeId:
+    employeeIds: []
+    holidayPlanId: "13"
+    id:
+    name: "默认考勤组"
+    overtimeId: "733358102681747456"
+    pinCoordinateIds: []
+    pinWifiIds: []
+    schedulingOfficers: []
+    schedulingShiftIdList: []
+    shiftPlan:
+      FRIDAY: "733358101624782852"
+      MONDAY: "733358101624782852"
+      SATURDAY: "733358101624782853"
+      SUNDAY: "733358101624782853"
+      THURSDAY: "733358101624782852"
+      TUESDAY: "733358101624782852"
+      WEDNESDAY: "733358101624782852"
+    type: "FIXED"
+# 上下班打卡
+clock:
+  body:
+    employee_id:
+    clock_type: CLOCK_OUT
+    clock_way: COORDINATE
+    address: 东方海外大厦
+    longitude: 121.454727
+    latitude: 31.223211
+    timeZone: Asia\/Shanghai
+  expect:
+    assert_type: errcode
+    assert_result: '0'
+# 查询员工当天上下班打卡记录
+get_employee_clock_record:
+  employee_id:
+  params:
+    timeZone: Asia/Shanghai
