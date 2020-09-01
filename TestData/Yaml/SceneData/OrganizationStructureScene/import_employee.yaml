@@ -1,0 +1,28 @@
+#批量导入员工(导入excel)
+importEmployee:
+  params:
+    coOrgId: 745972619194400768
+    timestamp:
+  expect:
+    assert_type: errcode
+    assert_result: '0'
+#批量获取导入员工信息
+getImportEmployee:
+  params:
+    coOrgId: 745972619194400768
+    timestamp:
+  headers:
+    x-current-page: '1'
+    x-page-size: '10'
+    x-dk-token:
+  expect:
+    assert_type: errcode
+    assert_result: '0'
+# 确认导入员工信息
+correctEmployee:
+  params:
+    coOrgId: 745972619194400768
+    timestamp:
+  expect:
+    assert_type: errcode
+    assert_result: '0'

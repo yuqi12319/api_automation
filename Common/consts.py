@@ -28,4 +28,7 @@ COMPANY_INFORMATION = []
 
 # company_id & employee_id
 COMPANY_ID = []
-EMPLOYEE_ID =[]
+EMPLOYEE_ID = []
+
+# 公司员工数据
+COMPANY_CHART = []
