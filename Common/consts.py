@@ -25,3 +25,6 @@ OPENAPI_ACCESS_TOKEN = []
 
 # 公司信息
 COMPANY_INFORMATION = []
+
+# 公司员工数据
+COMPANY_CHART = []

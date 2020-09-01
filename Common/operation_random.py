@@ -113,3 +113,16 @@ def snowflake():
     s = ''.join(random.sample(string.digits, 2))
     id = str(round(t * 1000000)) + s
     return id
+
+
+# 生成随机编码
+def random_code():
+    code = ''.join(random.sample(string.digits, 4))
+    return code
+
+
+# 随机生成部门名称
+def random_departments_name():
+    name = ['华东区', '华西区', '华南区', '华北区', '花溪', '眉山', 'GIVENCHY', '东极']
+    departments_name = random.choice(name)
+    return departments_name
