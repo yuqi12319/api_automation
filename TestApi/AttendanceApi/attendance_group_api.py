@@ -27,7 +27,7 @@ class AttendanceGroupApi(Const):
     # 删除考勤组
     def del_attendance_group(self, data):
         url = self.url_path + '/dukang-attendance/api/attendancegroup/' + data['attendancegroup_id']
-        res = self.request.send_request_method('delete', url=url, json=data['body'], headers=self.headers)
+        res = self.request.send_request_method('delete', url=url, params=data['params'], headers=self.headers)
         return res
 
     # 新增考勤组

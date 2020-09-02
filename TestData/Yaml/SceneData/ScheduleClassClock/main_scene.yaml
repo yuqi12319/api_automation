@@ -1,0 +1,115 @@
+# 添加坐标打卡位置信息
+add_pincoordinate:
+  body:
+    address_detail: 延安中路841号
+    address_name: 东方海外大厦
+    company_id:
+    distance: "300"
+    latitude: 31.22336
+    longitude: 121.45441
+    shortName:
+  expect:
+    assert_type: errcode
+    assert_result: '0'
+# 查询公司班次列表
+get_company_shift:
+  params:
+    company_id:
+    attendanceId:
+  expect:
+    assert_type: errcode
+    assert_result: '0'
+# 获取加班规则列表
+get_overtime_rule_list:
+  params:
+    company_id:
+  expect:
+    assert_type: errcode
+    assert_result: '0'
+# 获取假期规则列表
+get_holiday_plan_list:
+  expect:
+    assert_type: errcode
+    assert_result: '0'
+# 添加排班制考勤组
+add_schedule_class_attendance_group:
+  body:
+    attendanceDeductionSettingDto:
+      absence: false
+      lateOrEarly: false
+      noClock: false
+    attendanceGroupLeader: ""
+    clockInMachineGroupCodes: ""
+    clockSwitch: true
+    companyId:
+    employeeId:
+    employeeIds: []
+    holidayPlanId:
+    name: 排班制考勤组
+    overtimeId:
+    pinCoordinateIds: []
+    pinWifiIds: []
+    schedulingOfficers: []
+    schedulingShiftIdList: []
+    shiftDtos: []
+    shiftPlan: {}
+    type: SCHEDULING
+  expect:
+    assert_type: errcode
+    assert_result: '0'
+
+# 排班
+add_and_update_shiftschedulingdraft:
+  body:
+    employeeShiftSchedulingDraftDtoList:
+      -
+        attendanceGroupId:
+        employeeId:
+        shiftSchedulingDate:
+        shiftSchedulingDraftDtoList:
+          -
+            offWorkPinCoordinateIdList: []
+            offWorkPinWifiIdList: []
+            shiftId:
+            toWorkPinCoordinateIdList: []
+            toWorkPinWifiIdList: []
+  expect:
+    assert_type: errcode
+    assert_result: '0'
+# 发布排班
+release_scheduling:
+  attendanceGroupId:
+  expect:
+    assert_type: errcode
+    assert_result: '0'
+# 打卡
+scheduling_clock:
+  body:
+    employeeId:
+    timeZone: Asia/Shanghai
+    attendanceGroupId:
+    shiftId:
+    dayType: TODAY
+    clockType: CLOCK_OUT
+    clockWay: COORDINATE
+    address: 东方海外大厦
+    longitude: 121.454723
+    latitude: 31.22321
+  expect:
+    assert_type: errcode
+    assert_result: '0'
+# 查看当天打开记录
+scheduling_clock_list:
+  params:
+    employeeId:
+    timeZone: Asia/Shanghai
+del_attendance_group:
+  attendancegroup_id:
+  params:
+    attendancegroup_id:
+    orgId:
+    employeeId:
+  expect:
+    assert_type: errcode
+    assert_result: '0'
+

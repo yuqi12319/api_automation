@@ -65,13 +65,13 @@ update_default_attendance_group:
     schedulingOfficers: []
     schedulingShiftIdList: []
     shiftPlan:
-      FRIDAY: "733358101624782852"
-      MONDAY: "733358101624782852"
-      SATURDAY: "733358101624782853"
-      SUNDAY: "733358101624782853"
-      THURSDAY: "733358101624782852"
-      TUESDAY: "733358101624782852"
-      WEDNESDAY: "733358101624782852"
+      FRIDAY:
+      MONDAY:
+      SATURDAY:
+      SUNDAY:
+      THURSDAY:
+      TUESDAY:
+      WEDNESDAY:
     type: "FIXED"
 # 上下班打卡
 clock:
