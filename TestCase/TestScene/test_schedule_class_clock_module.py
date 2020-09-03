@@ -19,6 +19,7 @@ from TestApi.MuscatApi.muscat import Muscat
 from TestApi.EmployeeApi.employee import Employee
 from TestApi.AttendanceApi.shift_scheduling_api import ShiftSchedulingApi
 from TestApi.AttendanceApi.scheduling_clock_api import SchedulingClockApi
+from TestApi.AttendanceApi.clock_api import ClockApi
 
 
 class TestScheduleClassClock:
@@ -46,10 +47,18 @@ class TestScheduleClassClock:
     @pytest.mark.parametrize('data', YamlHandle().read_yaml("SceneData/ScheduleClassClock/main_scene.yaml"))
     def test_main_scene(self, data):
         with allure.step('第一步：考勤组设置'):
+            # 获取考勤组列表
+            data['get_attendance_group_list']['params']['company_id'] = self.company_id
+            data['get_attendance_group_list']['params']['employeeId'] = self.employee_id
+            get_attendance_group_list_res = AttendanceGroupApi(self.env).get_attendance_group_list(
+                data['get_attendance_group_list'])
+            Assertions().assert_in_text(get_attendance_group_list_res.json()['data'], "默认考勤组")
+            default_attendance_group_id = get_attendance_group_list_res.json()['data'][0]['attendanceGroupId']
+
             # 添加考勤地点
             data['add_pincoordinate']['body']['company_id'] = self.company_id
             data['add_pincoordinate']['body']['shortName'] = random.randint(1000, 9999)
-            add_pincoordinate_res = AttendanceGroupInternalApi(self.env).add_pincoordinate(data['add_pincoordinate'])
+            add_pincoordinate_res = ClockApi(self.env).add_pincoordinate(data['add_pincoordinate'])
             Assertions().assert_mode(add_pincoordinate_res, data['add_pincoordinate'])
             if add_pincoordinate_res.json()['data']['pin_coordinate_id']:
                 pin_coordinate_id = add_pincoordinate_res.json()['data']['pin_coordinate_id']
@@ -70,6 +79,33 @@ class TestScheduleClassClock:
             # 获取假期规则列表
             get_holiday_plan_list_res = HolidayApi(self.env).get_holiday_plan_list()
             Assertions().assert_mode(get_holiday_plan_list_res, data['get_holiday_plan_list'])
+
+            # 获取默认考勤组详情
+            data['get_default_attendance_group_information']['attendancegroupId'] = default_attendance_group_id
+            data['get_default_attendance_group_information']['params'][
+                'attendancegroupId'] = default_attendance_group_id
+            get_default_attendance_group_information_res = AttendanceGroupApi(
+                self.env).get_attendance_group_information(data['get_default_attendance_group_information'])
+            Assertions().assert_mode(get_default_attendance_group_information_res,
+                                     data['get_default_attendance_group_information'])
+
+            # 修改默认考勤组信息，将admin用户剔除默认考勤组
+            data['update_default_attendance_group']['body']['attendanceDeductionSettingDto'] = get_default_attendance_group_information_res.json()['data']['attendanceDeductionSettingVo']
+            data['update_default_attendance_group']['body']['companyId'] = self.company_id
+            data['update_default_attendance_group']['body']['employeeId'] = self.employee_id
+            data['update_default_attendance_group']['body']['holidayPlanId'] = get_holiday_plan_list_res.json()['data'][1]['id']
+            data['update_default_attendance_group']['body']['id'] = default_attendance_group_id
+            data['update_default_attendance_group']['body']['overtimeId'] = get_overtime_rule_list_res.json()['data'][1]['overtime_setting_id']
+            data['update_default_attendance_group']['body']['shiftPlan']['MONDAY'] = get_company_shift_res.json()['data'][1]['id']
+            data['update_default_attendance_group']['body']['shiftPlan']['TUESDAY'] = get_company_shift_res.json()['data'][1]['id']
+            data['update_default_attendance_group']['body']['shiftPlan']['WEDNESDAY'] = get_company_shift_res.json()['data'][1]['id']
+            data['update_default_attendance_group']['body']['shiftPlan']['THURSDAY'] = get_company_shift_res.json()['data'][1]['id']
+            data['update_default_attendance_group']['body']['shiftPlan']['FRIDAY'] = get_company_shift_res.json()['data'][1]['id']
+            data['update_default_attendance_group']['body']['shiftPlan']['SATURDAY'] = get_company_shift_res.json()['data'][0]['id']
+            data['update_default_attendance_group']['body']['shiftPlan']['SUNDAY'] = get_company_shift_res.json()['data'][0]['id']
+            update_attendance_group_res = AttendanceGroupApi(self.env).update_attendance_group(
+                data['update_default_attendance_group'])
+            Assertions().assert_text(update_attendance_group_res.json()['data'], str(default_attendance_group_id))
 
             # 添加排班制考勤组
             data['add_schedule_class_attendance_group']['body']['companyId'] = self.company_id
@@ -131,6 +167,11 @@ class TestScheduleClassClock:
             data['del_attendance_group']['params']['employeeId'] = self.employee_id
             del_attendance_group_res = AttendanceGroupApi(self.env).del_attendance_group(data['del_attendance_group'])
             Assertions().assert_mode(del_attendance_group_res, data['del_attendance_group'])
+
+            data['delete_pincoordinate']['pin_coordinate_id'] = pin_coordinate_id
+            data['delete_pincoordinate']['params']['attendance_group_id'] = schedule_class_attendance_group_id
+            delete_pincoordinate_res = ClockApi(self.env).delete_pincoordinate(data['delete_pincoordinate'])
+            Assertions().assert_mode(delete_pincoordinate_res, data['delete_pincoordinate'])
 
 
 if __name__ == '__main__':

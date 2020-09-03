@@ -56,7 +56,7 @@ class TestFixationClassClock:
             # 添加考勤地点
             data['add_pincoordinate']['body']['company_id'] = self.company_id
             data['add_pincoordinate']['body']['shortName'] = random.randint(1000, 9999)
-            add_pincoordinate_res = AttendanceGroupInternalApi(self.env).add_pincoordinate(data['add_pincoordinate'])
+            add_pincoordinate_res = ClockApi(self.env).add_pincoordinate(data['add_pincoordinate'])
             Assertions().assert_mode(add_pincoordinate_res, data['add_pincoordinate'])
             if add_pincoordinate_res.json()['data']['pin_coordinate_id']:
                 pin_coordinate_id = add_pincoordinate_res.json()['data']['pin_coordinate_id']
@@ -88,15 +88,13 @@ class TestFixationClassClock:
             Assertions().assert_mode(get_default_attendance_group_information_res,
                                      data['get_default_attendance_group_information'])
 
-            # 修改默认考勤组信息
+            # 修改默认考勤组信息，将admin用户剔除默认考勤组
             data['update_default_attendance_group']['body']['attendanceDeductionSettingDto'] = get_default_attendance_group_information_res.json()['data']['attendanceDeductionSettingVo']
             data['update_default_attendance_group']['body']['companyId'] = self.company_id
             data['update_default_attendance_group']['body']['employeeId'] = self.employee_id
-            data['update_default_attendance_group']['body']['employeeIds'].append(self.employee_id)
             data['update_default_attendance_group']['body']['holidayPlanId'] = get_holiday_plan_list_res.json()['data'][1]['id']
             data['update_default_attendance_group']['body']['id'] = default_attendance_group_id
-            data['update_default_attendance_group']['body']['overtimeId'] = get_overtime_rule_list_res.json()['data'][0]['overtime_setting_id']
-            data['update_default_attendance_group']['body']['pinCoordinateIds'].append(pin_coordinate_id)
+            data['update_default_attendance_group']['body']['overtimeId'] = get_overtime_rule_list_res.json()['data'][1]['overtime_setting_id']
             data['update_default_attendance_group']['body']['shiftPlan']['MONDAY'] = get_company_shift_res.json()['data'][1]['id']
             data['update_default_attendance_group']['body']['shiftPlan']['TUESDAY'] = get_company_shift_res.json()['data'][1]['id']
             data['update_default_attendance_group']['body']['shiftPlan']['WEDNESDAY'] = get_company_shift_res.json()['data'][1]['id']
@@ -108,26 +106,31 @@ class TestFixationClassClock:
             Assertions().assert_text(update_attendance_group_res.json()['data'], str(default_attendance_group_id))
 
             # 新增默认考勤信息
-            # data['add_attendance_group']['body']['companyId'] = self.company_id
-            # data['add_attendance_group']['body']['employeeId'] = self.employee_id
-            # data['add_attendance_group']['body']['employeeIds'].append(self.employee_id)
-            # data['add_attendance_group']['body']['pinCoordinateIds'].append(pin_coordinate_id)
-            # new_shift = []
-            # for item in get_company_shift_res.json()['data']:
-            #     generator_id = ShiftApi(self.env).get_id_generator().json()['data']
-            #     item['shiftId'] = generator_id
-            #     item['id'] = generator_id
-            #     item['employeeId'] = self.employee_id
-            #     new_shift.append(item)
-            # data['add_attendance_group']['body']['shiftDtos'] = new_shift
-            # data['add_attendance_group']['body']['shiftPlan']['MONDAY'] = new_shift[1]['shiftId']
-            # data['add_attendance_group']['body']['shiftPlan']['TUESDAY'] = new_shift[1]['shiftId']
-            # data['add_attendance_group']['body']['shiftPlan']['WEDNESDAY'] = new_shift[1]['shiftId']
-            # data['add_attendance_group']['body']['shiftPlan']['THURSDAY'] = new_shift[1]['shiftId']
-            # data['add_attendance_group']['body']['shiftPlan']['FRIDAY'] = new_shift[1]['shiftId']
-            # data['add_attendance_group']['body']['shiftPlan']['SATURDAY'] = new_shift[0]['shiftId']
-            # data['add_attendance_group']['body']['shiftPlan']['SUNDAY'] = new_shift[0]['shiftId']
-            # add_attendance_group_res = AttendanceGroupApi(self.env).add_attendance_group(data['add_attendance_group'])
+            data['add_fixation_class_attendance_group']['body']['companyId'] = self.company_id
+            data['add_fixation_class_attendance_group']['body']['employeeId'] = self.employee_id
+            data['add_fixation_class_attendance_group']['body']['employeeIds'].append(self.employee_id)
+            data['add_fixation_class_attendance_group']['body']['holidayPlanId'] = get_holiday_plan_list_res.json()['data'][1]['id']
+            data['add_fixation_class_attendance_group']['body']['overtimeId'] = get_overtime_rule_list_res.json()['data'][0]['overtime_setting_id']
+            data['add_fixation_class_attendance_group']['body']['pinCoordinateIds'].append(pin_coordinate_id)
+            new_shift = []
+            for item in get_company_shift_res.json()['data']:
+                generator_id = ShiftApi(self.env).get_id_generator().json()['data']
+                item['shiftId'] = generator_id
+                item['id'] = generator_id
+                item['employeeId'] = self.employee_id
+                new_shift.append(item)
+            data['add_fixation_class_attendance_group']['body']['shiftDtos'] = new_shift
+            data['add_fixation_class_attendance_group']['body']['shiftPlan']['MONDAY'] = new_shift[1]['shiftId']
+            data['add_fixation_class_attendance_group']['body']['shiftPlan']['TUESDAY'] = new_shift[1]['shiftId']
+            data['add_fixation_class_attendance_group']['body']['shiftPlan']['WEDNESDAY'] = new_shift[1]['shiftId']
+            data['add_fixation_class_attendance_group']['body']['shiftPlan']['THURSDAY'] = new_shift[1]['shiftId']
+            data['add_fixation_class_attendance_group']['body']['shiftPlan']['FRIDAY'] = new_shift[1]['shiftId']
+            data['add_fixation_class_attendance_group']['body']['shiftPlan']['SATURDAY'] = new_shift[0]['shiftId']
+            data['add_fixation_class_attendance_group']['body']['shiftPlan']['SUNDAY'] = new_shift[0]['shiftId']
+            add_fixation_class_attendance_group_res = AttendanceGroupApi(self.env).add_attendance_group(data['add_fixation_class_attendance_group'])
+            Assertions().assert_mode(add_fixation_class_attendance_group_res, data['add_fixation_class_attendance_group'])
+            fixation_class_attendance_group_id = add_fixation_class_attendance_group_res.json()['data']
+
         with allure.step('第二步：打卡'):
             data['clock']['body']['employee_id'] = self.employee_id
             clock_res = ClockApi(self.env).clock(data['clock'])
@@ -140,6 +143,19 @@ class TestFixationClassClock:
                 pass
             else:
                 self.log.error('下班打卡失败')
+
+        with allure.step('第四步：删除考勤组和打卡坐标信息'):
+            data['del_attendance_group']['attendancegroup_id'] = fixation_class_attendance_group_id
+            data['del_attendance_group']['params']['attendancegroup_id'] =fixation_class_attendance_group_id
+            data['del_attendance_group']['params']['orgId'] = self.company_id
+            data['del_attendance_group']['params']['employeeId'] = self.employee_id
+            del_attendance_group_res = AttendanceGroupApi(self.env).del_attendance_group(data['del_attendance_group'])
+            Assertions().assert_mode(del_attendance_group_res, data['del_attendance_group'])
+
+            data['delete_pincoordinate']['pin_coordinate_id'] = pin_coordinate_id
+            data['delete_pincoordinate']['params']['attendance_group_id'] = fixation_class_attendance_group_id
+            delete_pincoordinate_res = ClockApi(self.env).delete_pincoordinate(data['delete_pincoordinate'])
+            Assertions().assert_mode(delete_pincoordinate_res, data['delete_pincoordinate'])
 
 
 if __name__ == '__main__':

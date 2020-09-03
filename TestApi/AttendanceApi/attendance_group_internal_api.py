@@ -24,14 +24,3 @@ class AttendanceGroupInternalApi(Const):
         res = self.request.send_request_method('put', url=url, json=data['body'], headers=self.headers)
         return res
 
-    # 查询公司下坐标打卡位置列表
-    def get_pincoordinate_list(self, data):
-        url = self.url_path + '/dukang-attendance/api/clock/pincoordinate'
-        res = self.request.send_request_method('post', url=url, params=data['params'], headers=self.headers)
-        return res
-
-    # 添加坐标打卡位置信息
-    def add_pincoordinate(self, data):
-        url = self.url_path + '/dukang-attendance/api/clock/pincoordinate'
-        res = self.request.send_request_method('post', url=url, json=data['body'], headers=self.headers)
-        return res

@@ -73,6 +73,39 @@ update_default_attendance_group:
       TUESDAY:
       WEDNESDAY:
     type: "FIXED"
+# 添加固定班制考勤组
+add_fixation_class_attendance_group:
+  body:
+    attendanceDeductionSettingDto:
+      absence: false
+      lateOrEarly: false
+      noClock: false
+    attendanceGroupLeader: ""
+    clockInMachineGroupCodes: ""
+    clockSwitch: true
+    companyId:
+    employeeId:
+    employeeIds: []
+    holidayPlanId:
+    name: 排班制考勤组
+    overtimeId:
+    pinCoordinateIds: []
+    pinWifiIds: []
+    schedulingOfficers: []
+    schedulingShiftIdList: []
+    shiftDtos: []
+    shiftPlan:
+      MONDAY:
+      TUESDAY:
+      WEDNESDAY:
+      THURSDAY:
+      FRIDAY:
+      SATURDAY:
+      SUNDAY:
+    type: FIXED
+  expect:
+    assert_type: errcode
+    assert_result: '0'
 # 上下班打卡
 clock:
   body:
@@ -91,3 +124,22 @@ get_employee_clock_record:
   employee_id:
   params:
     timeZone: Asia/Shanghai
+# 删除考勤组
+del_attendance_group:
+  attendancegroup_id:
+  params:
+    attendancegroup_id:
+    orgId:
+    employeeId:
+  expect:
+    assert_type: errcode
+    assert_result: '0'
+# 删除坐标打卡位置信息
+delete_pincoordinate:
+  pin_coordinate_id:
+  params:
+    attendance_group_id:
+  expect:
+    assert_type: errcode
+    assert_result: '0'
+
