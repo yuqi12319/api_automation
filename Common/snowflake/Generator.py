@@ -1,5 +1,8 @@
 import time
+from math import floor
 from os import getpid
+from random import random
+
 from .Snowflake import Snowflake
 
 
@@ -11,7 +14,7 @@ class Generator:
         if process_id is None:
             process_id = getpid()
         if worker_id is None:
-            worker_id = 0
+            worker_id = floor(random() * 32)
 
         self.epoch = epoch
         self.process_id = process_id
@@ -45,23 +48,19 @@ class Generator:
     def __repr__(self):
         return "Generator(epoch=%r,process_id=%r,worker_id=%r)" % (self.epoch, self.process_id, self.worker_id)
 
-    def digital_zoom(self, gain):
-        return (len(bin(pow(10,gain)))-2)
+    @staticmethod
+    def dec_bit_to_bin_bit(gain):
+        return len(bin(pow(10, gain))) - 2
 
     def generate(self, timestamp=None) -> Snowflake:
         if timestamp is None:
             timestamp = int(time.time() * 1000)
 
-        # ep = timestamp - self.epoch
-        #
-        # sflake = ep << 22
-
-        sflake = self.epoch << self.digital_zoom(5)
-
-        sflake |= (self.worker_id % 32) << self.digital_zoom(16)
-        sflake |= (self.process_id % 32) << self.digital_zoom(12)
+        ep = timestamp - self.epoch + 1
+        sflake = ep << self.dec_bit_to_bin_bit(18 - len(str(ep)))
+        sflake |= (self.worker_id % 32) << self.dec_bit_to_bin_bit(16)
+        sflake |= (self.process_id % 32) << self.dec_bit_to_bin_bit(12)
         sflake |= (self._count % 4096)
-
 
         self._count += 1
 
