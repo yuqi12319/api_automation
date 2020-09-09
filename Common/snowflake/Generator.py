@@ -48,20 +48,17 @@ class Generator:
     def __repr__(self):
         return "Generator(epoch=%r,process_id=%r,worker_id=%r)" % (self.epoch, self.process_id, self.worker_id)
 
-    @staticmethod
-    def dec_bit_to_bin_bit(gain):
-        return len(bin(pow(10, gain))) - 2
-
     def generate(self, timestamp=None) -> Snowflake:
         if timestamp is None:
             timestamp = int(time.time() * 1000)
 
-        ep = timestamp - self.epoch + floor(random() * 32)
-        sflake = ep << self.dec_bit_to_bin_bit(18 - len(str(ep)))
-        sflake ^= (self.worker_id % 32) << self.dec_bit_to_bin_bit(16)
-        sflake ^= (self.process_id % 32) << self.dec_bit_to_bin_bit(12)
-        sflake ^= (self._count % 4096)
+        sflake = timestamp << 22
 
+        sflake |= (self.worker_id % 32) << 17
+        sflake |= (self.process_id % 32) << 12
+        sflake |= (self._count % 4096)
+
+        sflake = sflake % pow(10, 18)
         self._count += 1
 
         return Snowflake(self.epoch, sflake)

@@ -34,7 +34,7 @@ class ImportDailyAndOvertimeRelatedData:
         else:
             return from_time
 
-    def import_overtime_form(self, database, attendance_group_id, start_date, end_date):
+    def import_overtime_form(self, database, attendance_group_id, shift_id, start_date, end_date):
         query_data = []
         employee_ids = get_employee_ids(database, attendance_group_id)
         id_generator = Generator()
@@ -50,11 +50,11 @@ class ImportDailyAndOvertimeRelatedData:
                 created_time = (datetime.strptime(current_date, self.date_format) - timedelta(days=1)).strftime(
                     self.date_format)
                 updated_time = datetime.today().strftime(self.date_format)
-                query_data.append((primary_key_id, employee, current_date, start_time, end_time, duration, created_time,
-                                   updated_time))
+                query_data.append(
+                    (primary_key_id, attendance_group_id, shift_id, employee, current_date, start_time, end_time,
+                     duration, created_time, updated_time))
 
-                current_date = (datetime.strptime(current_date, self.date_format) + timedelta(days=1)).strftime(
-                    self.date_format)
+                current_date = self.time_shifter(current_date, 1, 'd')
 
             current_date = start_date
 
@@ -63,8 +63,7 @@ class ImportDailyAndOvertimeRelatedData:
 
         insert_sql = "INSERT INTO overtime_form (id, attendance_group_id, attendance_group_type, shift_id, " \
                      "employee_id, overtime_date, start_time, end_time, duration, `status`, deleted, created_time, " \
-                     "updated_time) VALUES (%s, 748596799903629312, 'FIXED', 748596799903629316, %s, %s, %s, %s, %s, " \
-                     "'AGREED', 0, %s, %s)"
+                     "updated_time) VALUES (%s, %s, 'FIXED', %s, %s, %s, %s, %s, %s, 'AGREED', 0, %s, %s)"
 
         db = pymysql.connect(host=mysqlDict['host'], port=3306, user=mysqlDict['user'], password=mysqlDict['password'],
                              database=database, charset='utf8')
@@ -84,5 +83,5 @@ class ImportDailyAndOvertimeRelatedData:
 
 if __name__ == '__main__':
     im = ImportDailyAndOvertimeRelatedData()
-    im.import_overtime_form('dukang_attendance_dktest2', 743464931646504960, '2020-09-01 00:00:00',
+    im.import_overtime_form('dukang_attendance_dktest2', 743464931646504960, 743464931646504964, '2020-09-01 00:00:00',
                             '2020-09-30 00:00:00')
