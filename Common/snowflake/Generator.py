@@ -56,11 +56,11 @@ class Generator:
         if timestamp is None:
             timestamp = int(time.time() * 1000)
 
-        ep = timestamp - self.epoch + 1
+        ep = timestamp - self.epoch + floor(random() * 32)
         sflake = ep << self.dec_bit_to_bin_bit(18 - len(str(ep)))
-        sflake |= (self.worker_id % 32) << self.dec_bit_to_bin_bit(16)
-        sflake |= (self.process_id % 32) << self.dec_bit_to_bin_bit(12)
-        sflake |= (self._count % 4096)
+        sflake ^= (self.worker_id % 32) << self.dec_bit_to_bin_bit(16)
+        sflake ^= (self.process_id % 32) << self.dec_bit_to_bin_bit(12)
+        sflake ^= (self._count % 4096)
 
         self._count += 1
 
