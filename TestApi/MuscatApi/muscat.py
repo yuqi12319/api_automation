@@ -36,7 +36,6 @@ class Muscat(Const):
     def vcode_api(self, data):
         url = self.url_path + '/muscat/sms/vcode'
         res = self.request.send_request_method('get', url=url, params=data['params'], headers=data['headers'])
-        print(res)
         return res
 
     # 校验验证码接口
