@@ -22,8 +22,9 @@ from TestApi.EmployeeApi.employee_contract import EmployeeContract
 
 
 class TestEmployeeManager:
+
     @pytest.fixture(autouse=True)
-    def precondition(self, env):
+    def setupClass(self, env):
         self.env = env
         self.log = log.MyLog()
         if Common.consts.COMPANY_INFORMATION:
@@ -42,8 +43,11 @@ class TestEmployeeManager:
         self.company_id = company_id
         self.employee_id = employee_id
 
+    # @pytest.mark.smoke
+    @pytest.mark.run(order=2)
     @pytest.mark.parametrize('data', YamlHandle().read_yaml('SceneData/EmployeeMasterDataScene/main_scene.yaml'))
     def test_main_scene(self, data):
+
         with allure.step('第一步：获取第一页员工管理列表数据'):
             data['get_employee_manager_list']['params']['company_id'] = self.company_id
             data['get_employee_manager_list']['headers']['x-dk-token'] = Common.consts.ACCESS_TOKEN[0]

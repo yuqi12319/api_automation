@@ -17,12 +17,12 @@ from TestApi.UserApi.third_sys_user_api import ThirdSysUserApi
 
 class TestLoginScene:
     @pytest.fixture(autouse=True)
-    def env_prepare(self, env):
+    def setupClass(self, env):
         self.env = env
         self.log = log.MyLog()
 
-    @pytest.mark.dependency()
-    @pytest.mark.main
+    # @pytest.mark.dependency()
+    # @pytest.mark.main
     @pytest.mark.parametrize('data', YamlHandle().read_yaml('SceneData/LoginScene/main_scene.yaml'))
     def test_main_scene(self, data):
         with allure.step('第一步：获取公司列表'):

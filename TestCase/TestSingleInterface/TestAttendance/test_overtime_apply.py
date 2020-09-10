@@ -2,7 +2,7 @@ import pytest
 from Common.operation_assert import *
 from Common.operation_yaml import YamlHandle
 from Conf.config import Config
-from TestApi.AttendanceApi.Overtimeapply import OvertimeApply
+from TestApi.AttendanceApi.overtime_api import OvertimeApi
 
 
 class TestOvertime:
@@ -14,7 +14,7 @@ class TestOvertime:
     @pytest.mark.parametrize("data", YamlHandle().read_yaml('SingleInterfaceData/Attendance/overtime.yaml'))
     def test_apply_overtime(self, data):
         print(data)
-        res = OvertimeApply(self.env).send_apply_api(data)
+        res = OvertimeApi(self.env).send_overtime_apply_api(data)
         # print(res.status_code())
         print(type(res))
         status_code = res.status_code
@@ -27,7 +27,7 @@ class TestOvertime:
     @pytest.mark.parametrize("data", YamlHandle().read_yaml('SingleInterfaceData/Attendance/Team_OverTime_Apply.yaml'))
     def test_team_overtime_apply(self, data):
         print(data)
-        res = OvertimeApply(self.env).send_apply_api(data)
+        res = OvertimeApi(self.env).send_overtime_apply_api(data)
         # print(res.status_code())
         print(type(res))
         print(res.json())

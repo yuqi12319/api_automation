@@ -115,7 +115,7 @@ clock:
     address: 东方海外大厦
     longitude: 121.454727
     latitude: 31.223211
-    timeZone: Asia\/Shanghai
+    timeZone: Asia/Shanghai
   expect:
     assert_type: errcode
     assert_result: '0'

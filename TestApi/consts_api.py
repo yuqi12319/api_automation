@@ -5,6 +5,7 @@
 
 from Common.request import Request
 from Conf.config import Config
+from Common import log
 import Common.consts
 
 
@@ -12,6 +13,7 @@ class Const(object):
 
     def __init__(self, env):
         self.request = Request()
+        self.log = log.MyLog()
         if env == "test":
             self.url_path = Config().get_conf('test_env', 'test')
         elif env == "test1":
@@ -21,4 +23,7 @@ class Const(object):
         elif env == "test3":
             self.url_path = Config().get_conf('test_env', 'test3')
         self.headers = dict()
-        self.headers['X-Dk-Token'] = Common.consts.ACCESS_TOKEN[0]
+        if Common.consts.ACCESS_TOKEN:
+            self.headers['X-Dk-Token'] = Common.consts.ACCESS_TOKEN[0]
+        else:
+            self.log.debug('未登录')
