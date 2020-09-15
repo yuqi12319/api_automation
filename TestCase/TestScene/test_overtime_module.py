@@ -15,7 +15,7 @@ from TestApi.AttendanceApi.attendance_group_api import AttendanceGroupApi
 from TestApi.AttendanceApi.clock_api import ClockApi
 from TestApi.AttendanceApi.holiday_api import HolidayApi
 from TestApi.AttendanceApi.shift_api import ShiftApi
-from TestApi.EmployeeApi.employee import Employee
+from TestApi.EmployeeApi.employee_api import EmployeeApi
 from TestApi.MuscatApi.muscat import Muscat
 from TestApi.AttendanceApi.overtime_api import OvertimeApi
 from TestApi.AttendanceApi.workflow_api import WorkflowApi
@@ -36,7 +36,7 @@ class TestOvertime:
                 company_id = my_companies_res.json()['data'][0]['company_id']
                 brief_profile_data = YamlHandle().read_yaml('SingleInterfaceData/Employee/brief_profile.yaml')[0]
                 brief_profile_data['params']['company_id'] = company_id
-                brief_profile_res = Employee(self.env).brief_profile_api(brief_profile_data)
+                brief_profile_res = EmployeeApi(self.env).brief_profile_api(brief_profile_data)
                 employee_id = brief_profile_res.json()['data']['employee_id']
             else:
                 self.log.error('当前用户下没有公司列表')

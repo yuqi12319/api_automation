@@ -12,7 +12,7 @@ import time
 from Common.operation_yaml import YamlHandle
 from Common.operation_assert import Assertions
 from TestApi.CommissionApi.positon import Position
-from TestApi.EmployeeApi.employee import Employee
+from TestApi.EmployeeApi.employee_api import EmployeeApi
 from TestApi.MuscatApi.muscat import Muscat
 from TestApi.EmployeeApi.rank import Rank
 from TestApi.EmployeeApi.cost_center import CostCenter
@@ -36,7 +36,7 @@ class TestEmployeeManager:
                 company_id = my_companies_res.json()['data'][0]['company_id']
                 brief_profile_data = YamlHandle().read_yaml('SingleInterfaceData/Employee/brief_profile.yaml')[0]
                 brief_profile_data['params']['company_id'] = company_id
-                brief_profile_res = Employee(self.env).brief_profile_api(brief_profile_data)
+                brief_profile_res = EmployeeApi(self.env).brief_profile_api(brief_profile_data)
                 employee_id = brief_profile_res.json()['data']['employee_id']
             else:
                 self.log.error('当前用户下没有公司列表')
@@ -51,7 +51,7 @@ class TestEmployeeManager:
         with allure.step('第一步：获取第一页员工管理列表数据'):
             data['get_employee_manager_list']['params']['company_id'] = self.company_id
             data['get_employee_manager_list']['headers']['x-dk-token'] = Common.consts.ACCESS_TOKEN[0]
-            get_employee_manager_list_res = Employee(self.env).get_employee_manager_list(
+            get_employee_manager_list_res = EmployeeApi(self.env).get_employee_manager_list(
                 data['get_employee_manager_list'])
             Assertions().assert_mode(get_employee_manager_list_res, data['get_employee_manager_list'])
 
@@ -102,7 +102,7 @@ class TestEmployeeManager:
             # 获取员工组织信息
             data['get_employee_organization']['employee_id'] = self.employee_id
             data['get_employee_organization']['params']['company_id'] = self.company_id
-            get_employee_organization_res = Employee(self.env).get_employee_organization_api(
+            get_employee_organization_res = EmployeeApi(self.env).get_employee_organization_api(
                 data['get_employee_organization'])
             Assertions().assert_mode(get_employee_organization_res, data['get_employee_organization'])
 
@@ -114,13 +114,13 @@ class TestEmployeeManager:
                 get_employee_organization_res.json()['data']['department_infos'][0])
             data['update_employee_organization']['body']['employee_id'] = self.employee_id
             data['update_employee_organization']['body']['laborContractPartiesName'] = get_laborcontractparties_res.json()['data'][0]['name']
-            update_employee_organization_res = Employee(self.env).update_employee_organization_api(
+            update_employee_organization_res = EmployeeApi(self.env).update_employee_organization_api(
                 data['update_employee_organization'])
             Assertions().assert_mode(update_employee_organization_res, data['update_employee_organization'])
 
             # 获取员工个人信息
             data['get_employee_information']['employee_id'] = self.employee_id
-            get_employee_information_res = Employee(self.env).get_employee_information_api(
+            get_employee_information_res = EmployeeApi(self.env).get_employee_information_api(
                 data['get_employee_information'])
             Assertions().assert_mode(get_employee_information_res, data['get_employee_information'])
 
@@ -136,7 +136,7 @@ class TestEmployeeManager:
                 'phone_number']
             personEmail = str(random.randint(100, 999)) + '@' + str(random.randint(100, 999)) + '.com'
             data['update_employee_information']['body']['personEmail'] = personEmail
-            update_employee_information_res = Employee(self.env).update_employee_information_api(
+            update_employee_information_res = EmployeeApi(self.env).update_employee_information_api(
                 data['update_employee_information'])
             Assertions().assert_mode(update_employee_information_res, data['update_employee_information'])
 
@@ -144,26 +144,26 @@ class TestEmployeeManager:
             data['update_employee_education']['body']['employeeId'] = self.employee_id
             major = str(random.randint(1000, 9999))
             data['update_employee_education']['body']['educations'][0]['major'] = major
-            update_employee_education_res = Employee(self.env).update_employee_education_api(
+            update_employee_education_res = EmployeeApi(self.env).update_employee_education_api(
                 data['update_employee_education'])
             Assertions().assert_mode(update_employee_education_res, data['update_employee_education'])
 
             # 获取员工教育信息
             data['get_employee_education']['employee_id'] = self.employee_id
-            get_employee_education_res = Employee(self.env).get_employee_education_api(data['get_employee_education'])
+            get_employee_education_res = EmployeeApi(self.env).get_employee_education_api(data['get_employee_education'])
             Assertions().assert_in_text(get_employee_education_res.json()['data'], major)
 
             # 修改员工工作经历
             data['update_employee_work_experience']['body']['employeeId'] = self.employee_id
             company_name = str(random.randint(1000, 9999))
             data['update_employee_work_experience']['body']['work_experiences'][0]['company'] = company_name
-            update_employee_work_experience_res = Employee(self.env).update_employee_work_experience_api(
+            update_employee_work_experience_res = EmployeeApi(self.env).update_employee_work_experience_api(
                 data['update_employee_work_experience'])
             Assertions().assert_mode(update_employee_work_experience_res, data['update_employee_work_experience'])
 
             # 获取员工工作信息
             data['get_employee_work_experience']['employee_id'] = self.employee_id
-            get_employee_work_experience_res = Employee(self.env).get_employee_work_experience_api(
+            get_employee_work_experience_res = EmployeeApi(self.env).get_employee_work_experience_api(
                 data['get_employee_work_experience'])
             Assertions().assert_in_text(get_employee_work_experience_res.json()['data'], company_name)
 

@@ -1,43 +1,3 @@
-# 获取考勤组列表
-get_attendance_group_list:
-  params:
-    company_id:
-    limit: 10
-    offset: 0
-    employeeId:
-# 添加坐标打卡位置信息
-add_pincoordinate:
-  body:
-    address_detail: 延安中路841号
-    address_name: 东方海外大厦
-    company_id:
-    distance: "300"
-    latitude: 31.22336
-    longitude: 121.45441
-    shortName:
-  expect:
-    assert_type: errcode
-    assert_result: '0'
-# 查询公司班次列表
-get_company_shift:
-  params:
-    company_id:
-    attendanceId:
-  expect:
-    assert_type: errcode
-    assert_result: '0'
-# 获取加班规则列表
-get_overtime_rule_list:
-  params:
-    company_id:
-  expect:
-    assert_type: errcode
-    assert_result: '0'
-# 获取假期规则列表
-get_holiday_plan_list:
-  expect:
-    assert_type: errcode
-    assert_result: '0'
 # 获取默认考勤组详情
 get_default_attendance_group_information:
   attendancegroupId:
@@ -56,50 +16,16 @@ update_default_attendance_group:
     companyId:
     employeeId:
     employeeIds: []
-    holidayPlanId: "13"
-    id:
-    name: "默认考勤组"
-    overtimeId: "733358102681747456"
-    pinCoordinateIds: []
-    pinWifiIds: []
-    schedulingOfficers: []
-    schedulingShiftIdList: []
-    shiftPlan:
-      FRIDAY:
-      MONDAY:
-      SATURDAY:
-      SUNDAY:
-      THURSDAY:
-      TUESDAY:
-      WEDNESDAY:
-    type: "FIXED"
-# 添加排班制考勤组
-add_schedule_class_attendance_group:
-  body:
-    attendanceDeductionSettingDto:
-      absence: false
-      lateOrEarly: false
-      noClock: false
-    attendanceGroupLeader: ""
-    clockInMachineGroupCodes: ""
-    clockSwitch: true
-    companyId:
-    employeeId:
-    employeeIds: []
     holidayPlanId:
-    name: 排班制考勤组
+    id:
+    name: 默认考勤组
     overtimeId:
     pinCoordinateIds: []
     pinWifiIds: []
     schedulingOfficers: []
     schedulingShiftIdList: []
-    shiftDtos: []
     shiftPlan: {}
     type: SCHEDULING
-  expect:
-    assert_type: errcode
-    assert_result: '0'
-
 # 排班
 add_and_update_shiftschedulingdraft:
   body:

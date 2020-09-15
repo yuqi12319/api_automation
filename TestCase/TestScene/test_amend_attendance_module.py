@@ -9,7 +9,7 @@ import random
 import Common.consts
 from Common.operation_yaml import YamlHandle
 from Common.operation_assert import Assertions
-from TestApi.EmployeeApi.employee import Employee
+from TestApi.EmployeeApi.employee_api import EmployeeApi
 from TestApi.MuscatApi.muscat import Muscat
 
 
@@ -28,7 +28,7 @@ class TestAmendAttendance:
                 company_id = my_companies_res.json()['data'][0]['company_id']
                 brief_profile_data = YamlHandle().read_yaml('SingleInterfaceData/Employee/brief_profile.yaml')[0]
                 brief_profile_data['params']['company_id'] = company_id
-                brief_profile_res = Employee(self.env).brief_profile_api(brief_profile_data)
+                brief_profile_res = EmployeeApi(self.env).brief_profile_api(brief_profile_data)
                 employee_id = brief_profile_res.json()['data']['employee_id']
             else:
                 self.log.error('当前用户下没有公司列表')

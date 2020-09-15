@@ -41,3 +41,9 @@ class ClockApi(Const):
         url = self.url_path + '/dukang-attendance/api/clock/pincoordinate/' + data['pin_coordinate_id']
         res = self.request.send_request_method('delete', url=url, params=data['params'], headers=self.headers)
         return res
+
+    # 查询员工当天上班时间状态
+    def get_employee_worktimeinfo(self, data):
+        url = self.url_path + '/dukang-attendance/api/employees/' + str(data['employee_id']) + '/worktimeinfo'
+        res = self.request.send_request_method('get', url=url, params=data['params'], headers=self.headers)
+        return res
