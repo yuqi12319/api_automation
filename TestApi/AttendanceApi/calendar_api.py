@@ -13,7 +13,7 @@ class CalendarApi(Const):
     def __init__(self, env):
         super().__init__(env)
 
-    def get_calendar_day_record(self, data):
+    def get_calendar_day_record_api(self, data):
         url = self.url_path + '/dukang-attendance/calendar/day/' + str(
             int(time.mktime(datetime.date.today().timetuple())) * 1000)
         res = self.request.send_request_method('post', url=url, json=data['body'], headers=self.headers)
