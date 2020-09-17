@@ -1,40 +1,24 @@
-# 获取考勤组列表
-get_attendance_group_list:
+# 加班审批流list
+overtime_approval_list:
   params:
     company_id:
-    limit: 10
-    offset: 0
-    employeeId:
-# 添加坐标打卡位置信息
-add_pincoordinate:
+    type:
+# 更新加班默认审批流：
+update_overtime_approval:
+  workflow_setting_id:
   body:
-    address_detail: 延安中路841号
-    address_name: 东方海外大厦
+    approverlist:
+      -
+        employee_id:
+        sort_order: 1
+        type: FIXED
+    cclist: []
     company_id:
-    distance: "300"
-    latitude: 31.22336
-    longitude: 121.45441
-    shortName:
-  expect:
-    assert_type: errcode
-    assert_result: '0'
-# 查询公司班次列表
-get_company_shift:
-  params:
-    company_id:
-    attendanceId:
-  expect:
-    assert_type: errcode
-    assert_result: '0'
-# 获取加班规则列表
-get_overtime_rule_list:
-  params:
-    company_id:
-  expect:
-    assert_type: errcode
-    assert_result: '0'
-# 获取假期规则列表
-get_holiday_plan_list:
+    name: 默认加班审批流
+    orglist:
+      -
+       co_org_id:
+    type: OVERTIME
   expect:
     assert_type: errcode
     assert_result: '0'
@@ -56,10 +40,10 @@ update_default_attendance_group:
     companyId:
     employeeId:
     employeeIds: []
-    holidayPlanId: "13"
+    holidayPlanId:
     id:
     name: "默认考勤组"
-    overtimeId: "733358102681747456"
+    overtimeId:
     pinCoordinateIds: []
     pinWifiIds: []
     schedulingOfficers: []
@@ -73,39 +57,6 @@ update_default_attendance_group:
       TUESDAY:
       WEDNESDAY:
     type: "FIXED"
-# 添加固定班制考勤组
-add_fixation_class_attendance_group:
-  body:
-    attendanceDeductionSettingDto:
-      absence: false
-      lateOrEarly: false
-      noClock: false
-    attendanceGroupLeader: ""
-    clockInMachineGroupCodes: ""
-    clockSwitch: true
-    companyId:
-    employeeId:
-    employeeIds: []
-    holidayPlanId:
-    name: 排班制考勤组
-    overtimeId:
-    pinCoordinateIds: []
-    pinWifiIds: []
-    schedulingOfficers: []
-    schedulingShiftIdList: []
-    shiftDtos: []
-    shiftPlan:
-      MONDAY:
-      TUESDAY:
-      WEDNESDAY:
-      THURSDAY:
-      FRIDAY:
-      SATURDAY:
-      SUNDAY:
-    type: FIXED
-  expect:
-    assert_type: errcode
-    assert_result: '0'
 # 查询加班申请时间是否符合条件
 check_overtime:
   params:
@@ -119,16 +70,6 @@ check_overtime:
   expect:
     assert_type: errcode
     assert_result: '0'
-# 获取审批流信息
-get_workflow_approval:
-  organization_id:
-  params:
-    type: OVERTIME
-    employee_id:
-    attendanceGroupId:
-  expect:
-    assert_type: errcode
-    assert_result: '0'
 # 加班申请
 send_overtime_apply:
   body:
@@ -138,10 +79,65 @@ send_overtime_apply:
     start_time:
     end_time:
     timeZone: Asia/Shanghai
-    approverList: []
+    approverList:
+      -
+        employee_id:
+        sort_order: 1
     ccList: []
     duration:
-    attachment: []
+    attachment: '[]'
+  expect:
+    assert_type: errcode
+    assert_result: '0'
+# 获取员工日历记录
+get_calendar_day_record:
+  body:
+    timeZone: Asia/Shanghai
+    employeeId:
+  expect:
+    assert_type: errcode
+    assert_result: '0'
+# 我的审批
+my_approval:
+  params:
+    company_id:
+    limit: 20
+    offset: 0
+  expect:
+    assert_type: errcode
+    assert_result: '0'
+# 我的申请
+my_application:
+  params:
+    employee_id:
+    limit: 20
+    offset: 0
+  expect:
+    assert_type: errcode
+    assert_result: '0'
+# 我的消息
+get_notifications_list:
+  params:
+    company_id:
+    limit: 20
+    offset: 0
+  expect:
+    assert_type: errcode
+    assert_result: '0'
+# 取消加班
+canceled_overtime_apply:
+  overtime_form_id:
+  body:
+    overtime_form_id:
+    cancelReason: 接口自动化取消加班申请
+  expect:
+    assert_type: errcode
+    assert_result: '0'
+# 删除坐标打卡位置信息
+delete_pincoordinate:
+  pin_coordinate_id:
+  params:
+    attendance_group_id:
   expect:
     assert_type: errcode
     assert_result: '0'

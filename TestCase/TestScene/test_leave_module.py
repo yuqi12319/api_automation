@@ -57,7 +57,7 @@ class TestLeave:
             # time.sleep(5)
 
         with allure.step('第二步：获取休假默认审批流,修改审批人为指定人，自动审批通过'):
-            # 获取默认审批流id
+            # 获取默认休假审批流id
             data['get_leave_approval']['params']['coOrgId'] = setup_class[1]
             get_leave_approval_res = LeaveWorkflowSettingApi(setup_class[0]).get_leave_approval_list_api(data['get_leave_approval'])
             Assertions().assert_mode(get_leave_approval_res, data['get_leave_approval'])
@@ -155,7 +155,7 @@ class TestLeave:
 
             # 查看日历
             data['get_calendar_day_record']['body']['employeeId'] = setup_class[2]
-            get_calendar_day_record_res = CalendarApi(setup_class[0]).get_calendar_day_record(
+            get_calendar_day_record_res = CalendarApi(setup_class[0]).get_calendar_day_record_api(
                 data['get_calendar_day_record'])
             Assertions().assert_mode(get_calendar_day_record_res, data['get_calendar_day_record'])
             Assertions().assert_in_text(get_calendar_day_record_res.json()['data'], apply_leave_id)
