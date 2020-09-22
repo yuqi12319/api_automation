@@ -140,6 +140,7 @@ class TestOvertime:
             send_overtime_apply_res = OvertimeApi(setup_class[0]).send_overtime_apply_api(data['send_overtime_apply'])
             Assertions().assert_mode(send_overtime_apply_res, data['send_overtime_apply'])
             send_overtime_apply_id = send_overtime_apply_res.json()['data']
+            time.sleep(5)
 
         with allure.step('第四步：查看加班'):
             # 查看日历

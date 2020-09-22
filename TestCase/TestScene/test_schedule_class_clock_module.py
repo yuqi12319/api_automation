@@ -44,6 +44,8 @@ class TestScheduleClassClock:
                 MyLog().error('当前用户下没有公司列表')
         return env, company_id, employee_id
 
+    @pytest.mark.smoke
+    @pytest.mark.run(order=6)
     @pytest.mark.parametrize('data', YamlHandle().read_yaml("SceneData/ScheduleClassClock/main_scene.yaml"))
     def test_main_scene(self, data, setup_class):
         with allure.step('第一步：考勤组设置'):

@@ -146,11 +146,11 @@ class TestRegisterCompanyScene:
 
         '''
         with allure.step('解散公司'):
-            data['dissolve_company']['companyId'] = 757916145733861376#regist_company_res.json()['data']['company_id']
+            data['dissolve_company']['companyId'] = 757996506060947456#regist_company_res.json()['data']['company_id']
             dissolve_company_res = Muscat(self.env).dissolve_company(data['dissolve_company'])
             Assertions().assert_mode(dissolve_company_res, data['dissolve_company'])
         '''
-
+        
 
 if __name__ == '__main__':
     pytest.main(['-sv', 'test_register_company_module.py', '--env', 'test3'])

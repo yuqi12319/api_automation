@@ -138,6 +138,7 @@ class TestOutgoing:
                 data['send_outgoing_apply'])
             Assertions().assert_mode(send_outgoing_apply_res, data['send_outgoing_apply'])
             send_outgoing_apply_id = send_outgoing_apply_res.json()['data']
+            time.sleep(5)
 
         with allure.step('第四步：查看外出'):
             # 查看日历

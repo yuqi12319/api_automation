@@ -37,6 +37,8 @@ class TestFixationClassClock:
                 MyLog().error('当前用户下没有公司列表')
         return env, company_id, employee_id
 
+    @pytest.mark.smoke
+    @pytest.mark.run(order=6)
     @pytest.mark.parametrize('data', YamlHandle().read_yaml("SceneData/FixationClassClock/main_scene.yaml"))
     def test_main_scene(self, data, setup_class):
 
