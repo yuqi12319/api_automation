@@ -57,19 +57,19 @@ class EmployeeDomain(Const):
     # 获取部门下所有子部门信息
     def organizations_children(self, data):
         url = self.url_path + '/muscat/organizations/' + str(data['coOrgId']) + '/children'
-        res = self.request.send_request_method('get', url=url, params=data['params'], headers=self.headers)
+        res = self.request.send_request_method('get', url=url, headers=self.headers)
         return res
 
     # 获取公司组织架构
     def organizations_chart(self, data):
         url = self.url_path + '/muscat/organizations/' + str(data['coOrgId']) + '/chart'
-        res = self.request.send_request_method('get', url=url, params=data['params'], headers=self.headers)
+        res = self.request.send_request_method('get', url=url, headers=self.headers)
         return res
 
     # 修改公司信息（设置公司主管）
     def modify_companies(self, data):
         url = self.url_path + '/muscat/companies' + '/' + str(data['coOrgId'])
-        res = self.request.send_request_method('put', url=url, params=data['params'], json=data['body'],
+        res = self.request.send_request_method('put', url=url, json=data['body'],
                                                headers=self.headers)
         return res
 
@@ -82,6 +82,6 @@ class EmployeeDomain(Const):
     # 新增部门
     def departments(self, data):
         url = self.url_path + '/muscat/departments'
-        res = self.request.send_request_method('post', url=url, params=data['params'], json=data['body'],
+        res = self.request.send_request_method('post', url=url, json=data['body'],
                                                headers=self.headers)
         return res

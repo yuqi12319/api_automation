@@ -5,6 +5,7 @@
 # Description: 注册公司
 
 import pytest, allure
+import time
 import Common.consts
 from Common.operation_yaml import YamlHandle
 from Common.operation_assert import Assertions
@@ -28,6 +29,7 @@ class TestRegisterCompanyScene:
     @pytest.mark.parametrize('data', YamlHandle().read_yaml('SceneData/RegisterComapnyScene/main_scene.yaml'))
     def test_main_scene(self, data, setupClass):
         self.env = setupClass
+
         with allure.step('第一步：创建公司'):
             # 获取flow_id
             flow_id_res = Muscat(self.env).get_flow_id()
@@ -44,6 +46,7 @@ class TestRegisterCompanyScene:
 
             # 注册公司
             data['register_company']['headers']['x-flow-id'] = flow_id_res.json()['data']
+            data['register_company']['body']['name'] = 'test_company_' + str(int(time.time()))
             regist_company_res = Muscat(self.env).register_comapny_api(data['register_company'])
             Assertions().assert_mode(regist_company_res, data['register_company'])
             Common.consts.COMPANY_INFORMATION.append(regist_company_res.json()['data'])
@@ -140,14 +143,14 @@ class TestRegisterCompanyScene:
             leave_group_res = LeaveSettingApi(self.env).get_leave_group_api(data['default_leave_group'])
             allure.attach(leave_group_res.text, "get_leave_group_api返回结果", allure.attachment_type.JSON)
             Assertions().assert_in_text(leave_group_res.json()['data'], '默认休假组')
-            '''
 
+        '''
         with allure.step('解散公司'):
-            data['dissolve_company']['companyId'] = 755390149604409344#regist_company_res.json()['data']['company_id']
+            data['dissolve_company']['companyId'] = 757916145733861376#regist_company_res.json()['data']['company_id']
             dissolve_company_res = Muscat(self.env).dissolve_company(data['dissolve_company'])
             Assertions().assert_mode(dissolve_company_res, data['dissolve_company'])
-            '''
+        '''
 
 
 if __name__ == '__main__':
-    pytest.main(['-sv', 'test_register_company_module.py', '--env', 'test1'])
+    pytest.main(['-sv', 'test_register_company_module.py', '--env', 'test3'])

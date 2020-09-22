@@ -16,10 +16,10 @@ if __name__ == '__main__':
     html_report_path = conf.html_report_path
 
     # 定义测试集
-    args = ['-sq', '--alluredir', xml_report_path, './TestCase/TestScene/test_register_company_module.py', '--env', 'test3']
-    pytest.main(args)
-    # args = ['-sv', './TestCase/TestScene', '-m', 'smoke', '--env', 'test3']
+    # args = ['-sq', '--alluredir', xml_report_path, './TestCase/TestScene/test_register_company_module.py', '--env', 'test3']
     # pytest.main(args)
+    args = ['-sv', '--alluredir', xml_report_path, './TestCase/TestScene', '-m', 'smoke', '--env', 'test3']
+    pytest.main(args)
 
     cmd = 'allure generate %s -o %s --clean' % (xml_report_path, html_report_path)
 

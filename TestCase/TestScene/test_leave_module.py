@@ -25,8 +25,8 @@ class TestLeave:
 
     @pytest.fixture(scope='class')
     def setup_class(self, env):
-        company_id = int()
-        employee_id = int()
+        company_id = str()
+        employee_id = str()
         if Common.consts.COMPANY_INFORMATION:
             company_id = Common.consts.COMPANY_INFORMATION[0]['company_id']
             employee_id = Common.consts.COMPANY_INFORMATION[0]['employee_id']
@@ -42,6 +42,8 @@ class TestLeave:
                 MyLog().error('当前用户下没有公司列表')
         return env, company_id, employee_id
 
+    @pytest.mark.smoke
+    @pytest.mark.run(order=6)
     @pytest.mark.parametrize('data', YamlHandle().read_yaml('SceneData/LeaveScene/main_scene.yaml'))
     def test_main_scene(self, data, setup_class):
         with allure.step('第一步：添加休假组'):

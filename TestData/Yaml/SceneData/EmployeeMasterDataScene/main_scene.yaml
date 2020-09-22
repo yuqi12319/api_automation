@@ -29,7 +29,7 @@ get_employee_manager_list:
 add_rank:
   body:
     coOrgId:
-    name: p8
+    name:
   expect:
     assert_type: errcode
     assert_result: '0'
@@ -39,7 +39,7 @@ get_rank:
 add_position:
   body:
     coOrgId:
-    name: ppaodsapdjaod
+    name:
   expect:
     assert_type: errcode
     assert_result: '0'
@@ -54,7 +54,7 @@ add_laborcontractparties:
     coOrgId:
     companyAddress:
     dutyParagraph:
-    name: adkadaida
+    name:
   expect:
     assert_type: errcode
     assert_result: '0'
@@ -64,7 +64,7 @@ get_laborcontractparties:
 add_costcenter:
   body:
     coOrgId:
-    name: asdadadadadadaada
+    name:
   expect:
     assert_type: errcode
     assert_result: '0'

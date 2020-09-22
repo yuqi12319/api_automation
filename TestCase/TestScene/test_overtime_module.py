@@ -42,6 +42,8 @@ class TestOvertime:
                 MyLog().error('当前用户下没有公司列表')
         return env, company_id, employee_id
 
+    @pytest.mark.smoke
+    @pytest.mark.run(order=6)
     @pytest.mark.parametrize('data', YamlHandle().read_yaml('SceneData/Overtime/main_scene.yaml'))
     def test_main_scene(self, data, setup_class):
         with allure.step('第一步：获取加班默认审批流,修改审批人为指定人，自动审批通过'):

@@ -1,0 +1,65 @@
+# 外出审批流list
+amend_attendance_approval_list:
+  params:
+    company_id:
+    type:
+  expect:
+    assert_type: errcode
+    assert_result: '0'
+# 更新加班默认审批流：
+update_amend_attendance_approval:
+  workflow_setting_id:
+  body:
+    approverlist:
+      -
+        employee_id:
+        sort_order: 1
+        type: FIXED
+    cclist: []
+    company_id:
+    name: 默认补卡审批流
+    orglist:
+      -
+       co_org_id:
+    type: AMEND_ATTENDANCE
+  expect:
+    assert_type: errcode
+    assert_result: '0'
+# 获取默认考勤组详情
+get_default_attendance_group_information:
+  attendancegroupId:
+  params:
+    attendancegroupId:
+  expect:
+    assert_type: errcode
+    assert_result: '0'
+# 修改默认考勤组
+update_default_attendance_group:
+  body:
+    attendanceDeductionSettingDto:
+    attendanceGroupLeader: null
+    clockInMachineGroupCodes: ""
+    clockSwitch: true
+    companyId:
+    employeeId:
+    employeeIds: []
+    holidayPlanId:
+    id:
+    name: "默认考勤组"
+    overtimeId:
+    pinCoordinateIds: []
+    pinWifiIds: []
+    schedulingOfficers: []
+    schedulingShiftIdList: []
+    shiftPlan:
+      FRIDAY:
+      MONDAY:
+      SATURDAY:
+      SUNDAY:
+      THURSDAY:
+      TUESDAY:
+      WEDNESDAY:
+    type: "FIXED"
+  expect:
+    assert_type: errcode
+    assert_result: '0'

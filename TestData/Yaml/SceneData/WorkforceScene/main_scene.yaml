@@ -4,6 +4,8 @@ send_apply:
     recruitmentType: New
     labourCompanyId: 733358092246319104
     labourCompanyName: workforce_company_test01
+    coOrgId: 733358092246319104
+    coOrgName: workforce_company_test01
     provinceId: 500000
     provinceName: 重庆
     cityId: 500100
@@ -22,12 +24,13 @@ send_apply:
     contactPerson: admin
     projectId:
     projectName:
-#    positionObligation:
-#    positionQualification:
-#    positionQualificationId:
-#    positionTask:
-    coOrgId: 733358092246319104
-    coOrgName: workforce_company_test01
+    approverList:
+    ccList:
+    needApproval:
+    workflowDeploymentId:
+    applyEmployeeId:
+    remark:
+    workforceApplicationBudgetDto: []
   expect:
     assert_type: errcode
     assert_result: '0'

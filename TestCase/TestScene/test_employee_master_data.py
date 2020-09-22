@@ -5,7 +5,7 @@
 # Description: 员工管理
 
 import pytest, allure
-from Common import log
+from Common.log import MyLog
 import Common.consts
 import random
 import time
@@ -26,7 +26,6 @@ class TestEmployeeManager:
     @pytest.fixture(autouse=True)
     def setupClass(self, env):
         self.env = env
-        self.log = log.MyLog()
         if Common.consts.COMPANY_INFORMATION:
             company_id = Common.consts.COMPANY_INFORMATION[0]['company_id']
             employee_id = Common.consts.COMPANY_INFORMATION[0]['employee_id']
@@ -39,11 +38,11 @@ class TestEmployeeManager:
                 brief_profile_res = EmployeeApi(self.env).brief_profile_api(brief_profile_data)
                 employee_id = brief_profile_res.json()['data']['employee_id']
             else:
-                self.log.error('当前用户下没有公司列表')
+                MyLog().error('当前用户下没有公司列表')
         self.company_id = company_id
         self.employee_id = employee_id
 
-    # @pytest.mark.smoke
+    @pytest.mark.smoke
     @pytest.mark.run(order=2)
     @pytest.mark.parametrize('data', YamlHandle().read_yaml('SceneData/EmployeeMasterDataScene/main_scene.yaml'))
     def test_main_scene(self, data):
@@ -58,26 +57,32 @@ class TestEmployeeManager:
         with allure.step('第二步：组织信息设置'):
             # 添加职级
             data['add_rank']['body']['coOrgId'] = self.company_id
+            rank_name = '职级' + str(int(time.time()))
+            data['add_rank']['body']['name'] = rank_name
             add_rank_res = Rank(self.env).add_rank_api(data['add_rank'])
             Assertions().assert_mode(add_rank_res, data['add_rank'])
 
             # 查看职级
             data['get_rank']['params']['coOrgId'] = self.company_id
             get_rank_res = Rank(self.env).get_rank_api(data['get_rank'])
-            Assertions().assert_in_text(get_rank_res.json()['data'], data['add_rank']['body']['name'])
+            Assertions().assert_in_text(get_rank_res.json()['data'], rank_name)
 
             # 添加职位
             data['add_position']['body']['coOrgId'] = self.company_id
+            position_name = '职位' + str(int(time.time()))
+            data['add_position']['body']['name'] = position_name
             add_position_res = Position(self.env).add_position_api(data['add_position'])
             Assertions().assert_mode(add_position_res, data['add_position'])
 
             # 查看职位
             data['get_position']['body']['coOrgId'] = self.company_id
             get_position_res = Position(self.env).get_position_api(data['get_position'])
-            Assertions().assert_in_text(get_position_res.json()['data'], data['add_position']['body']['name'])
+            Assertions().assert_in_text(get_position_res.json()['data'], position_name)
             
             # 添加劳动合同主体
             data['add_laborcontractparties']['body']['coOrgId'] = self.company_id
+            laborcontractparties_name = '劳动合同主体' + str(int(time.time()))
+            data['add_laborcontractparties']['body']['name'] =laborcontractparties_name
             add_laborcontractparties_res = LaborContractParties(self.env).add_laborcontractparties_api(
                 data['add_laborcontractparties'])
             Assertions().assert_mode(add_laborcontractparties_res, data['add_laborcontractparties'])
@@ -86,17 +91,19 @@ class TestEmployeeManager:
             data['get_laborcontractparties']['params']['coOrgId'] = self.company_id
             get_laborcontractparties_res = LaborContractParties(self.env).get_laborcontractparties_api(
                 data['get_laborcontractparties'])
-            Assertions().assert_in_text(get_laborcontractparties_res.json()['data'], data['add_laborcontractparties']['body']['name'])
+            Assertions().assert_in_text(get_laborcontractparties_res.json()['data'], laborcontractparties_name)
 
             # 添加成本中心
             data['add_costcenter']['body']['coOrgId'] = self.company_id
+            costcenter_name = '成本中心' + str(int(time.time()))
+            data['add_costcenter']['body']['name'] = costcenter_name
             add_costcenter_res = CostCenter(self.env).add_costcenter_api(data['add_costcenter'])
             Assertions().assert_mode(add_costcenter_res, data['add_costcenter'])
 
             # 查看成本中心
             data['get_costcenter']['params']['coOrgId'] = self.company_id
             get_costcenter_res = CostCenter(self.env).get_costcenter_api(data['get_costcenter'])
-            Assertions().assert_in_text(get_costcenter_res.json()['data'], data['add_costcenter']['body']['name'])
+            Assertions().assert_in_text(get_costcenter_res.json()['data'], costcenter_name)
 
         with allure.step('第三步：修改,查看员工信息'):
             # 获取员工组织信息
