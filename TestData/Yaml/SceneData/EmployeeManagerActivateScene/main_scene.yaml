@@ -1,7 +1,7 @@
 # 获取员工未激活集合
 unactive:
   params:
-    companyId: 733365230582628352
+    companyId:
   headers:
     x-current-page: '1'
     x-page-size: '20'
@@ -43,7 +43,7 @@ vcode_check:
 check:
   params:
     mobile:
-    companyId: 733365230582628352
+    companyId:
   expect:
     assert_type: errcode
     assert_result: '0'
@@ -61,7 +61,7 @@ employee_register:
 employee_active:
   params:
     mobile:
-    companyId: 733365230582628352
+    companyId:
     areaCode: 86
   expect:
     assert_type: errcode

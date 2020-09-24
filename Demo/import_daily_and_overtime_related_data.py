@@ -36,6 +36,7 @@ class ImportDailyAndOvertimeRelatedData:
 
     def import_overtime_form(self, database, attendance_group_id, shift_id, start_date, end_date):
         query_data = []
+        dict_for_detail = []
         employee_ids = get_employee_ids(database, attendance_group_id)
         id_generator = Generator()
         current_date = start_date
@@ -53,6 +54,10 @@ class ImportDailyAndOvertimeRelatedData:
                 query_data.append(
                     (primary_key_id, attendance_group_id, shift_id, employee, current_date, start_time, end_time,
                      duration, created_time, updated_time))
+                dict_for_detail.append(
+                    {"employee": employee, "start_time": start_time, "end_time": end_time, "duration": duration,
+                     "overtime_form_id": primary_key_id, "created_time": created_time, "updated_time": updated_time}
+                )
 
                 current_date = self.time_shifter(current_date, 1, 'd')
 
@@ -80,8 +85,44 @@ class ImportDailyAndOvertimeRelatedData:
         cursor.close()
         db.close()
 
+        return dict_for_detail
+
+    def import_overtime_detail(self, data_dict, database):
+        query_data = []
+        id_generator = Generator()
+        for d_dict in data_dict:
+            primary_key_id = int(id_generator.generate())
+            query_data.append((
+                primary_key_id, d_dict["employee"], d_dict["start_time"], d_dict["end_time"], d_dict["duration"],
+                d_dict["overtime_form_id"], d_dict["created_time"], d_dict["updated_time"]
+            ))
+
+        for data in query_data:
+            print(data)
+
+        insert_sql = "INSERT INTO overtime_detail (id,employee_id,start_time,end_time,duration,`status`," \
+                     "overtime_form_id,shift_type,deleted,created_time,updated_time) VALUES (%s, %s, %s, %s, %s, " \
+                     "'AGREED', %s, 'WORK', 0, %s, %s)"
+
+        db = pymysql.connect(host=mysqlDict['host'], port=3306, user=mysqlDict['user'], password=mysqlDict['password'],
+                             database=database, charset='utf8')
+        cursor = db.cursor()
+        try:
+            cursor.executemany(insert_sql, query_data)
+            db.commit()
+            print("success")
+        except Exception as e:
+            db.rollback()
+            print(e)
+            return e
+
+        cursor.close()
+        db.close()
+
 
 if __name__ == '__main__':
     im = ImportDailyAndOvertimeRelatedData()
-    im.import_overtime_form('dukang_attendance_dktest2', 743464931646504960, 743464931646504964, '2020-09-01 00:00:00',
-                            '2020-09-30 00:00:00')
+    data_for_detail = im.import_overtime_form('dukang_attendance_dktest2', 755428269179797504, 755428269179797508,
+                                              '2020-08-01 00:00:00', '2020-08-31 00:00:00')
+    im.import_overtime_detail(data_for_detail, 'dukang_attendance_dktest2')
+  

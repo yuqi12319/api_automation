@@ -51,6 +51,9 @@ class Request:
             raise Exception("CONNECTION_ERROR")
         except urllib3.exceptions.ProtocolError:
             raise Exception("CONNECTION_ERROR")
+        except Exception as e:
+            self.log.error(e)
+            raise
 
         time_consuming = response.elapsed.microseconds / 1000  # time_consuming为响应时间，单位为毫秒
         Common.consts.STRESS_LIST.append(time_consuming)
@@ -89,6 +92,9 @@ class Request:
             raise Exception("CONNECTION_ERROR")
         except urllib3.exceptions.ProtocolError:
             raise Exception("CONNECTION_ERROR")
+        except Exception as e:
+            self.log.error(e)
+            raise
 
         time_consuming = response.elapsed.microseconds / 1000
         Common.consts.STRESS_LIST.append(time_consuming)
@@ -125,6 +131,9 @@ class Request:
             raise Exception("CONNECTION_ERROR")
         except urllib3.exceptions.ProtocolError:
             raise Exception("CONNECTION_ERROR")
+        except Exception as e:
+            self.log.error(e)
+            raise
 
         time_consuming = response.elapsed.microseconds / 1000
         Common.consts.STRESS_LIST.append(time_consuming)
@@ -161,6 +170,9 @@ class Request:
             raise Exception("CONNECTION_ERROR")
         except urllib3.exceptions.ProtocolError:
             raise Exception("CONNECTION_ERROR")
+        except Exception as e:
+            self.log.error(e)
+            raise
 
         time_consuming = response.elapsed.microseconds / 1000
         Common.consts.STRESS_LIST.append(time_consuming)

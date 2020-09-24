@@ -1,0 +1,175 @@
+# 添加休假组
+add_leave_group:
+  body:
+    employeesDto:
+      employeeIds: []
+    leaveGroupAnnualLeaveDto:
+      capping: 5
+      carryForwardExpiry: 0
+      coOrgId:
+      country: CN
+      salCarryForwardDays: 0
+      walCarryForwardDays: 0
+      welfareAnnualLeaveList:
+        -
+          entitlement: 5
+          ruleType: FIXED
+          ruleValue: 0
+    leaveGroupDto:
+      coOrgId:
+      dayConversionHours: 8
+      fullPaySickLeaveList:
+        -
+          entitlement: 0
+          ruleType: FIXED
+          ruleValue: 0
+      name:
+      overstepSickLeaveList:
+        -
+          entitlement: 0
+          ruleType: FIXED
+          ruleValue: 0
+      priority: LOW
+      sickLeaveName: CN
+    name:
+  expect:
+    assert_type: errcode
+    assert_result: '0'
+# 获取请假审批流list
+get_leave_approval:
+  params:
+    coOrgId:
+  expect:
+    assert_type: errcode
+    assert_result: '0'
+# 获取默认考勤组详情
+get_default_attendance_group_information:
+  attendancegroupId:
+  params:
+    attendancegroupId:
+  expect:
+    assert_type: errcode
+    assert_result: '0'
+# 修改默认考勤组
+update_default_attendance_group:
+  body:
+    attendanceDeductionSettingDto:
+    attendanceGroupLeader: null
+    clockInMachineGroupCodes: ""
+    clockSwitch: true
+    companyId:
+    employeeId:
+    employeeIds: []
+    holidayPlanId: "13"
+    id:
+    name: "默认考勤组"
+    overtimeId: "733358102681747456"
+    pinCoordinateIds: []
+    pinWifiIds: []
+    schedulingOfficers: []
+    schedulingShiftIdList: []
+    shiftPlan:
+      FRIDAY:
+      MONDAY:
+      SATURDAY:
+      SUNDAY:
+      THURSDAY:
+      TUESDAY:
+      WEDNESDAY:
+    type: "FIXED"
+# 修改默认审批流
+post_leave_approval:
+  body:
+    coOrgId:
+    leaveWorkflowSettingId:
+    leaveWorkflowSettingRules:
+      -
+        leaveTypes: ['ALL']
+        rules:
+          -
+            approvalParameters: []
+            copyParameters: []
+            leaveTimeGreaterThan: 0
+    name: 默认请假审批流
+    orgIds: []
+  expect:
+    assert_type: errcode
+    assert_result: '0'
+# 固定班制请假申请
+apply_leave:
+  body:
+    employeeId:
+    orgId:
+    approverList: []
+    ccList: []
+    leaveType: ANNUAL_LEAVE
+    beginDateHalfDay: FIRSTHALF
+    endDateHalfDay: SECONDHALF
+    beginDate:
+    endDate:
+    duration: '1'
+    timeZone: Asia/Shanghai
+    reason:
+    attachment: '[]'
+  expect:
+    assert_type: errcode
+    assert_result: '0'
+# 获取员工当天上班状态
+get_employee_worktimeinfo:
+  employee_id:
+  params:
+    timeZone: Asia/Shanghai
+  expect:
+    assert_type: errcode
+    assert_result: '0'
+# 获取员工日历记录
+get_calendar_day_record:
+  body:
+    timeZone: Asia/Shanghai
+    employeeId:
+  expect:
+    assert_type: errcode
+    assert_result: '0'
+# 我的休假记录
+get_employee_leave_record:
+  params:
+    employee_id:
+    scope: CURRENT
+    limit: 20
+    offset: 0
+# 我的审批
+my_approval:
+  params:
+    company_id:
+    limit: 20
+    offset: 0
+# 我的申请
+my_application:
+  params:
+    employee_id:
+    limit: 20
+    offset: 0
+# 取消休假流程申请
+canceled_leave_apply:
+  leaveFormId:
+  body:
+    cancelReason: 接口自动化取消请假申请
+    leaveFormId:
+  expect:
+    assert_type: errcode
+    assert_result: '0'
+# 删除休假组
+delete_leave_group:
+  leaveGroupId:
+  expect:
+    assert_type: errcode
+    assert_result: '0'
+# 删除坐标打卡位置信息
+delete_pincoordinate:
+  pin_coordinate_id:
+  params:
+    attendance_group_id:
+  expect:
+    assert_type: errcode
+    assert_result: '0'
+

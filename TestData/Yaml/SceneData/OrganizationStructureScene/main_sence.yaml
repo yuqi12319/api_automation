@@ -1,43 +1,34 @@
 # 获取部门下所有子部门信息
 organizationsChildren:
-  params:
-    timestamp:
-  coOrgId: 745972619194400768
+  coOrgId:
   expect:
     assert_type: errcode
     assert_result: '0'
 # 获取公司组织架构
 chart:
-  params:
-    timestamp:
-  coOrgId: 745972619194400768
+  coOrgId:
   expect:
     assert_type: errcode
     assert_result: '0'
 # 修改公司信息
 modify_companies:
-  params:
-    timestamp:
   body:
     company_name:
     header_employee_id:
-  coOrgId: 745972619194400768
+  coOrgId:
   expect:
     assert_type: errcode
     assert_result: '0'
 # 获取层级结构
 business_level:
   params:
-    coOrgId: 745972619194400768
+    coOrgId:
     type:
-    timestamp:
   expect:
     assert_type: errcode
     assert_result: '0'
 # 新增部门
 departments:
-  params:
-    timestamp:
   body:
     businessType:
     code:

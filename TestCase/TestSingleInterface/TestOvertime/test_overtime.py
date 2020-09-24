@@ -14,7 +14,7 @@ class TestOvertime:
     @pytest.mark.parametrize("data", YamlHandle().read_yaml('SingleInterfaceData/OvertimeApply/overtime.yaml'))
     def test_apply_overtime(self, data):
         print(data)
-        res = OvertimeApply(self.env).send_apply_api(data)
+        res = OvertimeApply(self.env).send_overtime_apply_api(data)
         status_code = res.status_code
         if status_code == 200:
 
@@ -26,7 +26,7 @@ class TestOvertime:
                              YamlHandle().read_yaml('SingleInterfaceData/OvertimeApply/Team_OverTime_Apply.yaml'))
     def test_team_overtime_apply(self, data):
         print(data)
-        res = OvertimeApply(self.env).send_apply_api(data)
+        res = OvertimeApply(self.env).send_overtime_apply_api(data)
         status_code = res.status_code
         if status_code == 200:
             Assertions().assert_text(res.json()['data'], data['expect']['assert_data'])

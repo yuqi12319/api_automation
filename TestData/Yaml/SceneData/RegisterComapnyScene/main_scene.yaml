@@ -30,7 +30,7 @@ register_company:
       name: admin
       password: 12345678
     area: CN
-    name: workforce_company_test08
+    name:
     size_max: 200
     size_min: 101
   headers:

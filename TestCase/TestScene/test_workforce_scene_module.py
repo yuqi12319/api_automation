@@ -9,7 +9,8 @@ import Common.consts
 from Common.operation_yaml import YamlHandle
 from Common.operation_assert import Assertions
 from Common.operation_mysql import *
-from Common import log
+from Common.log import MyLog
+from TestApi.EmployeeApi.employee_api import EmployeeApi
 from TestApi.WorkforceApi.workforce_apply import WorkforceApply
 from TestApi.WorkforceApi.workforce_require import WorkforceRequire
 from TestApi.MuscatApi.muscat import Muscat
@@ -25,76 +26,70 @@ from TestApi.WorkforceApi.workforce_receive import WorkforceRecevice
 @allure.feature("劳务工场景测试")
 class TestWorkforceScene:
 
-    @pytest.fixture(autouse=True)
-    def precondition(self, env):
-        self.env = env
-        self.log = log.MyLog()
-        headers = dict()
-        headers['X-Dk-Token'] = Common.consts.ACCESS_TOKEN[0]
-        my_companies_res = Muscat(env).get_my_companies_api()
-        for item in my_companies_res.json()['data']:
-            data_dict = dict()
-            data_dict['my_company'] = item
-            # 判断当前公司是否有关联劳务公司
-            workforce_company_map_data = YamlHandle().read_yaml('SingleInterfaceData/Coc/workforce_company_map.yaml')[0]
-            workforce_company_map_data['params']['coOrgId'] = item['company_id']
-            workforce_company_map_res = Coc(env).workforce_company_map_api(workforce_company_map_data)
-            if workforce_company_map_res.json()['data']:
-                data_dict['workforce_company_map'] = workforce_company_map_res.json()['data']
+    @pytest.fixture(scope='class')
+    def setup_class(self, env):
+        company_id = str()
+        employee_id = str()
+        data_dict = dict()
+        if Common.consts.COMPANY_INFORMATION:
+            company_id = Common.consts.COMPANY_INFORMATION[0]['company_id']
+            employee_id = Common.consts.COMPANY_INFORMATION[0]['employee_id']
+        else:
+            my_companies_res = Muscat(env).get_my_companies_api()
+            if my_companies_res.json()['data']:
+                company_id = my_companies_res.json()['data'][-1]['company_id']
+                brief_profile_data = YamlHandle().read_yaml('SingleInterfaceData/Employee/brief_profile.yaml')[0]
+                brief_profile_data['params']['company_id'] = company_id
+                brief_profile_res = EmployeeApi(env).brief_profile_api(brief_profile_data)
+                employee_id = brief_profile_res.json()['data']['employee_id']
             else:
-                continue
+                MyLog().error('当前用户下没有公司列表')
 
-            # 判断当前公司是否是职位信息
-            positions_data = YamlHandle().read_yaml('SingleInterfaceData/Commission/position.yaml')[0]
-            positions_data['body']['coOrgId'] = item['company_id']
-            positions_res = Commission(env).positions(positions_data)
-            if positions_res.json()['data']:
-                data_dict['position'] = positions_res.json()['data']
-            else:
-                self.log.error("当前公司没有职位信息")
-                continue
+        # 判断当前公司是否是职位信息
+        positions_data = YamlHandle().read_yaml('SingleInterfaceData/Commission/position.yaml')[0]
+        positions_data['body']['coOrgId'] = company_id
+        positions_res = Commission(env).positions(positions_data)
+        if positions_res.json()['data']['positionVoList']:
+            data_dict['position'] = positions_res.json()['data']['positionVoList']
+        else:
+            MyLog().error("当前公司没有职位信息")
 
-            # 获取当前员工id
-            employeeid_data = YamlHandle().read_yaml('SingleInterfaceData/Muscat/company_guide_employeeid.yaml')[0]
-            employeeid_data['params']['company_id'] = item['company_id']
-            employeeid_res = Muscat(env).company_guide_employeeid(employeeid_data)
-            data_dict['employee'] = employeeid_res.json()['data']
+        # 判断当前公司是否有组织架构
+        organizations_trees_data = YamlHandle().read_yaml('SingleInterfaceData/Muscat/organizations.yaml')[0]
+        organizations_trees_data['employeeid'] = employee_id
+        organizations_trees_data['params']['coOrgId'] = company_id
+        organizations_trees_res = Muscat(env).organizations(organizations_trees_data)
+        if organizations_trees_res.json()['data']:
+            data_dict['organizations_trees'] = organizations_trees_res.json()['data']
+        else:
+            MyLog().error("当前公司没有组织架构")
 
-            # 判断当前公司是否有组织架构
-            organizations_trees_data = YamlHandle().read_yaml('SingleInterfaceData/Muscat/organizations.yaml')[0]
-            organizations_trees_data['employeeid'] = employeeid_res.json()['data']
-            organizations_trees_data['params']['coOrgId'] = item['company_id']
-            organizations_trees_res = Muscat(env).organizations(organizations_trees_data)
-            if organizations_trees_res.json()['data']:
-                data_dict['organizations_trees'] = organizations_trees_res.json()['data']
-            else:
-                continue
+        # 根据组织架构节点获取对应审批流
+        # approval_data = YamlHandle().read_yaml('SingleInterfaceData/Workflow/workflow_approval_query.yaml')[0]
+        # approval_data['organizationId'] = organizations_trees_res.json()['data'][0]['id']
+        # approval_data['body']['employeeId'] = employee_id
+        # approval_data['body']['type'] = 'WORKFORCEAPPLICATION'
+        # approval_res = WorkflowDomain(env).workflow_approval_query(approval_data)
+        # data_dict['approval'] = approval_res.json()['data']
 
-            # 根据组织架构节点获取对应审批流
-            approval_data = YamlHandle().read_yaml('SingleInterfaceData/Workflow/workflow_approval_query.yaml')[0]
-            approval_data['organizationId'] = organizations_trees_res.json()['data'][0]['id']
-            approval_data['body']['employeeId'] = employeeid_res.json()['data']
-            approval_data['body']['type'] = 'WORKFORCEAPPLICATION'
-            approval_res = WorkflowDomain(env).workflow_approval_query(approval_data)
-            data_dict['approval'] = approval_res.json()['data']
+        # 判断是否有项目
+        project_data = YamlHandle().read_yaml('SingleInterfaceData/ContingentProject/project.yaml')[0]
+        project_data['params']['coOrgId'] = company_id
+        project_data['body']['coOrgId'] = company_id
+        project_res = ContingentProject(env).project(project_data)
+        if project_res.json()['data']:
+            data_dict['project'] = project_res.json()['data']['list'][0]
+        else:
+            MyLog().error('当前公司没有项目')
+        return env, company_id, employee_id, data_dict
 
-            # 判断是否有项目
-            project_data = YamlHandle().read_yaml('SingleInterfaceData/ContingentProject/project.yaml')[0]
-            project_data['params']['coOrgId'] = item['company_id']
-            project_data['body']['coOrgId'] = item['company_id']
-            project_res = ContingentProject(env).project(project_data)
-            if project_res.json()['data']:
-                data_dict['project'] = project_res.json()['data']['list'][0]
-            return data_dict
-
-    @pytest.mark.skip
+    # @pytest.mark.skip
     @allure.story("主流程")
     @pytest.mark.parametrize('data', YamlHandle().read_yaml('SceneData/WorkforceScene/main_scene.yaml'))
-    def test_main_scene(self, data, precondition):
-        data_dict = self.precondition()
+    def test_main_scene(self, data, setup_class):
         with allure.step('第一步：发送申请单'):
             # 数据拼接
-            data['send_apply']['body']['coOrgId'] = data_dict['my_company']['company_id']
+            data['send_apply']['body']['coOrgId'] = setup_class[1]
             data['send_apply']['body']['coOrgName'] = data_dict['my_company']['company_name']
             data['send_apply']['body']['labourCompanyId'] = data_dict['workforce_company_map'][0][
                 'workforceCompanyId']
@@ -562,4 +557,4 @@ class TestWorkforceScene:
 
 
 if __name__ == '__main__':
-    pytest.main(["-sv", "test_workforce_scene_module.py", "--env", "test3"])
+    pytest.main(["-sv", "test_workforce_scene_module.py::TestWorkforceScene::test_main_scene", "--env", "test3"])

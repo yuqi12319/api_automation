@@ -2,9 +2,10 @@
 # Name:test_register_company_module.py
 # Author:qi.yu
 # Time:2020/8/21 3:54 下午
-# Description:
+# Description: 注册公司
 
 import pytest, allure
+import time
 import Common.consts
 from Common.operation_yaml import YamlHandle
 from Common.operation_assert import Assertions
@@ -12,19 +13,23 @@ from TestApi.MuscatApi.muscat import Muscat
 from TestApi.WorkflowApi.workflow_domain import WorkflowDomain
 from TestApi.PayrollApi.payroll_setting import PayrollSetting
 from TestApi.AttendanceApi.attendance_setting import AttendanceSetting
-from TestApi.LeaveApi.leave_setting import LeaveSetting
+from TestApi.LeaveApi.leave_setting_api import LeaveSettingApi
 from TestApi.UserApi.token import Token
 
 
 class TestRegisterCompanyScene:
 
-    @pytest.fixture(autouse=True)
-    def env_prepare(self, env):
+    @pytest.fixture(scope='class')
+    def setupClass(self, env):
         self.env = env
+        return self.env
 
-    @pytest.mark.main
+    @pytest.mark.smoke
+    @pytest.mark.run(order=1)
     @pytest.mark.parametrize('data', YamlHandle().read_yaml('SceneData/RegisterComapnyScene/main_scene.yaml'))
-    def test_main_scene(self, data):
+    def test_main_scene(self, data, setupClass):
+        self.env = setupClass
+
         with allure.step('第一步：创建公司'):
             # 获取flow_id
             flow_id_res = Muscat(self.env).get_flow_id()
@@ -41,6 +46,7 @@ class TestRegisterCompanyScene:
 
             # 注册公司
             data['register_company']['headers']['x-flow-id'] = flow_id_res.json()['data']
+            data['register_company']['body']['name'] = 'test_company_' + str(int(time.time()))
             regist_company_res = Muscat(self.env).register_comapny_api(data['register_company'])
             Assertions().assert_mode(regist_company_res, data['register_company'])
             Common.consts.COMPANY_INFORMATION.append(regist_company_res.json()['data'])
@@ -50,7 +56,7 @@ class TestRegisterCompanyScene:
             data['login']['body']['username'] = data['register_company']['body']['admin']['mobile']
             login_res = Token(self.env).login(data['login'])
             Assertions().assert_mode(login_res, data['login'])
-            Common.consts.ACCESS_TOKEN[0] = login_res.json()['data']['accessToken']
+            Common.consts.ACCESS_TOKEN.append(login_res.json()['data']['accessToken'])
 
             # 公司初始化完成
             data['initsetting']['body']['companyId'] = regist_company_res.json()['data']['company_id']
@@ -60,38 +66,50 @@ class TestRegisterCompanyScene:
         with allure.step('第二步：校验是否生成默认审批流'):
             # 默认账单审批流判断
             data['default_bill_approval']['params']['coOrgId'] = regist_company_res.json()['data']['company_id']
+            allure.attach(str(data['default_bill_approval']), "请求数据", allure.attachment_type.JSON)
             bill_approval_list_res = WorkflowDomain(self.env).bill_approval_list_api(data['default_bill_approval'])
+            allure.attach(bill_approval_list_res.text, "bill_approval_list_api返回结果", allure.attachment_type.JSON)
             Assertions().assert_in_text(bill_approval_list_res.json()['data'], '默认账单审批流')
 
             # 默认用工申请审批流判断
             data['default_workforce_apply_approval']['params']['coOrgId'] = regist_company_res.json()['data'][
                 'company_id']
+            allure.attach(str(data['default_workforce_apply_approval']), "请求数据", allure.attachment_type.JSON)
             workforce_apply_approval_list_res = WorkflowDomain(self.env).workforce_apply_approval_list_api(
                 data['default_workforce_apply_approval'])
+            allure.attach(workforce_apply_approval_list_res.text, "workforce_apply_approval_list_api返回结果", allure.attachment_type.JSON)
             Assertions().assert_in_text(workforce_apply_approval_list_res.json()['data'], '默认用工申请审批流')
 
             # 默认用工登记审批流判断
             data['default_workforce_register_approval']['params']['coOrgId'] = regist_company_res.json()['data'][
                 'company_id']
+            allure.attach(str(data['default_workforce_register_approval']), "请求数据", allure.attachment_type.JSON)
             workforce_register_approval_list_res = WorkflowDomain(self.env).workforce_register_approval_list_api(
                 data['default_workforce_register_approval'])
+            allure.attach(workforce_register_approval_list_res.text, "workforce_register_approval_list_api返回结果", allure.attachment_type.JSON)
             Assertions().assert_in_text(workforce_register_approval_list_res.json()['data'], '默认用工登记审批流')
 
             # 默认报销审批流判断
             data['default_claim_approval']['params']['coOrgId'] = regist_company_res.json()['data']['company_id']
+            allure.attach(str(data['default_claim_approval']), "请求数据", allure.attachment_type.JSON)
             claim_approval_list_res = WorkflowDomain(self.env).claim_approval_list_api(data['default_claim_approval'])
+            allure.attach(claim_approval_list_res.text, "claim_approval_list_api返回结果", allure.attachment_type.JSON)
             Assertions().assert_in_text(claim_approval_list_res.json()['data'], '默认报销审批流')
 
             # 默认请假审批流判断
             data['default_leave_approval']['params']['coOrgId'] = regist_company_res.json()['data']['company_id']
+            allure.attach(str(data['default_leave_approval']), "请求数据", allure.attachment_type.JSON)
             leave_approval_list_res = WorkflowDomain(self.env).leave_approval_list_api(data['default_leave_approval'])
+            allure.attach(leave_approval_list_res.text, "leave_approval_list_api返回结果", allure.attachment_type.JSON)
             Assertions().assert_in_text(leave_approval_list_res.json()['data'], '默认请假审批流')
 
             # 默认加班,补卡,外出,离职审批流判断
             data['default_attendance_approval']['params']['company_id'] = regist_company_res.json()['data'][
                 'company_id']
+            allure.attach(str(data['default_attendance_approval']), "请求数据", allure.attachment_type.JSON)
             attendance_approval_list_res = WorkflowDomain(self.env).attendance_approval_list_api(
                 data['default_attendance_approval'])
+            allure.attach(attendance_approval_list_res.text, "attendance_approval_list_api返回结果", allure.attachment_type.JSON)
             Assertions().assert_in_text(attendance_approval_list_res.json()['data'], '默认加班审批流')
             Assertions().assert_in_text(attendance_approval_list_res.json()['data'], '默认外出审批流')
             Assertions().assert_in_text(attendance_approval_list_res.json()['data'], '默认补卡审批流')
@@ -99,7 +117,9 @@ class TestRegisterCompanyScene:
 
         with allure.step('第三步：校验是否生成默认薪资项'):
             data['default_payroll_item']['params']['coOrgId'] = regist_company_res.json()['data']['company_id']
+            allure.attach(str(data['default_payroll_item']), "请求数据", allure.attachment_type.JSON)
             payroll_item_list_res = PayrollSetting(self.env).payroll_item_list_api(data['default_payroll_item'])
+            allure.attach(payroll_item_list_res.text, "payroll_item_list_api返回结果", allure.attachment_type.JSON)
             Assertions().assert_in_text(payroll_item_list_res.json()['data'], '基本工资')
             Assertions().assert_in_text(payroll_item_list_res.json()['data'], '工作日加班费')
             Assertions().assert_in_text(payroll_item_list_res.json()['data'], '休息日加班费')
@@ -111,19 +131,26 @@ class TestRegisterCompanyScene:
         with allure.step('第四步：校验是否生成默认考勤组'):
             data['default_attendance_group']['params']['company_id'] = regist_company_res.json()['data']['company_id']
             data['default_attendance_group']['params']['employeeId'] = regist_company_res.json()['data']['employee_id']
-            attendance_group_res = AttendanceSetting(self.env).get_attendance_group_api(data['default_attendance_group'])
+            allure.attach(str(data['default_attendance_group']), "请求数据", allure.attachment_type.JSON)
+            attendance_group_res = AttendanceSetting(self.env).get_attendance_group_api(
+                data['default_attendance_group'])
+            allure.attach(attendance_group_res.text, "get_attendance_group_api返回结果", allure.attachment_type.JSON)
             Assertions().assert_in_text(attendance_group_res.json()['data'], '默认考勤组')
 
         with allure.step('第五步：校验是否生成默认休假组'):
             data['default_leave_group']['params']['companyId'] = regist_company_res.json()['data']['company_id']
-            leave_group_res = LeaveSetting(self.env).get_leave_group_api(data['default_leave_group'])
+            allure.attach(str(data['default_leave_group']), "请求数据", allure.attachment_type.JSON)
+            leave_group_res = LeaveSettingApi(self.env).get_leave_group_api(data['default_leave_group'])
+            allure.attach(leave_group_res.text, "get_leave_group_api返回结果", allure.attachment_type.JSON)
             Assertions().assert_in_text(leave_group_res.json()['data'], '默认休假组')
 
+        '''
         with allure.step('解散公司'):
-            data['dissolve_company']['companyId'] = regist_company_res.json()['data']['company_id']
+            data['dissolve_company']['companyId'] = 757996506060947456#regist_company_res.json()['data']['company_id']
             dissolve_company_res = Muscat(self.env).dissolve_company(data['dissolve_company'])
             Assertions().assert_mode(dissolve_company_res, data['dissolve_company'])
-
+        '''
+        
 
 if __name__ == '__main__':
     pytest.main(['-sv', 'test_register_company_module.py', '--env', 'test3'])

@@ -1,5 +1,5 @@
-# 加班审批流list
-overtime_approval_list:
+# 外出审批流list
+outgoing_approval_list:
   params:
     company_id:
     type:
@@ -7,7 +7,7 @@ overtime_approval_list:
     assert_type: errcode
     assert_result: '0'
 # 更新加班默认审批流：
-update_overtime_approval:
+update_outgoing_approval:
   workflow_setting_id:
   body:
     approverlist:
@@ -17,11 +17,11 @@ update_overtime_approval:
         type: FIXED
     cclist: []
     company_id:
-    name: 默认加班审批流
+    name: 默认外出审批流
     orglist:
       -
        co_org_id:
-    type: OVERTIME
+    type: OUTGOING
   expect:
     assert_type: errcode
     assert_result: '0'
@@ -63,34 +63,23 @@ update_default_attendance_group:
   expect:
     assert_type: errcode
     assert_result: '0'
-# 查询加班申请时间是否符合条件
-check_overtime:
-  params:
-    attendanceGroupId:
-    employee_id:
-    overtimeDate:
-    overtime_start:
-    overtime_end:
-    shiftId:
-    timeZone: Asia/Shanghai
-  expect:
-    assert_type: errcode
-    assert_result: '0'
-# 加班申请
-send_overtime_apply:
+# 外出申请
+send_outgoing_apply:
   body:
-    org_id:
+    orgId:
     reason:
-    employee_id:
-    start_time:
-    end_time:
+    employeeId:
+    beginDate:
+    endDate:
+    beginDateHalfDay: FIRSTHALF
+    endDateHalfDay: SECONDHALF
     timeZone: Asia/Shanghai
     approverList:
       -
         employee_id:
         sort_order: 1
     ccList: []
-    duration:
+    duration: 1
     attachment: '[]'
   expect:
     assert_type: errcode
@@ -131,11 +120,10 @@ get_notifications_list:
     assert_type: errcode
     assert_result: '0'
 # 取消加班
-canceled_overtime_apply:
-  overtime_form_id:
+canceled_outgoing_apply:
+  outgoingFormId:
   body:
-    overtime_form_id:
-    cancelReason: 接口自动化取消加班申请
+    cancelReason: 接口自动化取消外出申请
   expect:
     assert_type: errcode
     assert_result: '0'
