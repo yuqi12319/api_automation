@@ -42,7 +42,7 @@ class TestImportEmployee:
     def test_main_scene(self, data, setup_class):
         with allure.step("第一步，导入员工"):
             # files = {'file': open('../../TestData/import_employee.xlsx', 'rb')}
-            files = {'file': open('/Users/qi.yu/PycharmProjects/riesling-apitest/TestData/import_employee.xlsx', 'rb')}
+            files = {'file': open('./TestData/import_employee.xlsx', 'rb')}
             data['importEmployee']['params']['coOrgId'] = setup_class[1]
             data['importEmployee']['params']['timestamp'] = int(round(time.time() * 1000))
             import_employee_res = EmployeeDomain(setup_class[0]).batch_import_employee(data['importEmployee'], files)

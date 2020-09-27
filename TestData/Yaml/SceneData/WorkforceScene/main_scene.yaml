@@ -1,36 +1,76 @@
+# 获取用工申请审批流列表
+workforce_application_approval_list:
+  params:
+    coOrgId:
+    offset: 0
+    limit: 10
+    type: WORKFORCEAPPLICATION
+  expect:
+    assert_type: errcode
+    assert_result: '0'
+# 修改默认审批流（无需审批）
+update_default_approval:
+  body:
+    coOrgId:
+    name: 默认用工申请审批流
+    orgIds: []
+    type: WORKFORCEAPPLICATION
+    workflowSettingId:
+    workflowSettingRuleGroupDtoList:
+      -
+        workflowSettingApproverList: []
+        workflowSettingCcList: []
+        workflowSettingRuleGroupRuleDtoList:
+          -
+            ruleName: REQUIRE_APPROVAL
+            ruleValue: 0
+  expect:
+    assert_type: errcode
+    assert_result: '0'
 send_apply:
   url: /dukang-workforce/api/workforce/apply
   body:
     recruitmentType: New
-    labourCompanyId: 733358092246319104
-    labourCompanyName: workforce_company_test01
-    coOrgId: 733358092246319104
-    coOrgName: workforce_company_test01
+    labourCompanyId:
+    labourCompanyName:
+    coOrgId:
+    coOrgName:
     provinceId: 500000
     provinceName: 重庆
     cityId: 500100
     cityName: 重庆市
-    organizationId: 737612490304651264
-    organizationName: A仓库
-    address: 工作地址输入框
+    organizationId:
+    organizationName:
+    address:
     joinDate: 1606752000000
     probationPeriodExpire: 1609344000000
-    positionId: 737611770553696256
-    positionName: 商务
+    positionId:
+    positionName:
     demandPersonCount: 10
     workforcePayrollDtos: []
-    contactEmail: 123@abc.com
-    contactMobile: 18818811881
-    contactPerson: admin
+    contactEmail:
+    contactMobile:
+    contactPerson:
     projectId:
     projectName:
-    approverList:
-    ccList:
-    needApproval:
+    approverList: []
+    ccList: []
+    needApproval: false
     workflowDeploymentId:
     applyEmployeeId:
     remark:
-    workforceApplicationBudgetDto: []
+    workforceApplicationBudgetDto:
+      demandExplain: 无预算信息
+      financeActual:
+      financeCurrency:
+      financePeriod:
+      financePlan:
+      passd: false
+      personnelActual:
+      personnelPeriod:
+      personnelPlan:
+      referenceOrganizationId:
+      referenceOrganizationName:
   expect:
     assert_type: errcode
     assert_result: '0'

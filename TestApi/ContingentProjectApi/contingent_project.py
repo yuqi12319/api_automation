@@ -12,8 +12,14 @@ class ContingentProject(Const):
     def __init__(self, env):
         super().__init__(env)
 
-    def project(self, data):
+    def get_project_list_api(self, data):
         url = self.url_path + "/dukang-contingent-project/api/project"
         res = self.request.send_request_method('post', url=url, params=data['params'], json=data['body'],
                                                headers=self.headers)
+        return res
+
+    # 添加项目
+    def add_project_api(self, data):
+        url = self.url_path + '/dukang-contingent-project/api/projectManage'
+        res = self.request.send_request_method('post', url=url, json=data['body'], headers=self.headers)
         return res
