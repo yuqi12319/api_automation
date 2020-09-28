@@ -16,6 +16,8 @@ class Const(object):
         self.log = log.MyLog()
         if env == "test":
             self.url_path = Config().get_conf('test_env', 'test')
+        elif env == "test0":
+            self.url_path = Config().get_conf('test_env', 'test0')
         elif env == "test1":
             self.url_path = Config().get_conf('test_env', 'test1')
         elif env == "test2":
