@@ -1,0 +1,52 @@
+{
+  "uid" : "4b4757e66a1912dae1a509f688f20b0f",
+  "name" : "categories",
+  "children" : [ {
+    "name" : "Product defects",
+    "children" : [ {
+      "name" : "AssertionError",
+      "children" : [ {
+        "name" : "test_main_scene[data0]",
+        "uid" : "8cb4c303db120c5f",
+        "parentUid" : "a0017ad855102fea08b8682d27fec4ca",
+        "status" : "failed",
+        "time" : {
+          "start" : 1601372778166,
+          "stop" : 1601372778305,
+          "duration" : 139
+        },
+        "flaky" : false,
+        "newFailed" : false,
+        "parameters" : [ "{'organizationsChildren': {'coOrgId': None, 'expect': {'assert_type': 'errcode', 'assert_result': '0'}}, 'chart': {'coOrgId': None, 'expect': {'assert_type': 'errcode', 'assert_result': '0'}}, 'modify_companies': {'body': {'company_name': None, 'header_employee_id': None}, 'coOrgId': None, 'expect': {'assert_type': 'errcode', 'assert_result': '0'}}, 'business_level': {'params': {'coOrgId': None, 'type': None}, 'expect': {'assert_type': 'errcode', 'assert_result': '0'}}, 'departments': {'body': {'businessType': None, 'code': None, 'name': None, 'organizationBusinessLevelId': None, 'parent_id': None}, 'expect': {'assert_type': 'errcode', 'assert_result': '0'}}}" ]
+      }, {
+        "name" : "test_main_scene[data0]",
+        "uid" : "a56f650980206f82",
+        "parentUid" : "a0017ad855102fea08b8682d27fec4ca",
+        "status" : "failed",
+        "time" : {
+          "start" : 1601372782674,
+          "stop" : 1601372793110,
+          "duration" : 10436
+        },
+        "flaky" : false,
+        "newFailed" : false,
+        "parameters" : [ "{'add_leave_group': {'body': {'employeesDto': {'employeeIds': []}, 'leaveGroupAnnualLeaveDto': {'capping': 5, 'carryForwardExpiry': 0, 'coOrgId': None, 'country': 'CN', 'salCarryForwardDays': 0, 'walCarryForwardDays': 0, 'welfareAnnualLeaveList': [{'entitlement': 5, 'ruleType': 'FIXED', 'ruleValue': 0}]}, 'leaveGroupDto': {'coOrgId': None, 'dayConversionHours': 8, 'fullPaySickLeaveList': [{'entitlement': 0, 'ruleType': 'FIXED', 'ruleValue': 0}], 'name': None, 'overstepSickLeaveList': [{'entitlement': 0, 'ruleType': 'FIXED', 'ruleValue': 0}], 'priority': 'LOW', 'sickLeaveName': 'CN'}, 'name': None}, 'expect': {'assert_type': 'errcode', 'assert_result': '0'}}, 'get_leave_approval': {'params': {'coOrgId': None}, 'expect': {'assert_type': 'errcode', 'assert_result': '0'}}, 'get_default_attendance_group_information': {'attendancegroupId': None, 'params': {'attendancegroupId': None}, 'expect': {'assert_type': 'errcode', 'assert_result': '0'}}, 'update_default_attendance_group': {'body': {'attendanceDeductionSettingDto': None, 'attendanceGroupLeader': None, 'clockInMachineGroupCodes': '', 'clockSwitch': True, 'companyId': None, 'employeeId': None, 'employeeIds': [], 'holidayPlanId': '13', 'id': None, 'name': '默认考勤组', 'overtimeId': '733358102681747456', 'pinCoordinateIds': [], 'pinWifiIds': [], 'schedulingOfficers': [], 'schedulingShiftIdList': [], 'shiftPlan': {'FRIDAY': None, 'MONDAY': None, 'SATURDAY': None, 'SUNDAY': None, 'THURSDAY': None, 'TUESDAY': None, 'WEDNESDAY': None}, 'type': 'FIXED'}}, 'post_leave_approval': {'body': {'coOrgId': None, 'leaveWorkflowSettingId': None, 'leaveWorkflowSettingRules': [{'leaveTypes': ['ALL'], 'rules': [{'approvalParameters': [], 'copyParameters': [], 'leaveTimeGreaterThan': 0}]}], 'name': '默认请假审批流', 'orgIds': []}, 'expect': {'assert_type': 'errcode', 'assert_result': '0'}}, 'apply_leave': {'body': {'employeeId': None, 'orgId': None, 'approverList': [], 'ccList': [], 'leaveType': 'ANNUAL_LEAVE', 'beginDateHalfDay': 'FIRSTHALF', 'endDateHalfDay': 'SECONDHALF', 'beginDate': None, 'endDate': None, 'duration': '1', 'timeZone': 'Asia/Shanghai', 'reason': None, 'attachment': '[]'}, 'expect': {'assert_type': 'errcode', 'assert_result': '0'}}, 'get_employee_worktimeinfo': {'employee_id': None, 'params': {'timeZone': 'Asia/Shanghai'}, 'expect': {'assert_type': 'errcode', 'assert_result': '0'}}, 'get_calendar_day_record': {'body': {'timeZone': 'Asia/Shanghai', 'employeeId': None}, 'expect': {'assert_type': 'errcode', 'assert_result': '0'}}, 'get_employee_leave_record': {'params': {'employee_id': None, 'scope': 'CURRENT', 'limit': 20, 'offset': 0}}, 'my_approval': {'params': {'company_id': None, 'limit': 20, 'offset': 0}}, 'my_application': {'params': {'employee_id': None, 'limit': 20, 'offset': 0}}, 'canceled_leave_apply': {'leaveFormId': None, 'body': {'cancelReason': '接口自动化取消请假申请', 'leaveFormId': None}, 'expect': {'assert_type': 'errcode', 'assert_result': '0'}}, 'delete_leave_group': {'leaveGroupId': None, 'expect': {'assert_type': 'errcode', 'assert_result': '0'}}, 'delete_pincoordinate': {'pin_coordinate_id': None, 'params': {'attendance_group_id': None}, 'expect': {'assert_type': 'errcode', 'assert_result': '0'}}}" ]
+      }, {
+        "name" : "test_main_scene[data0]",
+        "uid" : "ee4845ba25d873ef",
+        "parentUid" : "a0017ad855102fea08b8682d27fec4ca",
+        "status" : "failed",
+        "time" : {
+          "start" : 1601372793336,
+          "stop" : 1601372802489,
+          "duration" : 9153
+        },
+        "flaky" : false,
+        "newFailed" : false,
+        "parameters" : [ "{'outgoing_approval_list': {'params': {'company_id': None, 'type': None}, 'expect': {'assert_type': 'errcode', 'assert_result': '0'}}, 'update_outgoing_approval': {'workflow_setting_id': None, 'body': {'approverlist': [{'employee_id': None, 'sort_order': 1, 'type': 'FIXED'}], 'cclist': [], 'company_id': None, 'name': '默认外出审批流', 'orglist': [{'co_org_id': None}], 'type': 'OUTGOING'}, 'expect': {'assert_type': 'errcode', 'assert_result': '0'}}, 'get_default_attendance_group_information': {'attendancegroupId': None, 'params': {'attendancegroupId': None}, 'expect': {'assert_type': 'errcode', 'assert_result': '0'}}, 'update_default_attendance_group': {'body': {'attendanceDeductionSettingDto': None, 'attendanceGroupLeader': None, 'clockInMachineGroupCodes': '', 'clockSwitch': True, 'companyId': None, 'employeeId': None, 'employeeIds': [], 'holidayPlanId': None, 'id': None, 'name': '默认考勤组', 'overtimeId': None, 'pinCoordinateIds': [], 'pinWifiIds': [], 'schedulingOfficers': [], 'schedulingShiftIdList': [], 'shiftPlan': {'FRIDAY': None, 'MONDAY': None, 'SATURDAY': None, 'SUNDAY': None, 'THURSDAY': None, 'TUESDAY': None, 'WEDNESDAY': None}, 'type': 'FIXED'}, 'expect': {'assert_type': 'errcode', 'assert_result': '0'}}, 'send_outgoing_apply': {'body': {'orgId': None, 'reason': None, 'employeeId': None, 'beginDate': None, 'endDate': None, 'beginDateHalfDay': 'FIRSTHALF', 'endDateHalfDay': 'SECONDHALF', 'timeZone': 'Asia/Shanghai', 'approverList': [{'employee_id': None, 'sort_order': 1}], 'ccList': [], 'duration': 1, 'attachment': '[]'}, 'expect': {'assert_type': 'errcode', 'assert_result': '0'}}, 'get_calendar_day_record': {'body': {'timeZone': 'Asia/Shanghai', 'employeeId': None}, 'expect': {'assert_type': 'errcode', 'assert_result': '0'}}, 'my_approval': {'params': {'company_id': None, 'limit': 20, 'offset': 0}, 'expect': {'assert_type': 'errcode', 'assert_result': '0'}}, 'my_application': {'params': {'employee_id': None, 'limit': 20, 'offset': 0}, 'expect': {'assert_type': 'errcode', 'assert_result': '0'}}, 'get_notifications_list': {'params': {'company_id': None, 'limit': 20, 'offset': 0}, 'expect': {'assert_type': 'errcode', 'assert_result': '0'}}, 'canceled_outgoing_apply': {'outgoingFormId': None, 'body': {'cancelReason': '接口自动化取消外出申请'}, 'expect': {'assert_type': 'errcode', 'assert_result': '0'}}, 'delete_pincoordinate': {'pin_coordinate_id': None, 'params': {'attendance_group_id': None}, 'expect': {'assert_type': 'errcode', 'assert_result': '0'}}}" ]
+      } ],
+      "uid" : "a0017ad855102fea08b8682d27fec4ca"
+    } ],
+    "uid" : "8fb3a91ba5aaf9de24cc8a92edc82b5d"
+  } ]
+}

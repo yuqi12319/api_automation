@@ -12,14 +12,11 @@ import random
 from Common.operation_yaml import YamlHandle
 from Common.operation_assert import Assertions
 from TestApi.AttendanceApi.attendance_group_api import AttendanceGroupApi
-from TestApi.AttendanceApi.attendance_group_internal_api import AttendanceGroupInternalApi
-from TestApi.AttendanceApi.holiday_api import HolidayApi
-from TestApi.AttendanceApi.shift_api import ShiftApi
-from TestApi.MuscatApi.muscat import Muscat
 from TestApi.EmployeeApi.employee_api import EmployeeApi
 from TestApi.AttendanceApi.shift_scheduling_api import ShiftSchedulingApi
 from TestApi.AttendanceApi.scheduling_clock_api import SchedulingClockApi
 from TestApi.AttendanceApi.clock_api import ClockApi
+from TestApi.MuscatApi.user_api import UserApi
 from TestCase.TestScene import attendance
 
 
@@ -30,10 +27,10 @@ class TestScheduleClassClock:
         company_id = str()
         employee_id = str()
         if Common.consts.COMPANY_INFORMATION:
-            company_id = Common.consts.COMPANY_INFORMATION[0]['company_id']
-            employee_id = Common.consts.COMPANY_INFORMATION[0]['employee_id']
+            company_id = Common.consts.COMPANY_INFORMATION['company_id']
+            employee_id = Common.consts.COMPANY_INFORMATION['employee_id']
         else:
-            my_companies_res = Muscat(env).get_my_companies_api()
+            my_companies_res = UserApi(env).get_my_companies_api()
             if my_companies_res.json()['data']:
                 company_id = my_companies_res.json()['data'][0]['company_id']
                 brief_profile_data = YamlHandle().read_yaml('SingleInterfaceData/Employee/brief_profile.yaml')[0]

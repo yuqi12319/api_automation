@@ -20,11 +20,14 @@ RESULT_LIST = []
 # 登陆token
 ACCESS_TOKEN = []
 
+# 执行环境
+RUN_ENV = []
+
 # OpenApi登录Token
 OPENAPI_ACCESS_TOKEN = []
 
 # 公司信息
-COMPANY_INFORMATION = []
+COMPANY_INFORMATION = {}
 
 # company_id & employee_id
 COMPANY_ID = []

@@ -1,0 +1,132 @@
+DEBUG    urllib3.connectionpool:connectionpool.py:230 Starting new HTTP connection (1): dktest3-api.bipocloud.com:80
+DEBUG    urllib3.connectionpool:connectionpool.py:442 http://dktest3-api.bipocloud.com:80 "POST /services/dukang-user/login HTTP/1.1" 200 None
+DEBUG    root:log.py:74 [INFO     2020-09-29 17:46:12]URL: http://dktest3-api.bipocloud.com/services/dukang-user/login 
+[REQUEST BODY]:b'{"areaCode": 86, "clientId": "gardenia", "password": 12345678, "username": 18373280066}' 
+[RESPONSE]:{'errcode': '0', 'errmsg': 'ok', 'data': {'accessToken': 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJjbGllbnRJZCI6ImdhcmRlbmlhIiwiY3JlYXRlZFRpbWUiOjE2MDEzNzI3NzIwMDEsInRva2VuVHlwZSI6IkFDQ0VTU1RPS0VOIiwidXNlcklkIjoiNzMzMzU4MDgzNTE3OTcyNDgwIiwiaWF0IjoxNjAxMzcyNzcyfQ.VBvwO8h2IgPIs0LhESIHVZ7hGFX5aIdadP4LF-75exc', 'refreshToken': 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJjbGllbnRJZCI6ImdhcmRlbmlhIiwiY3JlYXRlZFRpbWUiOjE2MDEzNzI3NzIwMDIsInRva2VuVHlwZSI6IlJFRlJFU0hUT0tFTiIsInVzZXJJZCI6IjczMzM1ODA4MzUxNzk3MjQ4MCIsImlhdCI6MTYwMTM3Mjc3Mn0.q2yZa-3Mf6Mckk_wI4MYjATaJ4TrKu2OJ--C68EIOXk', 'expires': 18000000}} 
+[CODE]: 200
+DEBUG    urllib3.connectionpool:connectionpool.py:230 Starting new HTTP connection (1): dktest3-api.bipocloud.com:80
+DEBUG    urllib3.connectionpool:connectionpool.py:442 http://dktest3-api.bipocloud.com:80 "POST /services/dukang-employee/employees/manage?company_id=760558037424406528 HTTP/1.1" 200 None
+DEBUG    root:log.py:74 [INFO     2020-09-29 17:46:12]URL: http://dktest3-api.bipocloud.com/services/dukang-employee/employees/manage 
+[REQUEST BODY]:b'{"administrator_auth": null, "birth_date": null, "confirmed_date": null, "department_ids": null, "employment_role": null, "employment_status": [1], "employment_type": null, "first_work_date": null, "gender_value": null, "join_date": null, "keyword": null, "laborContractExpiringDates": null, "last_working_date": null, "marital_status_value": null, "nationality_value": null, "probation_date": null, "probation_period": null}' 
+[RESPONSE]:{'errcode': '0', 'errmsg': 'ok', 'data': {'on_job': 1, 'full_time': 1, 'part_time': None, 'practice': None, 'labour_services': None, 'probation_employees': 0, 'will_to_Leave': 0, 'total': 1, 'employeeManageVoList': [{'id': '760558037416017920', 'userId': '733358083517972480', 'displayName': 'admin', 'legalName': None, 'birthDate': None, 'mobileAreaCode': '86', 'mobile': '18373280066', 'companyEmail': None, 'position': None, 'age': None, 'joinDate': None, 'probationDate': None, 'lastWorkingDate': None, 'firstWorkDate': None, 'submitResignationDate': None, 'firstWorkDateLong': None, 'chineseFlag': True, 'commissionOrgnizationList': [], 'postionList': [], 'nationalityValue': None, 'nationalityName': None, 'identityTypeValue': None, 'identityNo': None, 'rank': None, 'country': None, 'province': None, 'city': None, 'laborContractParties': None, 'costCenter': None, 'confirmedDateLong': None, 'attendanceGroupName': '默认考勤组', 'leaveGroupName': '默认休假组', 'claimGroupName': '默认报销组', 'companyTelephone': None, 'laborContractExpiringDate': None, 'employee_code': None, 'gender_value': None, 'departments': 'test_company_1601372766', 'employment_type': '全职', 'employee_status': '在职', 'birth_date': None, 'join_date': None, 'probation_date': None, 'last_working_date': None}]}} 
+[CODE]: 200
+DEBUG    urllib3.connectionpool:connectionpool.py:230 Starting new HTTP connection (1): dktest3-api.bipocloud.com:80
+DEBUG    urllib3.connectionpool:connectionpool.py:442 http://dktest3-api.bipocloud.com:80 "POST /services/dukang-employee/rank HTTP/1.1" 200 None
+DEBUG    root:log.py:74 [INFO     2020-09-29 17:46:12]URL: http://dktest3-api.bipocloud.com/services/dukang-employee/rank 
+[REQUEST BODY]:b'{"coOrgId": "760558037424406528", "name": "\\u804c\\u7ea71601372772"}' 
+[RESPONSE]:{'errcode': '0', 'errmsg': 'ok', 'data': None} 
+[CODE]: 200
+DEBUG    urllib3.connectionpool:connectionpool.py:230 Starting new HTTP connection (1): dktest3-api.bipocloud.com:80
+DEBUG    urllib3.connectionpool:connectionpool.py:442 http://dktest3-api.bipocloud.com:80 "GET /services/dukang-employee/rank?coOrgId=760558037424406528 HTTP/1.1" 200 None
+DEBUG    root:log.py:74 [INFO     2020-09-29 17:46:12]URL: http://dktest3-api.bipocloud.com/services/dukang-employee/rank 
+[REQUEST BODY]:None 
+[RESPONSE]:{'errcode': '0', 'errmsg': 'ok', 'data': [{'id': '760558060983812096', 'coOrgId': '760558037424406528', 'name': '职级1601372772'}]} 
+[CODE]: 200
+DEBUG    urllib3.connectionpool:connectionpool.py:230 Starting new HTTP connection (1): dktest3-api.bipocloud.com:80
+DEBUG    urllib3.connectionpool:connectionpool.py:442 http://dktest3-api.bipocloud.com:80 "POST /services/dukang-commission/position HTTP/1.1" 200 None
+DEBUG    root:log.py:74 [INFO     2020-09-29 17:46:12]URL: http://dktest3-api.bipocloud.com/services/dukang-commission/position 
+[REQUEST BODY]:b'{"coOrgId": "760558037424406528", "name": "\\u804c\\u4f4d1601372772"}' 
+[RESPONSE]:{'errcode': '0', 'errmsg': 'ok', 'data': None} 
+[CODE]: 200
+DEBUG    urllib3.connectionpool:connectionpool.py:230 Starting new HTTP connection (1): dktest3-api.bipocloud.com:80
+DEBUG    urllib3.connectionpool:connectionpool.py:442 http://dktest3-api.bipocloud.com:80 "POST /services/dukang-commission/positions?offset=0&limit=0 HTTP/1.1" 200 None
+DEBUG    root:log.py:74 [INFO     2020-09-29 17:46:12]URL: http://dktest3-api.bipocloud.com/services/dukang-commission/positions 
+[REQUEST BODY]:b'{"coOrgId": "760558037424406528"}' 
+[RESPONSE]:{'errcode': '0', 'errmsg': 'ok', 'data': {'positionVoList': [{'positionId': '760558061608763392', 'name': '职位1601372772'}], 'total': 1}} 
+[CODE]: 200
+DEBUG    urllib3.connectionpool:connectionpool.py:230 Starting new HTTP connection (1): dktest3-api.bipocloud.com:80
+DEBUG    urllib3.connectionpool:connectionpool.py:442 http://dktest3-api.bipocloud.com:80 "POST /services/dukang-employee/laborcontractparties HTTP/1.1" 200 None
+DEBUG    root:log.py:74 [INFO     2020-09-29 17:46:12]URL: http://dktest3-api.bipocloud.com/services/dukang-employee/laborcontractparties 
+[REQUEST BODY]:b'{"coOrgId": "760558037424406528", "companyAddress": null, "dutyParagraph": null, "name": "\\u52b3\\u52a8\\u5408\\u540c\\u4e3b\\u4f531601372772"}' 
+[RESPONSE]:{'errcode': '0', 'errmsg': 'ok', 'data': None} 
+[CODE]: 200
+DEBUG    urllib3.connectionpool:connectionpool.py:230 Starting new HTTP connection (1): dktest3-api.bipocloud.com:80
+DEBUG    urllib3.connectionpool:connectionpool.py:442 http://dktest3-api.bipocloud.com:80 "GET /services/dukang-employee/laborcontractparties?coOrgId=760558037424406528 HTTP/1.1" 200 None
+DEBUG    root:log.py:74 [INFO     2020-09-29 17:46:12]URL: http://dktest3-api.bipocloud.com/services/dukang-employee/laborcontractparties 
+[REQUEST BODY]:None 
+[RESPONSE]:{'errcode': '0', 'errmsg': 'ok', 'data': [{'id': '760558062284046336', 'coOrgId': '760558037424406528', 'name': '劳动合同主体1601372772', 'dutyParagraph': None, 'companyAddress': None}]} 
+[CODE]: 200
+DEBUG    urllib3.connectionpool:connectionpool.py:230 Starting new HTTP connection (1): dktest3-api.bipocloud.com:80
+DEBUG    urllib3.connectionpool:connectionpool.py:442 http://dktest3-api.bipocloud.com:80 "POST /services/dukang-employee/costcenter HTTP/1.1" 200 None
+DEBUG    root:log.py:74 [INFO     2020-09-29 17:46:12]URL: http://dktest3-api.bipocloud.com/services/dukang-employee/costcenter 
+[REQUEST BODY]:b'{"coOrgId": "760558037424406528", "name": "\\u6210\\u672c\\u4e2d\\u5fc31601372772"}' 
+[RESPONSE]:{'errcode': '0', 'errmsg': 'ok', 'data': None} 
+[CODE]: 200
+DEBUG    urllib3.connectionpool:connectionpool.py:230 Starting new HTTP connection (1): dktest3-api.bipocloud.com:80
+DEBUG    urllib3.connectionpool:connectionpool.py:442 http://dktest3-api.bipocloud.com:80 "GET /services/dukang-employee/costcenter?coOrgId=760558037424406528 HTTP/1.1" 200 None
+DEBUG    root:log.py:74 [INFO     2020-09-29 17:46:12]URL: http://dktest3-api.bipocloud.com/services/dukang-employee/costcenter 
+[REQUEST BODY]:None 
+[RESPONSE]:{'errcode': '0', 'errmsg': 'ok', 'data': [{'id': '760558062896414720', 'coOrgId': '760558037424406528', 'name': '成本中心1601372772'}]} 
+[CODE]: 200
+DEBUG    urllib3.connectionpool:connectionpool.py:230 Starting new HTTP connection (1): dktest3-api.bipocloud.com:80
+DEBUG    urllib3.connectionpool:connectionpool.py:442 http://dktest3-api.bipocloud.com:80 "GET /services/dukang-employee/employees/760558037416017920/organization?company_id=760558037424406528 HTTP/1.1" 200 None
+DEBUG    root:log.py:74 [INFO     2020-09-29 17:46:12]URL: http://dktest3-api.bipocloud.com/services/dukang-employee/employees/760558037416017920/organization 
+[REQUEST BODY]:None 
+[RESPONSE]:{'errcode': '0', 'errmsg': 'ok', 'data': {'commissionOrgnizationList': [], 'postionList': [], 'companyTelephone': None, 'country': None, 'rankName': None, 'costCenterName': None, 'laborContractPartiesName': None, 'workCity': None, 'rankId': None, 'employeeType': None, 'probationDueDate': None, 'companyEmail': None, 'personEmail': None, 'resignReason': None, 'endLandTime': None, 'employeeStatus': 'inservice', 'resignAgainJoinFlag': False, 'laborContractExpiringDate': None, 'employee_id': '760558037416017920', 'department_infos': [{'id': '760558037424406528', 'name': 'test_company_1601372766', 'path': None, 'parent_id': None, 'parent_name': None, 'header_employee_id': None, 'header_employee_name': None, 'company_position_id': None, 'company_position_name': None}], 'position_name': None, 'employee_code': None, 'join_date': None, 'probation_period': None, 'confirmed_date': None, 'employment_type': 'FULL_TIME', 'first_work_date': None, 'submit_resignation_date': None, 'last_working_date': None, 'is_admin': True}} 
+[CODE]: 200
+DEBUG    urllib3.connectionpool:connectionpool.py:230 Starting new HTTP connection (1): dktest3-api.bipocloud.com:80
+DEBUG    urllib3.connectionpool:connectionpool.py:442 http://dktest3-api.bipocloud.com:80 "PUT /services/dukang-employee/employees/760558037416017920/organization HTTP/1.1" 200 None
+DEBUG    root:log.py:74 [INFO     2020-09-29 17:46:13]URL: http://dktest3-api.bipocloud.com/services/dukang-employee/employees/760558037416017920/organization 
+[REQUEST BODY]:b'{"commissionOrgnizationIdList": [], "commissionOrgnizationList": [], "companyEmail": null, "companyTelephone": null, "confirmed_date": null, "costCenterName": null, "country": null, "department_ids": ["760558037424406528"], "department_infos": [{"id": "760558037424406528", "name": "test_company_1601372766", "path": null, "parent_id": null, "parent_name": null, "header_employee_id": null, "header_employee_name": null, "company_position_id": null, "company_position_name": null}], "employeeStatus": "inservice", "employeeType": null, "employee_code": null, "employee_id": "760558037416017920", "employment_type": "FULL_TIME", "endLandTime": null, "first_work_date": null, "is_admin": true, "join_date": null, "laborContractExpiringDate": null, "laborContractPartiesName": "\\u52b3\\u52a8\\u5408\\u540c\\u4e3b\\u4f531601372772", "last_working_date": null, "personEmail": null, "position": null, "position_name": null, "postionIdList": [], "postionList": [], "probationDueDate": null, "probation_period": null, "rankId": null, "rankName": null, "resignAgainJoinFlag": false, "resignReason": null, "submit_resignation_date": null, "workCity": ""}' 
+[RESPONSE]:{'errcode': '0', 'errmsg': 'ok', 'data': None} 
+[CODE]: 200
+DEBUG    urllib3.connectionpool:connectionpool.py:230 Starting new HTTP connection (1): dktest3-api.bipocloud.com:80
+DEBUG    urllib3.connectionpool:connectionpool.py:442 http://dktest3-api.bipocloud.com:80 "GET /services/dukang-employee/employees/760558037416017920/profile HTTP/1.1" 200 None
+DEBUG    root:log.py:74 [INFO     2020-09-29 17:46:13]URL: http://dktest3-api.bipocloud.com/services/dukang-employee/employees/760558037416017920/profile 
+[REQUEST BODY]:None 
+[RESPONSE]:{'errcode': '0', 'errmsg': 'ok', 'data': {'displayName': 'admin', 'legalName': None, 'companyEmail': None, 'personEmail': None, 'mobile_area_code': '86', 'phone_number': '18373280066', 'gender_value': None, 'gender_name': None, 'height': None, 'weight': None, 'birth_date': None, 'identity_type_value': None, 'identity_type_name': None, 'identity_no': None, 'nationality_value': None, 'nationality_name': None, 'address': None, 'avatar': None, 'native_place': None, 'registered_permanent_residence': None, 'ethnic_value': None, 'ethnic_name': None, 'political_status_value': None, 'political_status': None, 'health_condition_value': None, 'health_condition': None, 'marital_status_value': None, 'marital_status': None, 'marriage_date': None, 'criminal_record_value': None, 'criminal_record': None, 'emergency_contact': [], 'family_contact': [], 'created_time': 1601372766000, 'updated_time': 1601372773000, 'health_descr': None, 'criminal_descr': None, 'natives': []}} 
+[CODE]: 200
+DEBUG    urllib3.connectionpool:connectionpool.py:230 Starting new HTTP connection (1): dktest3-api.bipocloud.com:80
+DEBUG    urllib3.connectionpool:connectionpool.py:442 http://dktest3-api.bipocloud.com:80 "PUT /services/dukang-employee/employees/profile HTTP/1.1" 200 None
+DEBUG    root:log.py:74 [INFO     2020-09-29 17:46:13]URL: http://dktest3-api.bipocloud.com/services/dukang-employee/employees/profile 
+[REQUEST BODY]:b'{"address": null, "avatar": null, "birth_date": null, "companyEmail": null, "created_time": 1601372766000, "criminal_descr": null, "criminal_record": null, "criminal_record_value": null, "displayName": "admin", "emergency_contact": [], "employeeId": "760558037416017920", "ethnic_name": null, "ethnic_value": null, "family_contact": [], "gender_name": null, "gender_value": null, "health_condition": null, "health_condition_value": null, "health_descr": null, "height": null, "identity_no": null, "identity_type_name": null, "identity_type_value": null, "legalName": null, "marital_status": null, "marital_status_value": null, "marriage_date": null, "mobile_area_code": "86", "nationality_name": null, "nationality_value": null, "native_place": null, "natives": [], "personEmail": "882@438.com", "phone_number": "18373280066", "political_status": null, "political_status_value": null, "registered_permanent_residence": null, "updated_time": 1601372773000, "weight": null}' 
+[RESPONSE]:{'errcode': '0', 'errmsg': 'ok', 'data': None} 
+[CODE]: 200
+DEBUG    urllib3.connectionpool:connectionpool.py:230 Starting new HTTP connection (1): dktest3-api.bipocloud.com:80
+DEBUG    urllib3.connectionpool:connectionpool.py:442 http://dktest3-api.bipocloud.com:80 "PUT /services/dukang-employee/employees/education HTTP/1.1" 200 None
+DEBUG    root:log.py:74 [INFO     2020-09-29 17:46:13]URL: http://dktest3-api.bipocloud.com/services/dukang-employee/employees/education 
+[REQUEST BODY]:b'{"educations": [{"admission_date": 1564588800000, "education_background_id": null, "education_background_value": "BACHELOR", "education_id": "", "graduate_from": "\\u4e0a\\u6d77\\u5927\\u5b66", "graduation_date": 1596211200000, "major": "5936"}], "employeeId": "760558037416017920"}' 
+[RESPONSE]:{'errcode': '0', 'errmsg': 'ok', 'data': None} 
+[CODE]: 200
+DEBUG    urllib3.connectionpool:connectionpool.py:230 Starting new HTTP connection (1): dktest3-api.bipocloud.com:80
+DEBUG    urllib3.connectionpool:connectionpool.py:442 http://dktest3-api.bipocloud.com:80 "GET /services/dukang-employee/employees/760558037416017920/education HTTP/1.1" 200 None
+DEBUG    root:log.py:74 [INFO     2020-09-29 17:46:13]URL: http://dktest3-api.bipocloud.com/services/dukang-employee/employees/760558037416017920/education 
+[REQUEST BODY]:None 
+[RESPONSE]:{'errcode': '0', 'errmsg': 'ok', 'data': [{'education_id': '760558065408802816', 'graduate_from': '上海大学', 'education': '本科', 'education_background_value': 'BACHELOR', 'major': '5936', 'admission_date': 1564588800000, 'graduation_date': 1596211200000}]} 
+[CODE]: 200
+DEBUG    urllib3.connectionpool:connectionpool.py:230 Starting new HTTP connection (1): dktest3-api.bipocloud.com:80
+DEBUG    urllib3.connectionpool:connectionpool.py:442 http://dktest3-api.bipocloud.com:80 "PUT /services/dukang-employee/employees/work HTTP/1.1" 200 None
+DEBUG    root:log.py:74 [INFO     2020-09-29 17:46:13]URL: http://dktest3-api.bipocloud.com/services/dukang-employee/employees/work 
+[REQUEST BODY]:b'{"employeeId": "760558037416017920", "work_experiences": [{"company": "2647", "job_description": null, "position": null, "work_end_date": null, "work_id": null, "work_start_date": null}]}' 
+[RESPONSE]:{'errcode': '0', 'errmsg': 'ok', 'data': None} 
+[CODE]: 200
+DEBUG    urllib3.connectionpool:connectionpool.py:230 Starting new HTTP connection (1): dktest3-api.bipocloud.com:80
+DEBUG    urllib3.connectionpool:connectionpool.py:442 http://dktest3-api.bipocloud.com:80 "GET /services/dukang-employee/employees/760558037416017920/work HTTP/1.1" 200 None
+DEBUG    root:log.py:74 [INFO     2020-09-29 17:46:13]URL: http://dktest3-api.bipocloud.com/services/dukang-employee/employees/760558037416017920/work 
+[REQUEST BODY]:None 
+[RESPONSE]:{'errcode': '0', 'errmsg': 'ok', 'data': {'first_work_date': None, 'work_experiences': [{'work_id': '760558066084085760', 'work_start_date': None, 'work_end_date': None, 'company': '2647', 'position': None, 'job_description': None}]}} 
+[CODE]: 200
+DEBUG    urllib3.connectionpool:connectionpool.py:230 Starting new HTTP connection (1): dktest3-api.bipocloud.com:80
+DEBUG    urllib3.connectionpool:connectionpool.py:442 http://dktest3-api.bipocloud.com:80 "POST /services/dukang-employee/employees/profile/bankcard/certificate/socialsecurityprovidentfund/photo HTTP/1.1" 200 None
+DEBUG    root:log.py:74 [INFO     2020-09-29 17:46:13]URL: http://dktest3-api.bipocloud.com/services/dukang-employee/employees/profile/bankcard/certificate/socialsecurityprovidentfund/photo 
+[REQUEST BODY]:b'{"employeeId": "760558037416017920", "photo": null, "employeeBankcardProfileDto": {"employeeId": "760558037416017920", "employeeBankcardDto": {"bankName": null, "employeeId": "760558037416017920", "name": null, "number": null, "subbranch": null}}, "employeeCertificateProfileDto": {"employeeId": "760558037416017920", "employeeCertificateDtoList": [{"employeeId": "760558037416017920", "name": "7373", "number": null, "photo": "[]", "type": "IDCard"}]}, "employeeSocialSecurityProvidentFundProfileDto": {"employeeId": "760558037416017920", "employeeSocialSecurityProvidentFundDto": {"employeeId": "760558037416017920", "providentFund": null, "socialSecurity": null}}}' 
+[RESPONSE]:{'errcode': '0', 'errmsg': 'ok', 'data': None} 
+[CODE]: 200
+DEBUG    urllib3.connectionpool:connectionpool.py:230 Starting new HTTP connection (1): dktest3-api.bipocloud.com:80
+DEBUG    urllib3.connectionpool:connectionpool.py:442 http://dktest3-api.bipocloud.com:80 "GET /services/dukang-employee/employees/profile/bankcard/certificate/socialsecurityprovidentfund/photo?employeeId=760558037416017920 HTTP/1.1" 200 None
+DEBUG    root:log.py:74 [INFO     2020-09-29 17:46:13]URL: http://dktest3-api.bipocloud.com/services/dukang-employee/employees/profile/bankcard/certificate/socialsecurityprovidentfund/photo 
+[REQUEST BODY]:None 
+[RESPONSE]:{'errcode': '0', 'errmsg': 'ok', 'data': {'photo': '', 'employeeBankcard': {'id': 760558066826477568, 'employeeId': 760558037416017920, 'bankName': None, 'name': None, 'number': None, 'subbranch': None, 'deleted': False, 'createdTime': '2020-09-29T09:46:14.000+0000', 'updatedTime': None}, 'employeeCertificateList': [{'id': '760558067002638336', 'employeeId': 760558037416017920, 'type': 'IDCard', 'name': '7373', 'number': None, 'photo': '[]', 'deleted': False, 'createdTime': '2020-09-29T09:46:14.000+0000', 'updatedTime': None}], 'employeeSocialSecurityProvidentFund': {'id': 760558067224936448, 'employeeId': 760558037416017920, 'socialSecurity': None, 'providentFund': None, 'deleted': False, 'createdTime': '2020-09-29T09:46:14.000+0000', 'updatedTime': None}}} 
+[CODE]: 200
+DEBUG    urllib3.connectionpool:connectionpool.py:230 Starting new HTTP connection (1): dktest3-api.bipocloud.com:80
+DEBUG    urllib3.connectionpool:connectionpool.py:442 http://dktest3-api.bipocloud.com:80 "POST /services/dukang-employee/api/employee/contract/manage HTTP/1.1" 200 None
+DEBUG    root:log.py:74 [INFO     2020-09-29 17:46:13]URL: http://dktest3-api.bipocloud.com/services/dukang-employee/api/employee/contract/manage 
+[REQUEST BODY]:b'{"employeeId": "760558037416017920", "employeeContractDtos": [{"beginTime": 1601372773000, "endTime": 1601372773000, "laborContractPartiesId": "760558062284046336", "pathContract": "[]"}]}' 
+[RESPONSE]:{'errcode': '0', 'errmsg': 'ok', 'data': None} 
+[CODE]: 200
+DEBUG    urllib3.connectionpool:connectionpool.py:230 Starting new HTTP connection (1): dktest3-api.bipocloud.com:80
+DEBUG    urllib3.connectionpool:connectionpool.py:442 http://dktest3-api.bipocloud.com:80 "GET /services/dukang-employee/api/employee/contract/list?employeeId=760558037416017920 HTTP/1.1" 200 None
+DEBUG    root:log.py:74 [INFO     2020-09-29 17:46:14]URL: http://dktest3-api.bipocloud.com/services/dukang-employee/api/employee/contract/list 
+[REQUEST BODY]:None 
+[RESPONSE]:{'errcode': '0', 'errmsg': 'ok', 'data': [{'id': '760558068009271296', 'employeeId': '760558037416017920', 'laborContractPartiesId': '760558062284046336', 'laborContractPartiesName': '劳动合同主体1601372772', 'beginTime': '1601372773000', 'endTime': '1601372773000', 'pathContract': '[]'}]} 
+[CODE]: 200

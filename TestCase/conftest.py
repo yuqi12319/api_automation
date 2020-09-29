@@ -3,13 +3,14 @@
 # Author:qi.yu
 # Time:2020/7/2 4:53 下午
 import pytest
+import Common.consts
 from Common.request import *
 from Conf.config import Config
 
 
 @pytest.fixture(scope="module", autouse=True)
 def login():
-    url = Config().get_conf('test_env', 'test0') + '/dukang-user/login'
+    url = Config().get_conf('test_env', 'test3') + '/dukang-user/login'
     body = {
         "areaCode": 86,
         "clientId": "gardenia",
@@ -26,7 +27,9 @@ def login():
 def pytest_addoption(parser):
     parser.addoption("--env", action="store", default="test", help="environment")
 
-
 @pytest.fixture(scope="class")
 def env(pytestconfig):
     return pytestconfig.getoption('--env')
+
+
+

@@ -1,0 +1,324 @@
+{
+  "uid" : "96f7731d5b0e4492",
+  "name" : "test_main_scene[data0]",
+  "fullName" : "TestCase.TestScene.test_register_company_module.TestRegisterCompanyScene#test_main_scene",
+  "historyId" : "52ae40f8c031467b75bbc6f0daaafa49",
+  "time" : {
+    "start" : 1601372766366,
+    "stop" : 1601372771823,
+    "duration" : 5457
+  },
+  "status" : "passed",
+  "flaky" : false,
+  "newFailed" : false,
+  "beforeStages" : [ {
+    "name" : "pytestconfig",
+    "time" : {
+      "start" : 1601372766096,
+      "stop" : 1601372766096,
+      "duration" : 0
+    },
+    "status" : "passed",
+    "steps" : [ ],
+    "attachments" : [ ],
+    "parameters" : [ ],
+    "stepsCount" : 0,
+    "attachmentsCount" : 0,
+    "shouldDisplayMessage" : false,
+    "hasContent" : false
+  }, {
+    "name" : "login",
+    "time" : {
+      "start" : 1601372766096,
+      "stop" : 1601372766364,
+      "duration" : 268
+    },
+    "status" : "passed",
+    "steps" : [ ],
+    "attachments" : [ ],
+    "parameters" : [ ],
+    "stepsCount" : 0,
+    "attachmentsCount" : 0,
+    "shouldDisplayMessage" : false,
+    "hasContent" : false
+  }, {
+    "name" : "setup_class",
+    "time" : {
+      "start" : 1601372766364,
+      "stop" : 1601372766365,
+      "duration" : 1
+    },
+    "status" : "passed",
+    "steps" : [ ],
+    "attachments" : [ ],
+    "parameters" : [ ],
+    "stepsCount" : 0,
+    "attachmentsCount" : 0,
+    "shouldDisplayMessage" : false,
+    "hasContent" : false
+  }, {
+    "name" : "env",
+    "time" : {
+      "start" : 1601372766364,
+      "stop" : 1601372766364,
+      "duration" : 0
+    },
+    "status" : "passed",
+    "steps" : [ ],
+    "attachments" : [ ],
+    "parameters" : [ ],
+    "stepsCount" : 0,
+    "attachmentsCount" : 0,
+    "shouldDisplayMessage" : false,
+    "hasContent" : false
+  } ],
+  "testStage" : {
+    "status" : "passed",
+    "steps" : [ {
+      "name" : "第一步：创建公司",
+      "time" : {
+        "start" : 1601372766366,
+        "stop" : 1601372770789,
+        "duration" : 4423
+      },
+      "status" : "passed",
+      "steps" : [ ],
+      "attachments" : [ ],
+      "parameters" : [ ],
+      "stepsCount" : 0,
+      "attachmentsCount" : 0,
+      "shouldDisplayMessage" : false,
+      "hasContent" : false
+    }, {
+      "name" : "第二步：校验是否生成默认审批流",
+      "time" : {
+        "start" : 1601372770789,
+        "stop" : 1601372771356,
+        "duration" : 567
+      },
+      "status" : "passed",
+      "steps" : [ ],
+      "attachments" : [ {
+        "uid" : "29f522c1edc3383f",
+        "name" : "请求数据",
+        "source" : "29f522c1edc3383f.json",
+        "type" : "application/json",
+        "size" : 87
+      }, {
+        "uid" : "1a9231919fb6acfa",
+        "name" : "bill_approval_list_api返回结果",
+        "source" : "1a9231919fb6acfa.json",
+        "type" : "application/json",
+        "size" : 461
+      }, {
+        "uid" : "5c2fe7bce0a319cb",
+        "name" : "请求数据",
+        "source" : "5c2fe7bce0a319cb.json",
+        "type" : "application/json",
+        "size" : 103
+      }, {
+        "uid" : "2884cc86e23dc890",
+        "name" : "workforce_apply_approval_list_api返回结果",
+        "source" : "2884cc86e23dc890.json",
+        "type" : "application/json",
+        "size" : 467
+      }, {
+        "uid" : "10e311e75b044fcf",
+        "name" : "请求数据",
+        "source" : "10e311e75b044fcf.json",
+        "type" : "application/json",
+        "size" : 100
+      }, {
+        "uid" : "3197c217a1029a6",
+        "name" : "workforce_register_approval_list_api返回结果",
+        "source" : "3197c217a1029a6.json",
+        "type" : "application/json",
+        "size" : 467
+      }, {
+        "uid" : "f36ed70cabb9dab",
+        "name" : "请求数据",
+        "source" : "f36ed70cabb9dab.json",
+        "type" : "application/json",
+        "size" : 71
+      }, {
+        "uid" : "db545982e9e28f35",
+        "name" : "claim_approval_list_api返回结果",
+        "source" : "db545982e9e28f35.json",
+        "type" : "application/json",
+        "size" : 232
+      }, {
+        "uid" : "a010c2f4afb079cd",
+        "name" : "请求数据",
+        "source" : "a010c2f4afb079cd.json",
+        "type" : "application/json",
+        "size" : 45
+      }, {
+        "uid" : "d8ede965ebd6cbef",
+        "name" : "leave_approval_list_api返回结果",
+        "source" : "d8ede965ebd6cbef.json",
+        "type" : "application/json",
+        "size" : 157
+      }, {
+        "uid" : "5c4e452fad824027",
+        "name" : "请求数据",
+        "source" : "5c4e452fad824027.json",
+        "type" : "application/json",
+        "size" : 48
+      }, {
+        "uid" : "d758bb1709727d86",
+        "name" : "attendance_approval_list_api返回结果",
+        "source" : "d758bb1709727d86.json",
+        "type" : "application/json",
+        "size" : 2448
+      } ],
+      "parameters" : [ ],
+      "stepsCount" : 0,
+      "attachmentsCount" : 12,
+      "shouldDisplayMessage" : false,
+      "hasContent" : true
+    }, {
+      "name" : "第三步：校验是否生成默认薪资项",
+      "time" : {
+        "start" : 1601372771357,
+        "stop" : 1601372771563,
+        "duration" : 206
+      },
+      "status" : "passed",
+      "steps" : [ ],
+      "attachments" : [ {
+        "uid" : "c88d3ef95d4de5df",
+        "name" : "请求数据",
+        "source" : "c88d3ef95d4de5df.json",
+        "type" : "application/json",
+        "size" : 71
+      }, {
+        "uid" : "4edd86415720bca3",
+        "name" : "payroll_item_list_api返回结果",
+        "source" : "4edd86415720bca3.json",
+        "type" : "application/json",
+        "size" : 7763
+      } ],
+      "parameters" : [ ],
+      "stepsCount" : 0,
+      "attachmentsCount" : 2,
+      "shouldDisplayMessage" : false,
+      "hasContent" : true
+    }, {
+      "name" : "第四步：校验是否生成默认考勤组",
+      "time" : {
+        "start" : 1601372771563,
+        "stop" : 1601372771743,
+        "duration" : 180
+      },
+      "status" : "passed",
+      "steps" : [ ],
+      "attachments" : [ {
+        "uid" : "a836d4c41f40e9d6",
+        "name" : "请求数据",
+        "source" : "a836d4c41f40e9d6.json",
+        "type" : "application/json",
+        "size" : 110
+      }, {
+        "uid" : "d03ba90059b159e8",
+        "name" : "get_attendance_group_api返回结果",
+        "source" : "d03ba90059b159e8.json",
+        "type" : "application/json",
+        "size" : 5679
+      } ],
+      "parameters" : [ ],
+      "stepsCount" : 0,
+      "attachmentsCount" : 2,
+      "shouldDisplayMessage" : false,
+      "hasContent" : true
+    }, {
+      "name" : "第五步：校验是否生成默认休假组",
+      "time" : {
+        "start" : 1601372771743,
+        "stop" : 1601372771823,
+        "duration" : 80
+      },
+      "status" : "passed",
+      "steps" : [ ],
+      "attachments" : [ {
+        "uid" : "c28a1109c7b56241",
+        "name" : "请求数据",
+        "source" : "c28a1109c7b56241.json",
+        "type" : "application/json",
+        "size" : 73
+      }, {
+        "uid" : "636d68be69ce9178",
+        "name" : "get_leave_group_api返回结果",
+        "source" : "636d68be69ce9178.json",
+        "type" : "application/json",
+        "size" : 215
+      } ],
+      "parameters" : [ ],
+      "stepsCount" : 0,
+      "attachmentsCount" : 2,
+      "shouldDisplayMessage" : false,
+      "hasContent" : true
+    } ],
+    "attachments" : [ {
+      "uid" : "230299171427e280",
+      "name" : "log",
+      "source" : "230299171427e280.txt",
+      "type" : "text/plain",
+      "size" : 28343
+    } ],
+    "parameters" : [ ],
+    "stepsCount" : 5,
+    "attachmentsCount" : 19,
+    "shouldDisplayMessage" : false,
+    "hasContent" : true
+  },
+  "afterStages" : [ ],
+  "labels" : [ {
+    "name" : "tag",
+    "value" : "run(order=1)"
+  }, {
+    "name" : "tag",
+    "value" : "smoke"
+  }, {
+    "name" : "parentSuite",
+    "value" : "TestCase.TestScene"
+  }, {
+    "name" : "suite",
+    "value" : "test_register_company_module"
+  }, {
+    "name" : "subSuite",
+    "value" : "TestRegisterCompanyScene"
+  }, {
+    "name" : "host",
+    "value" : "yuqideMacBook-Pro.local"
+  }, {
+    "name" : "thread",
+    "value" : "820-MainThread"
+  }, {
+    "name" : "framework",
+    "value" : "pytest"
+  }, {
+    "name" : "language",
+    "value" : "cpython3"
+  }, {
+    "name" : "package",
+    "value" : "TestCase.TestScene.test_register_company_module"
+  }, {
+    "name" : "resultFormat",
+    "value" : "allure2"
+  } ],
+  "parameters" : [ {
+    "name" : "data",
+    "value" : "{'register_company': {'body': {'address': '上海/上海市', 'administratorName': 'admin', 'area': '中国', 'areaCode': 86, 'mobile': 18373280066, 'name': None, 'sizeMax': 200, 'sizeMin': 101}, 'expect': {'assert_type': 'errcode', 'assert_result': '0'}}, 'company_register_approval': {'body': {'approvalStatus': 'AGREED', 'id': None}, 'expect': {'assert_type': 'errcode', 'assert_result': '0'}}, 'brief_profile': {'params': {'company_id': None}, 'expect': {'assert_type': 'errcode', 'assert_result': '0'}}, 'default_bill_approval': {'params': {'coOrgId': None, 'offset': 0, 'limit': 10, 'type': 'BILL'}}, 'default_workforce_apply_approval': {'params': {'coOrgId': None, 'offset': 0, 'limit': 10, 'type': 'WORKFORCEAPPLICATION'}}, 'default_workforce_register_approval': {'params': {'coOrgId': None, 'offset': 0, 'limit': 10, 'type': 'WORKFORCEREGISTER'}}, 'default_claim_approval': {'params': {'coOrgId': None, 'offset': 0, 'limit': 10}}, 'default_leave_approval': {'params': {'coOrgId': None}}, 'default_attendance_approval': {'params': {'company_id': 11}}, 'default_payroll_item': {'params': {'coOrgId': None, 'limit': 10, 'offset': 0}}, 'default_attendance_group': {'params': {'company_id': None, 'limit': 10, 'offset': 0, 'employeeId': None}}, 'default_leave_group': {'params': {'companyId': None, 'limit': 10, 'offset': 1}}, 'dissolve_company': {'companyId': None, 'expect': {'assert_type': 'errcode', 'assert_result': '0'}}}"
+  } ],
+  "links" : [ ],
+  "hidden" : false,
+  "retry" : false,
+  "extra" : {
+    "severity" : "normal",
+    "retries" : [ ],
+    "categories" : [ ],
+    "tags" : [ "run(order=1)", "smoke" ]
+  },
+  "source" : "96f7731d5b0e4492.json",
+  "parameterValues" : [ "{'register_company': {'body': {'address': '上海/上海市', 'administratorName': 'admin', 'area': '中国', 'areaCode': 86, 'mobile': 18373280066, 'name': None, 'sizeMax': 200, 'sizeMin': 101}, 'expect': {'assert_type': 'errcode', 'assert_result': '0'}}, 'company_register_approval': {'body': {'approvalStatus': 'AGREED', 'id': None}, 'expect': {'assert_type': 'errcode', 'assert_result': '0'}}, 'brief_profile': {'params': {'company_id': None}, 'expect': {'assert_type': 'errcode', 'assert_result': '0'}}, 'default_bill_approval': {'params': {'coOrgId': None, 'offset': 0, 'limit': 10, 'type': 'BILL'}}, 'default_workforce_apply_approval': {'params': {'coOrgId': None, 'offset': 0, 'limit': 10, 'type': 'WORKFORCEAPPLICATION'}}, 'default_workforce_register_approval': {'params': {'coOrgId': None, 'offset': 0, 'limit': 10, 'type': 'WORKFORCEREGISTER'}}, 'default_claim_approval': {'params': {'coOrgId': None, 'offset': 0, 'limit': 10}}, 'default_leave_approval': {'params': {'coOrgId': None}}, 'default_attendance_approval': {'params': {'company_id': 11}}, 'default_payroll_item': {'params': {'coOrgId': None, 'limit': 10, 'offset': 0}}, 'default_attendance_group': {'params': {'company_id': None, 'limit': 10, 'offset': 0, 'employeeId': None}}, 'default_leave_group': {'params': {'companyId': None, 'limit': 10, 'offset': 1}}, 'dissolve_company': {'companyId': None, 'expect': {'assert_type': 'errcode', 'assert_result': '0'}}}" ]
+}

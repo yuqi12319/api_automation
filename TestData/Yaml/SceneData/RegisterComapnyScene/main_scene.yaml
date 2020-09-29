@@ -1,60 +1,28 @@
-# 发送验证码
-vcode:
-  params:
-    mobileAreaCode: 86
-    mobile_number: 18373280066
-    scene: REGISTER_COMPANY
-  headers:
-    x-flow-id:
-  expect:
-    assert_type: errcode
-    assert_result: '0'
-# 校验验证码
-vcode_check:
-  params:
-    country_code: 86
-    mobile_number: 18373280066
-    vcode: 6666
-  headers:
-    x-flow-id:
-  expect:
-    assert_type: errcode
-    assert_result: '0'
 # 注册公司
 register_company:
   body:
     address: 上海/上海市
-    admin:
-      mobile: 18373280066
-      mobileAreaCode: 86
-      name: admin
-      password: 12345678
-    area: CN
-    name:
-    size_max: 200
-    size_min: 101
-  headers:
-    x-flow-id:
-  expect:
-    assert_type: errcode
-    assert_result: '0'
-# 登陆公司
-login:
-  body:
+    administratorName: admin
+    area: 中国
     areaCode: 86
-    clientId: gardenia
-    password:
-    username:
+    mobile: 18373280066
+    name:
+    sizeMax: 200
+    sizeMin: 101
   expect:
     assert_type: errcode
     assert_result: '0'
-# 公司初始化
-initsetting:
+# 注册公司审批
+company_register_approval:
   body:
-    clockSwitch: false
-    companyId:
-    offWorkTime: 64800
-    toWorkTime: 32400
+    approvalStatus: AGREED
+    id:
+  expect:
+    assert_type: errcode
+    assert_result: '0'
+brief_profile:
+  params:
+    company_id:
   expect:
     assert_type: errcode
     assert_result: '0'

@@ -1,0 +1,226 @@
+{
+  "uid" : "a56f650980206f82",
+  "name" : "test_main_scene[data0]",
+  "fullName" : "TestCase.TestScene.test_leave_module.TestLeave#test_main_scene",
+  "historyId" : "87ab58b27dc5411a65ea0a4aeea5d42d",
+  "time" : {
+    "start" : 1601372782674,
+    "stop" : 1601372793110,
+    "duration" : 10436
+  },
+  "status" : "failed",
+  "statusMessage" : "AssertionError",
+  "statusTrace" : "self = <TestCase.TestScene.test_leave_module.TestLeave object at 0x102ccd7d0>\ndata = {'add_leave_group': {'body': {'employeesDto': {'employeeIds': ['760558037416017920']}, 'leaveGroupAnnualLeaveDto': {'c...: None}, 'delete_leave_group': {'expect': {'assert_result': '0', 'assert_type': 'errcode'}, 'leaveGroupId': None}, ...}\nsetup_class = ('test3', '760558037424406528', '760558037416017920')\n\n    @pytest.mark.smoke\n    @pytest.mark.run(order=6)\n    @pytest.mark.parametrize('data', YamlHandle().read_yaml('SceneData/LeaveScene/main_scene.yaml'))\n    def test_main_scene(self, data, setup_class):\n        with allure.step('第一步：添加休假组'):\n            leave_group_name = 'leave_group_' + str(int(time.time()))\n            data['add_leave_group']['body']['employeesDto']['employeeIds'].append(setup_class[2])\n            data['add_leave_group']['body']['leaveGroupAnnualLeaveDto']['coOrgId'] = setup_class[1]\n            data['add_leave_group']['body']['leaveGroupDto']['coOrgId'] = setup_class[1]\n            data['add_leave_group']['body']['leaveGroupDto']['name'] = leave_group_name\n            data['add_leave_group']['body']['name'] = leave_group_name\n            add_leave_groups_res = LeaveSettingApi(setup_class[0]).add_leave_groups_api(data['add_leave_group'])\n            Assertions().assert_mode(add_leave_groups_res, data['add_leave_group'])\n            leave_groups_id = add_leave_groups_res.json()['data']\n            # time.sleep(5)\n    \n        with allure.step('第二步：获取休假默认审批流,修改审批人为指定人，自动审批通过'):\n            # 获取默认休假审批流id\n            data['get_leave_approval']['params']['coOrgId'] = setup_class[1]\n            get_leave_approval_res = LeaveWorkflowSettingApi(setup_class[0]).get_leave_approval_list_api(data['get_leave_approval'])\n            Assertions().assert_mode(get_leave_approval_res, data['get_leave_approval'])\n            for item in get_leave_approval_res.json()['data']:\n                if item['name'] == '默认请假审批流':\n                    default_leave_approval_id = item['id']\n                    MyLog().info('有默认请假审批流')\n                else:\n                    MyLog().error('无默认请假审批流')\n    \n            # 修改默认审批流\n            data['post_leave_approval']['body']['coOrgId'] = setup_class[1]\n            data['post_leave_approval']['body']['leaveWorkflowSettingId'] = default_leave_approval_id\n            data['post_leave_approval']['body']['leaveWorkflowSettingRules'][0]['rules'][0]['approvalParameters'].append(setup_class[2])\n            data['post_leave_approval']['body']['orgIds'].append(setup_class[1])\n            post_leave_approval_res = LeaveWorkflowSettingApi(setup_class[0]).post_leave_approval_api(data['post_leave_approval'])\n            Assertions().assert_mode(post_leave_approval_res, data['post_leave_approval'])\n    \n        with allure.step('第三步：设置考勤组为固定班制'):\n            # 获取考勤组列表\n            get_attendance_group_list = attendance.get_attendance_group_list(setup_class[0], setup_class[1],\n                                                                             setup_class[2])\n            Assertions().assert_in_text(get_attendance_group_list['data'], \"默认考勤组\")\n            default_attendance_group_id = get_attendance_group_list['data'][0]['attendanceGroupId']\n    \n            # 添加考勤地点\n            add_attendance_location = attendance.add_attendance_location(setup_class[0], setup_class[1])\n            add_attendance_location_id = add_attendance_location['data']['pin_coordinate_id']\n    \n            # 查询公司班次列表\n            get_company_shift = attendance.get_company_shift(setup_class[0], setup_class[1],\n                                                             default_attendance_group_id)\n    \n            # 获取加班规则列表\n            get_overtime_rule_list = attendance.get_overtime_rule_list(setup_class[0], setup_class[1])\n    \n            # 获取假期规则列表\n            get_holiday_plan_list = attendance.get_holiday_plan_list(setup_class[0])\n    \n            # 获取默认考勤组详情\n            data['get_default_attendance_group_information']['attendancegroupId'] = default_attendance_group_id\n            data['get_default_attendance_group_information']['params'][\n                'attendancegroupId'] = default_attendance_group_id\n            get_default_attendance_group_information_res = AttendanceGroupApi(\n                setup_class[0]).get_attendance_group_information(data['get_default_attendance_group_information'])\n            Assertions().assert_mode(get_default_attendance_group_information_res,\n                                     data['get_default_attendance_group_information'])\n    \n            # 修改默认考勤组信息\n            data['update_default_attendance_group']['body']['attendanceDeductionSettingDto'] = \\\n                get_default_attendance_group_information_res.json()['data']['attendanceDeductionSettingVo']\n            data['update_default_attendance_group']['body']['companyId'] = setup_class[1]\n            data['update_default_attendance_group']['body']['employeeId'] = setup_class[2]\n            data['update_default_attendance_group']['body']['employeeIds'].append(setup_class[2])\n            data['update_default_attendance_group']['body']['holidayPlanId'] = get_holiday_plan_list['data'][1]['id']\n            data['update_default_attendance_group']['body']['id'] = default_attendance_group_id\n            data['update_default_attendance_group']['body']['overtimeId'] = get_overtime_rule_list['data'][1][\n                'overtime_setting_id']\n            data['update_default_attendance_group']['body']['pinCoordinateIds'].append(add_attendance_location_id)\n            data['update_default_attendance_group']['body']['shiftPlan']['MONDAY'] = get_company_shift['data'][1]['id']\n            data['update_default_attendance_group']['body']['shiftPlan']['TUESDAY'] = get_company_shift['data'][1]['id']\n            data['update_default_attendance_group']['body']['shiftPlan']['WEDNESDAY'] = get_company_shift['data'][1][\n                'id']\n            data['update_default_attendance_group']['body']['shiftPlan']['THURSDAY'] = get_company_shift['data'][1][\n                'id']\n            data['update_default_attendance_group']['body']['shiftPlan']['FRIDAY'] = get_company_shift['data'][1]['id']\n            data['update_default_attendance_group']['body']['shiftPlan']['SATURDAY'] = get_company_shift['data'][0][\n                'id']\n            data['update_default_attendance_group']['body']['shiftPlan']['SUNDAY'] = get_company_shift['data'][0]['id']\n            update_attendance_group_res = AttendanceGroupApi(setup_class[0]).update_attendance_group(\n                data['update_default_attendance_group'])\n            Assertions().assert_text(update_attendance_group_res.json()['data'], str(default_attendance_group_id))\n    \n        with allure.step('第四步：固定班制请假申请'):\n            time.sleep(5)\n            data['apply_leave']['body']['employeeId'] = setup_class[2]\n            data['apply_leave']['body']['orgId'] = setup_class[1]\n            leave_approval = dict()\n            leave_approval['employee_id'] = setup_class[2]\n            leave_approval['sort_order'] = 1\n            data['apply_leave']['body']['approverList'].append(leave_approval)\n            data['apply_leave']['body']['beginDate'] = round(int(time.mktime(datetime.date.today().timetuple())) * 1000)\n            data['apply_leave']['body']['endDate'] = round(int(time.mktime(datetime.date.today().timetuple())) * 1000)\n            apply_leave_res = LeaveRequestApi(setup_class[0]).apply_leave(data['apply_leave'])\n            Assertions().assert_mode(apply_leave_res, data['apply_leave'])\n            apply_leave_id = apply_leave_res.json()['data']\n    \n        with allure.step('第五步：查看记录'):\n            # 查看打卡（无需打卡）\n            data['get_employee_worktimeinfo']['employee_id'] = setup_class[2]\n            get_employee_worktimeinfo_res = ClockApi(setup_class[0]).get_employee_worktimeinfo(\n                data['get_employee_worktimeinfo'])\n            Assertions().assert_mode(get_employee_worktimeinfo_res, data['get_employee_worktimeinfo'])\n>           Assertions().assert_in_text(get_employee_worktimeinfo_res.json()['data'], 'LEAVE')\n\nTestCase/TestScene/test_leave_module.py:156: \n_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ \n\nself = <Common.operation_assert.Assertions object at 0x102cfc210>\nbody = {'acceptLeaveEarlierDuration': 0, 'acceptToworkLateDuration': 0, 'attendanceGroupType': 'FIXED', 'attendance_id': '760558040242978816', ...}\nexpected_msg = 'LEAVE'\n\n    def assert_in_text(self, body, expected_msg):\n        \"\"\"\n        验证response body中是否包含预期字符串\n        :param body:\n        :param expected_msg:\n        :return:\n        \"\"\"\n        try:\n            text = json.dumps(body, ensure_ascii=False)\n>           assert expected_msg in text\nE           AssertionError\n\nCommon/operation_assert.py:64: AssertionError",
+  "flaky" : false,
+  "newFailed" : false,
+  "beforeStages" : [ {
+    "name" : "pytestconfig",
+    "time" : {
+      "start" : 1601372766096,
+      "stop" : 1601372766096,
+      "duration" : 0
+    },
+    "status" : "passed",
+    "steps" : [ ],
+    "attachments" : [ ],
+    "parameters" : [ ],
+    "stepsCount" : 0,
+    "attachmentsCount" : 0,
+    "shouldDisplayMessage" : false,
+    "hasContent" : false
+  }, {
+    "name" : "env",
+    "time" : {
+      "start" : 1601372782673,
+      "stop" : 1601372782673,
+      "duration" : 0
+    },
+    "status" : "passed",
+    "steps" : [ ],
+    "attachments" : [ ],
+    "parameters" : [ ],
+    "stepsCount" : 0,
+    "attachmentsCount" : 0,
+    "shouldDisplayMessage" : false,
+    "hasContent" : false
+  }, {
+    "name" : "login",
+    "time" : {
+      "start" : 1601372782467,
+      "stop" : 1601372782672,
+      "duration" : 205
+    },
+    "status" : "passed",
+    "steps" : [ ],
+    "attachments" : [ ],
+    "parameters" : [ ],
+    "stepsCount" : 0,
+    "attachmentsCount" : 0,
+    "shouldDisplayMessage" : false,
+    "hasContent" : false
+  }, {
+    "name" : "setup_class",
+    "time" : {
+      "start" : 1601372782673,
+      "stop" : 1601372782673,
+      "duration" : 0
+    },
+    "status" : "passed",
+    "steps" : [ ],
+    "attachments" : [ ],
+    "parameters" : [ ],
+    "stepsCount" : 0,
+    "attachmentsCount" : 0,
+    "shouldDisplayMessage" : false,
+    "hasContent" : false
+  } ],
+  "testStage" : {
+    "status" : "failed",
+    "statusMessage" : "AssertionError",
+    "statusTrace" : "self = <TestCase.TestScene.test_leave_module.TestLeave object at 0x102ccd7d0>\ndata = {'add_leave_group': {'body': {'employeesDto': {'employeeIds': ['760558037416017920']}, 'leaveGroupAnnualLeaveDto': {'c...: None}, 'delete_leave_group': {'expect': {'assert_result': '0', 'assert_type': 'errcode'}, 'leaveGroupId': None}, ...}\nsetup_class = ('test3', '760558037424406528', '760558037416017920')\n\n    @pytest.mark.smoke\n    @pytest.mark.run(order=6)\n    @pytest.mark.parametrize('data', YamlHandle().read_yaml('SceneData/LeaveScene/main_scene.yaml'))\n    def test_main_scene(self, data, setup_class):\n        with allure.step('第一步：添加休假组'):\n            leave_group_name = 'leave_group_' + str(int(time.time()))\n            data['add_leave_group']['body']['employeesDto']['employeeIds'].append(setup_class[2])\n            data['add_leave_group']['body']['leaveGroupAnnualLeaveDto']['coOrgId'] = setup_class[1]\n            data['add_leave_group']['body']['leaveGroupDto']['coOrgId'] = setup_class[1]\n            data['add_leave_group']['body']['leaveGroupDto']['name'] = leave_group_name\n            data['add_leave_group']['body']['name'] = leave_group_name\n            add_leave_groups_res = LeaveSettingApi(setup_class[0]).add_leave_groups_api(data['add_leave_group'])\n            Assertions().assert_mode(add_leave_groups_res, data['add_leave_group'])\n            leave_groups_id = add_leave_groups_res.json()['data']\n            # time.sleep(5)\n    \n        with allure.step('第二步：获取休假默认审批流,修改审批人为指定人，自动审批通过'):\n            # 获取默认休假审批流id\n            data['get_leave_approval']['params']['coOrgId'] = setup_class[1]\n            get_leave_approval_res = LeaveWorkflowSettingApi(setup_class[0]).get_leave_approval_list_api(data['get_leave_approval'])\n            Assertions().assert_mode(get_leave_approval_res, data['get_leave_approval'])\n            for item in get_leave_approval_res.json()['data']:\n                if item['name'] == '默认请假审批流':\n                    default_leave_approval_id = item['id']\n                    MyLog().info('有默认请假审批流')\n                else:\n                    MyLog().error('无默认请假审批流')\n    \n            # 修改默认审批流\n            data['post_leave_approval']['body']['coOrgId'] = setup_class[1]\n            data['post_leave_approval']['body']['leaveWorkflowSettingId'] = default_leave_approval_id\n            data['post_leave_approval']['body']['leaveWorkflowSettingRules'][0]['rules'][0]['approvalParameters'].append(setup_class[2])\n            data['post_leave_approval']['body']['orgIds'].append(setup_class[1])\n            post_leave_approval_res = LeaveWorkflowSettingApi(setup_class[0]).post_leave_approval_api(data['post_leave_approval'])\n            Assertions().assert_mode(post_leave_approval_res, data['post_leave_approval'])\n    \n        with allure.step('第三步：设置考勤组为固定班制'):\n            # 获取考勤组列表\n            get_attendance_group_list = attendance.get_attendance_group_list(setup_class[0], setup_class[1],\n                                                                             setup_class[2])\n            Assertions().assert_in_text(get_attendance_group_list['data'], \"默认考勤组\")\n            default_attendance_group_id = get_attendance_group_list['data'][0]['attendanceGroupId']\n    \n            # 添加考勤地点\n            add_attendance_location = attendance.add_attendance_location(setup_class[0], setup_class[1])\n            add_attendance_location_id = add_attendance_location['data']['pin_coordinate_id']\n    \n            # 查询公司班次列表\n            get_company_shift = attendance.get_company_shift(setup_class[0], setup_class[1],\n                                                             default_attendance_group_id)\n    \n            # 获取加班规则列表\n            get_overtime_rule_list = attendance.get_overtime_rule_list(setup_class[0], setup_class[1])\n    \n            # 获取假期规则列表\n            get_holiday_plan_list = attendance.get_holiday_plan_list(setup_class[0])\n    \n            # 获取默认考勤组详情\n            data['get_default_attendance_group_information']['attendancegroupId'] = default_attendance_group_id\n            data['get_default_attendance_group_information']['params'][\n                'attendancegroupId'] = default_attendance_group_id\n            get_default_attendance_group_information_res = AttendanceGroupApi(\n                setup_class[0]).get_attendance_group_information(data['get_default_attendance_group_information'])\n            Assertions().assert_mode(get_default_attendance_group_information_res,\n                                     data['get_default_attendance_group_information'])\n    \n            # 修改默认考勤组信息\n            data['update_default_attendance_group']['body']['attendanceDeductionSettingDto'] = \\\n                get_default_attendance_group_information_res.json()['data']['attendanceDeductionSettingVo']\n            data['update_default_attendance_group']['body']['companyId'] = setup_class[1]\n            data['update_default_attendance_group']['body']['employeeId'] = setup_class[2]\n            data['update_default_attendance_group']['body']['employeeIds'].append(setup_class[2])\n            data['update_default_attendance_group']['body']['holidayPlanId'] = get_holiday_plan_list['data'][1]['id']\n            data['update_default_attendance_group']['body']['id'] = default_attendance_group_id\n            data['update_default_attendance_group']['body']['overtimeId'] = get_overtime_rule_list['data'][1][\n                'overtime_setting_id']\n            data['update_default_attendance_group']['body']['pinCoordinateIds'].append(add_attendance_location_id)\n            data['update_default_attendance_group']['body']['shiftPlan']['MONDAY'] = get_company_shift['data'][1]['id']\n            data['update_default_attendance_group']['body']['shiftPlan']['TUESDAY'] = get_company_shift['data'][1]['id']\n            data['update_default_attendance_group']['body']['shiftPlan']['WEDNESDAY'] = get_company_shift['data'][1][\n                'id']\n            data['update_default_attendance_group']['body']['shiftPlan']['THURSDAY'] = get_company_shift['data'][1][\n                'id']\n            data['update_default_attendance_group']['body']['shiftPlan']['FRIDAY'] = get_company_shift['data'][1]['id']\n            data['update_default_attendance_group']['body']['shiftPlan']['SATURDAY'] = get_company_shift['data'][0][\n                'id']\n            data['update_default_attendance_group']['body']['shiftPlan']['SUNDAY'] = get_company_shift['data'][0]['id']\n            update_attendance_group_res = AttendanceGroupApi(setup_class[0]).update_attendance_group(\n                data['update_default_attendance_group'])\n            Assertions().assert_text(update_attendance_group_res.json()['data'], str(default_attendance_group_id))\n    \n        with allure.step('第四步：固定班制请假申请'):\n            time.sleep(5)\n            data['apply_leave']['body']['employeeId'] = setup_class[2]\n            data['apply_leave']['body']['orgId'] = setup_class[1]\n            leave_approval = dict()\n            leave_approval['employee_id'] = setup_class[2]\n            leave_approval['sort_order'] = 1\n            data['apply_leave']['body']['approverList'].append(leave_approval)\n            data['apply_leave']['body']['beginDate'] = round(int(time.mktime(datetime.date.today().timetuple())) * 1000)\n            data['apply_leave']['body']['endDate'] = round(int(time.mktime(datetime.date.today().timetuple())) * 1000)\n            apply_leave_res = LeaveRequestApi(setup_class[0]).apply_leave(data['apply_leave'])\n            Assertions().assert_mode(apply_leave_res, data['apply_leave'])\n            apply_leave_id = apply_leave_res.json()['data']\n    \n        with allure.step('第五步：查看记录'):\n            # 查看打卡（无需打卡）\n            data['get_employee_worktimeinfo']['employee_id'] = setup_class[2]\n            get_employee_worktimeinfo_res = ClockApi(setup_class[0]).get_employee_worktimeinfo(\n                data['get_employee_worktimeinfo'])\n            Assertions().assert_mode(get_employee_worktimeinfo_res, data['get_employee_worktimeinfo'])\n>           Assertions().assert_in_text(get_employee_worktimeinfo_res.json()['data'], 'LEAVE')\n\nTestCase/TestScene/test_leave_module.py:156: \n_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ \n\nself = <Common.operation_assert.Assertions object at 0x102cfc210>\nbody = {'acceptLeaveEarlierDuration': 0, 'acceptToworkLateDuration': 0, 'attendanceGroupType': 'FIXED', 'attendance_id': '760558040242978816', ...}\nexpected_msg = 'LEAVE'\n\n    def assert_in_text(self, body, expected_msg):\n        \"\"\"\n        验证response body中是否包含预期字符串\n        :param body:\n        :param expected_msg:\n        :return:\n        \"\"\"\n        try:\n            text = json.dumps(body, ensure_ascii=False)\n>           assert expected_msg in text\nE           AssertionError\n\nCommon/operation_assert.py:64: AssertionError",
+    "steps" : [ {
+      "name" : "第一步：添加休假组",
+      "time" : {
+        "start" : 1601372782674,
+        "stop" : 1601372783051,
+        "duration" : 377
+      },
+      "status" : "passed",
+      "steps" : [ ],
+      "attachments" : [ ],
+      "parameters" : [ ],
+      "stepsCount" : 0,
+      "attachmentsCount" : 0,
+      "shouldDisplayMessage" : false,
+      "hasContent" : false
+    }, {
+      "name" : "第二步：获取休假默认审批流,修改审批人为指定人，自动审批通过",
+      "time" : {
+        "start" : 1601372783051,
+        "stop" : 1601372783228,
+        "duration" : 177
+      },
+      "status" : "passed",
+      "steps" : [ ],
+      "attachments" : [ ],
+      "parameters" : [ ],
+      "stepsCount" : 0,
+      "attachmentsCount" : 0,
+      "shouldDisplayMessage" : false,
+      "hasContent" : false
+    }, {
+      "name" : "第三步：设置考勤组为固定班制",
+      "time" : {
+        "start" : 1601372783228,
+        "stop" : 1601372786206,
+        "duration" : 2978
+      },
+      "status" : "passed",
+      "steps" : [ ],
+      "attachments" : [ ],
+      "parameters" : [ ],
+      "stepsCount" : 0,
+      "attachmentsCount" : 0,
+      "shouldDisplayMessage" : false,
+      "hasContent" : false
+    }, {
+      "name" : "第四步：固定班制请假申请",
+      "time" : {
+        "start" : 1601372786206,
+        "stop" : 1601372792815,
+        "duration" : 6609
+      },
+      "status" : "passed",
+      "steps" : [ ],
+      "attachments" : [ ],
+      "parameters" : [ ],
+      "stepsCount" : 0,
+      "attachmentsCount" : 0,
+      "shouldDisplayMessage" : false,
+      "hasContent" : false
+    }, {
+      "name" : "第五步：查看记录",
+      "time" : {
+        "start" : 1601372792815,
+        "stop" : 1601372793110,
+        "duration" : 295
+      },
+      "status" : "failed",
+      "statusMessage" : "AssertionError\n",
+      "statusTrace" : "  File \"/Users/qi.yu/PycharmProjects/riesling-apitest/TestCase/TestScene/test_leave_module.py\", line 156, in test_main_scene\n    Assertions().assert_in_text(get_employee_worktimeinfo_res.json()['data'], 'LEAVE')\n  File \"/Users/qi.yu/PycharmProjects/riesling-apitest/Common/operation_assert.py\", line 64, in assert_in_text\n    assert expected_msg in text\n",
+      "steps" : [ ],
+      "attachments" : [ ],
+      "parameters" : [ ],
+      "stepsCount" : 0,
+      "attachmentsCount" : 0,
+      "shouldDisplayMessage" : true,
+      "hasContent" : true
+    } ],
+    "attachments" : [ {
+      "uid" : "3014da60a4df8311",
+      "name" : "log",
+      "source" : "3014da60a4df8311.txt",
+      "type" : "text/plain",
+      "size" : 26484
+    } ],
+    "parameters" : [ ],
+    "stepsCount" : 5,
+    "attachmentsCount" : 1,
+    "shouldDisplayMessage" : true,
+    "hasContent" : true
+  },
+  "afterStages" : [ ],
+  "labels" : [ {
+    "name" : "tag",
+    "value" : "run(order=6)"
+  }, {
+    "name" : "tag",
+    "value" : "smoke"
+  }, {
+    "name" : "parentSuite",
+    "value" : "TestCase.TestScene"
+  }, {
+    "name" : "suite",
+    "value" : "test_leave_module"
+  }, {
+    "name" : "subSuite",
+    "value" : "TestLeave"
+  }, {
+    "name" : "host",
+    "value" : "yuqideMacBook-Pro.local"
+  }, {
+    "name" : "thread",
+    "value" : "820-MainThread"
+  }, {
+    "name" : "framework",
+    "value" : "pytest"
+  }, {
+    "name" : "language",
+    "value" : "cpython3"
+  }, {
+    "name" : "package",
+    "value" : "TestCase.TestScene.test_leave_module"
+  }, {
+    "name" : "resultFormat",
+    "value" : "allure2"
+  } ],
+  "parameters" : [ {
+    "name" : "data",
+    "value" : "{'add_leave_group': {'body': {'employeesDto': {'employeeIds': []}, 'leaveGroupAnnualLeaveDto': {'capping': 5, 'carryForwardExpiry': 0, 'coOrgId': None, 'country': 'CN', 'salCarryForwardDays': 0, 'walCarryForwardDays': 0, 'welfareAnnualLeaveList': [{'entitlement': 5, 'ruleType': 'FIXED', 'ruleValue': 0}]}, 'leaveGroupDto': {'coOrgId': None, 'dayConversionHours': 8, 'fullPaySickLeaveList': [{'entitlement': 0, 'ruleType': 'FIXED', 'ruleValue': 0}], 'name': None, 'overstepSickLeaveList': [{'entitlement': 0, 'ruleType': 'FIXED', 'ruleValue': 0}], 'priority': 'LOW', 'sickLeaveName': 'CN'}, 'name': None}, 'expect': {'assert_type': 'errcode', 'assert_result': '0'}}, 'get_leave_approval': {'params': {'coOrgId': None}, 'expect': {'assert_type': 'errcode', 'assert_result': '0'}}, 'get_default_attendance_group_information': {'attendancegroupId': None, 'params': {'attendancegroupId': None}, 'expect': {'assert_type': 'errcode', 'assert_result': '0'}}, 'update_default_attendance_group': {'body': {'attendanceDeductionSettingDto': None, 'attendanceGroupLeader': None, 'clockInMachineGroupCodes': '', 'clockSwitch': True, 'companyId': None, 'employeeId': None, 'employeeIds': [], 'holidayPlanId': '13', 'id': None, 'name': '默认考勤组', 'overtimeId': '733358102681747456', 'pinCoordinateIds': [], 'pinWifiIds': [], 'schedulingOfficers': [], 'schedulingShiftIdList': [], 'shiftPlan': {'FRIDAY': None, 'MONDAY': None, 'SATURDAY': None, 'SUNDAY': None, 'THURSDAY': None, 'TUESDAY': None, 'WEDNESDAY': None}, 'type': 'FIXED'}}, 'post_leave_approval': {'body': {'coOrgId': None, 'leaveWorkflowSettingId': None, 'leaveWorkflowSettingRules': [{'leaveTypes': ['ALL'], 'rules': [{'approvalParameters': [], 'copyParameters': [], 'leaveTimeGreaterThan': 0}]}], 'name': '默认请假审批流', 'orgIds': []}, 'expect': {'assert_type': 'errcode', 'assert_result': '0'}}, 'apply_leave': {'body': {'employeeId': None, 'orgId': None, 'approverList': [], 'ccList': [], 'leaveType': 'ANNUAL_LEAVE', 'beginDateHalfDay': 'FIRSTHALF', 'endDateHalfDay': 'SECONDHALF', 'beginDate': None, 'endDate': None, 'duration': '1', 'timeZone': 'Asia/Shanghai', 'reason': None, 'attachment': '[]'}, 'expect': {'assert_type': 'errcode', 'assert_result': '0'}}, 'get_employee_worktimeinfo': {'employee_id': None, 'params': {'timeZone': 'Asia/Shanghai'}, 'expect': {'assert_type': 'errcode', 'assert_result': '0'}}, 'get_calendar_day_record': {'body': {'timeZone': 'Asia/Shanghai', 'employeeId': None}, 'expect': {'assert_type': 'errcode', 'assert_result': '0'}}, 'get_employee_leave_record': {'params': {'employee_id': None, 'scope': 'CURRENT', 'limit': 20, 'offset': 0}}, 'my_approval': {'params': {'company_id': None, 'limit': 20, 'offset': 0}}, 'my_application': {'params': {'employee_id': None, 'limit': 20, 'offset': 0}}, 'canceled_leave_apply': {'leaveFormId': None, 'body': {'cancelReason': '接口自动化取消请假申请', 'leaveFormId': None}, 'expect': {'assert_type': 'errcode', 'assert_result': '0'}}, 'delete_leave_group': {'leaveGroupId': None, 'expect': {'assert_type': 'errcode', 'assert_result': '0'}}, 'delete_pincoordinate': {'pin_coordinate_id': None, 'params': {'attendance_group_id': None}, 'expect': {'assert_type': 'errcode', 'assert_result': '0'}}}"
+  } ],
+  "links" : [ ],
+  "hidden" : false,
+  "retry" : false,
+  "extra" : {
+    "severity" : "normal",
+    "retries" : [ ],
+    "categories" : [ {
+      "name" : "Product defects",
+      "matchedStatuses" : [ ],
+      "flaky" : false
+    } ],
+    "tags" : [ "smoke", "run(order=6)" ]
+  },
+  "source" : "a56f650980206f82.json",
+  "parameterValues" : [ "{'add_leave_group': {'body': {'employeesDto': {'employeeIds': []}, 'leaveGroupAnnualLeaveDto': {'capping': 5, 'carryForwardExpiry': 0, 'coOrgId': None, 'country': 'CN', 'salCarryForwardDays': 0, 'walCarryForwardDays': 0, 'welfareAnnualLeaveList': [{'entitlement': 5, 'ruleType': 'FIXED', 'ruleValue': 0}]}, 'leaveGroupDto': {'coOrgId': None, 'dayConversionHours': 8, 'fullPaySickLeaveList': [{'entitlement': 0, 'ruleType': 'FIXED', 'ruleValue': 0}], 'name': None, 'overstepSickLeaveList': [{'entitlement': 0, 'ruleType': 'FIXED', 'ruleValue': 0}], 'priority': 'LOW', 'sickLeaveName': 'CN'}, 'name': None}, 'expect': {'assert_type': 'errcode', 'assert_result': '0'}}, 'get_leave_approval': {'params': {'coOrgId': None}, 'expect': {'assert_type': 'errcode', 'assert_result': '0'}}, 'get_default_attendance_group_information': {'attendancegroupId': None, 'params': {'attendancegroupId': None}, 'expect': {'assert_type': 'errcode', 'assert_result': '0'}}, 'update_default_attendance_group': {'body': {'attendanceDeductionSettingDto': None, 'attendanceGroupLeader': None, 'clockInMachineGroupCodes': '', 'clockSwitch': True, 'companyId': None, 'employeeId': None, 'employeeIds': [], 'holidayPlanId': '13', 'id': None, 'name': '默认考勤组', 'overtimeId': '733358102681747456', 'pinCoordinateIds': [], 'pinWifiIds': [], 'schedulingOfficers': [], 'schedulingShiftIdList': [], 'shiftPlan': {'FRIDAY': None, 'MONDAY': None, 'SATURDAY': None, 'SUNDAY': None, 'THURSDAY': None, 'TUESDAY': None, 'WEDNESDAY': None}, 'type': 'FIXED'}}, 'post_leave_approval': {'body': {'coOrgId': None, 'leaveWorkflowSettingId': None, 'leaveWorkflowSettingRules': [{'leaveTypes': ['ALL'], 'rules': [{'approvalParameters': [], 'copyParameters': [], 'leaveTimeGreaterThan': 0}]}], 'name': '默认请假审批流', 'orgIds': []}, 'expect': {'assert_type': 'errcode', 'assert_result': '0'}}, 'apply_leave': {'body': {'employeeId': None, 'orgId': None, 'approverList': [], 'ccList': [], 'leaveType': 'ANNUAL_LEAVE', 'beginDateHalfDay': 'FIRSTHALF', 'endDateHalfDay': 'SECONDHALF', 'beginDate': None, 'endDate': None, 'duration': '1', 'timeZone': 'Asia/Shanghai', 'reason': None, 'attachment': '[]'}, 'expect': {'assert_type': 'errcode', 'assert_result': '0'}}, 'get_employee_worktimeinfo': {'employee_id': None, 'params': {'timeZone': 'Asia/Shanghai'}, 'expect': {'assert_type': 'errcode', 'assert_result': '0'}}, 'get_calendar_day_record': {'body': {'timeZone': 'Asia/Shanghai', 'employeeId': None}, 'expect': {'assert_type': 'errcode', 'assert_result': '0'}}, 'get_employee_leave_record': {'params': {'employee_id': None, 'scope': 'CURRENT', 'limit': 20, 'offset': 0}}, 'my_approval': {'params': {'company_id': None, 'limit': 20, 'offset': 0}}, 'my_application': {'params': {'employee_id': None, 'limit': 20, 'offset': 0}}, 'canceled_leave_apply': {'leaveFormId': None, 'body': {'cancelReason': '接口自动化取消请假申请', 'leaveFormId': None}, 'expect': {'assert_type': 'errcode', 'assert_result': '0'}}, 'delete_leave_group': {'leaveGroupId': None, 'expect': {'assert_type': 'errcode', 'assert_result': '0'}}, 'delete_pincoordinate': {'pin_coordinate_id': None, 'params': {'attendance_group_id': None}, 'expect': {'assert_type': 'errcode', 'assert_result': '0'}}}" ]
+}

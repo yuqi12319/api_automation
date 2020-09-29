@@ -1,0 +1,15 @@
+{
+  "total" : 1,
+  "items" : [ {
+    "uid" : "5db65377dd102d84af34940eaa906cf4",
+    "name" : "TestCase.TestScene",
+    "statistic" : {
+      "failed" : 3,
+      "broken" : 0,
+      "skipped" : 0,
+      "passed" : 7,
+      "unknown" : 0,
+      "total" : 10
+    }
+  } ]
+}

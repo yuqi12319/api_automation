@@ -1,0 +1,231 @@
+{
+  "uid" : "12cde2d4fe1ad8b1",
+  "name" : "test_main_scene[data0]",
+  "fullName" : "TestCase.TestScene.test_overtime_module.TestOvertime#test_main_scene",
+  "historyId" : "73e719ec092ce3d22899873e044523a2",
+  "time" : {
+    "start" : 1601372802714,
+    "stop" : 1601372813668,
+    "duration" : 10954
+  },
+  "status" : "passed",
+  "flaky" : false,
+  "newFailed" : false,
+  "beforeStages" : [ {
+    "name" : "pytestconfig",
+    "time" : {
+      "start" : 1601372766096,
+      "stop" : 1601372766096,
+      "duration" : 0
+    },
+    "status" : "passed",
+    "steps" : [ ],
+    "attachments" : [ ],
+    "parameters" : [ ],
+    "stepsCount" : 0,
+    "attachmentsCount" : 0,
+    "shouldDisplayMessage" : false,
+    "hasContent" : false
+  }, {
+    "name" : "login",
+    "time" : {
+      "start" : 1601372802506,
+      "stop" : 1601372802712,
+      "duration" : 206
+    },
+    "status" : "passed",
+    "steps" : [ ],
+    "attachments" : [ ],
+    "parameters" : [ ],
+    "stepsCount" : 0,
+    "attachmentsCount" : 0,
+    "shouldDisplayMessage" : false,
+    "hasContent" : false
+  }, {
+    "name" : "setup_class",
+    "time" : {
+      "start" : 1601372802713,
+      "stop" : 1601372802713,
+      "duration" : 0
+    },
+    "status" : "passed",
+    "steps" : [ ],
+    "attachments" : [ ],
+    "parameters" : [ ],
+    "stepsCount" : 0,
+    "attachmentsCount" : 0,
+    "shouldDisplayMessage" : false,
+    "hasContent" : false
+  }, {
+    "name" : "env",
+    "time" : {
+      "start" : 1601372802713,
+      "stop" : 1601372802713,
+      "duration" : 0
+    },
+    "status" : "passed",
+    "steps" : [ ],
+    "attachments" : [ ],
+    "parameters" : [ ],
+    "stepsCount" : 0,
+    "attachmentsCount" : 0,
+    "shouldDisplayMessage" : false,
+    "hasContent" : false
+  } ],
+  "testStage" : {
+    "status" : "passed",
+    "steps" : [ {
+      "name" : "第一步：获取加班默认审批流,修改审批人为指定人，自动审批通过",
+      "time" : {
+        "start" : 1601372802714,
+        "stop" : 1601372802970,
+        "duration" : 256
+      },
+      "status" : "passed",
+      "steps" : [ ],
+      "attachments" : [ ],
+      "parameters" : [ ],
+      "stepsCount" : 0,
+      "attachmentsCount" : 0,
+      "shouldDisplayMessage" : false,
+      "hasContent" : false
+    }, {
+      "name" : "第二步：考勤组设置",
+      "time" : {
+        "start" : 1601372802971,
+        "stop" : 1601372805252,
+        "duration" : 2281
+      },
+      "status" : "passed",
+      "steps" : [ ],
+      "attachments" : [ ],
+      "parameters" : [ ],
+      "stepsCount" : 0,
+      "attachmentsCount" : 0,
+      "shouldDisplayMessage" : false,
+      "hasContent" : false
+    }, {
+      "name" : "第三步：加班申请",
+      "time" : {
+        "start" : 1601372805253,
+        "stop" : 1601372812254,
+        "duration" : 7001
+      },
+      "status" : "passed",
+      "steps" : [ ],
+      "attachments" : [ ],
+      "parameters" : [ ],
+      "stepsCount" : 0,
+      "attachmentsCount" : 0,
+      "shouldDisplayMessage" : false,
+      "hasContent" : false
+    }, {
+      "name" : "第四步：查看加班",
+      "time" : {
+        "start" : 1601372812254,
+        "stop" : 1601372813299,
+        "duration" : 1045
+      },
+      "status" : "passed",
+      "steps" : [ ],
+      "attachments" : [ ],
+      "parameters" : [ ],
+      "stepsCount" : 0,
+      "attachmentsCount" : 0,
+      "shouldDisplayMessage" : false,
+      "hasContent" : false
+    }, {
+      "name" : "第五步：取消加班",
+      "time" : {
+        "start" : 1601372813299,
+        "stop" : 1601372813595,
+        "duration" : 296
+      },
+      "status" : "passed",
+      "steps" : [ ],
+      "attachments" : [ ],
+      "parameters" : [ ],
+      "stepsCount" : 0,
+      "attachmentsCount" : 0,
+      "shouldDisplayMessage" : false,
+      "hasContent" : false
+    }, {
+      "name" : "第六步：删除位置打卡",
+      "time" : {
+        "start" : 1601372813595,
+        "stop" : 1601372813668,
+        "duration" : 73
+      },
+      "status" : "passed",
+      "steps" : [ ],
+      "attachments" : [ ],
+      "parameters" : [ ],
+      "stepsCount" : 0,
+      "attachmentsCount" : 0,
+      "shouldDisplayMessage" : false,
+      "hasContent" : false
+    } ],
+    "attachments" : [ {
+      "uid" : "c3d2caf4e164fe88",
+      "name" : "log",
+      "source" : "c3d2caf4e164fe88.txt",
+      "type" : "text/plain",
+      "size" : 42162
+    } ],
+    "parameters" : [ ],
+    "stepsCount" : 6,
+    "attachmentsCount" : 1,
+    "shouldDisplayMessage" : false,
+    "hasContent" : true
+  },
+  "afterStages" : [ ],
+  "labels" : [ {
+    "name" : "tag",
+    "value" : "run(order=6)"
+  }, {
+    "name" : "tag",
+    "value" : "smoke"
+  }, {
+    "name" : "parentSuite",
+    "value" : "TestCase.TestScene"
+  }, {
+    "name" : "suite",
+    "value" : "test_overtime_module"
+  }, {
+    "name" : "subSuite",
+    "value" : "TestOvertime"
+  }, {
+    "name" : "host",
+    "value" : "yuqideMacBook-Pro.local"
+  }, {
+    "name" : "thread",
+    "value" : "820-MainThread"
+  }, {
+    "name" : "framework",
+    "value" : "pytest"
+  }, {
+    "name" : "language",
+    "value" : "cpython3"
+  }, {
+    "name" : "package",
+    "value" : "TestCase.TestScene.test_overtime_module"
+  }, {
+    "name" : "resultFormat",
+    "value" : "allure2"
+  } ],
+  "parameters" : [ {
+    "name" : "data",
+    "value" : "{'overtime_approval_list': {'params': {'company_id': None, 'type': None}, 'expect': {'assert_type': 'errcode', 'assert_result': '0'}}, 'update_overtime_approval': {'workflow_setting_id': None, 'body': {'approverlist': [{'employee_id': None, 'sort_order': 1, 'type': 'FIXED'}], 'cclist': [], 'company_id': None, 'name': '默认加班审批流', 'orglist': [{'co_org_id': None}], 'type': 'OVERTIME'}, 'expect': {'assert_type': 'errcode', 'assert_result': '0'}}, 'get_default_attendance_group_information': {'attendancegroupId': None, 'params': {'attendancegroupId': None}, 'expect': {'assert_type': 'errcode', 'assert_result': '0'}}, 'update_default_attendance_group': {'body': {'attendanceDeductionSettingDto': None, 'attendanceGroupLeader': None, 'clockInMachineGroupCodes': '', 'clockSwitch': True, 'companyId': None, 'employeeId': None, 'employeeIds': [], 'holidayPlanId': None, 'id': None, 'name': '默认考勤组', 'overtimeId': None, 'pinCoordinateIds': [], 'pinWifiIds': [], 'schedulingOfficers': [], 'schedulingShiftIdList': [], 'shiftPlan': {'FRIDAY': None, 'MONDAY': None, 'SATURDAY': None, 'SUNDAY': None, 'THURSDAY': None, 'TUESDAY': None, 'WEDNESDAY': None}, 'type': 'FIXED'}, 'expect': {'assert_type': 'errcode', 'assert_result': '0'}}, 'check_overtime': {'params': {'attendanceGroupId': None, 'employee_id': None, 'overtimeDate': None, 'overtime_start': None, 'overtime_end': None, 'shiftId': None, 'timeZone': 'Asia/Shanghai'}, 'expect': {'assert_type': 'errcode', 'assert_result': '0'}}, 'send_overtime_apply': {'body': {'org_id': None, 'reason': None, 'employee_id': None, 'start_time': None, 'end_time': None, 'timeZone': 'Asia/Shanghai', 'approverList': [{'employee_id': None, 'sort_order': 1}], 'ccList': [], 'duration': None, 'attachment': '[]'}, 'expect': {'assert_type': 'errcode', 'assert_result': '0'}}, 'get_calendar_day_record': {'body': {'timeZone': 'Asia/Shanghai', 'employeeId': None}, 'expect': {'assert_type': 'errcode', 'assert_result': '0'}}, 'my_approval': {'params': {'company_id': None, 'limit': 20, 'offset': 0}, 'expect': {'assert_type': 'errcode', 'assert_result': '0'}}, 'my_application': {'params': {'employee_id': None, 'limit': 20, 'offset': 0}, 'expect': {'assert_type': 'errcode', 'assert_result': '0'}}, 'get_notifications_list': {'params': {'company_id': None, 'limit': 20, 'offset': 0}, 'expect': {'assert_type': 'errcode', 'assert_result': '0'}}, 'canceled_overtime_apply': {'overtime_form_id': None, 'body': {'overtime_form_id': None, 'cancelReason': '接口自动化取消加班申请'}, 'expect': {'assert_type': 'errcode', 'assert_result': '0'}}, 'delete_pincoordinate': {'pin_coordinate_id': None, 'params': {'attendance_group_id': None}, 'expect': {'assert_type': 'errcode', 'assert_result': '0'}}}"
+  } ],
+  "links" : [ ],
+  "hidden" : false,
+  "retry" : false,
+  "extra" : {
+    "severity" : "normal",
+    "retries" : [ ],
+    "categories" : [ ],
+    "tags" : [ "smoke", "run(order=6)" ]
+  },
+  "source" : "12cde2d4fe1ad8b1.json",
+  "parameterValues" : [ "{'overtime_approval_list': {'params': {'company_id': None, 'type': None}, 'expect': {'assert_type': 'errcode', 'assert_result': '0'}}, 'update_overtime_approval': {'workflow_setting_id': None, 'body': {'approverlist': [{'employee_id': None, 'sort_order': 1, 'type': 'FIXED'}], 'cclist': [], 'company_id': None, 'name': '默认加班审批流', 'orglist': [{'co_org_id': None}], 'type': 'OVERTIME'}, 'expect': {'assert_type': 'errcode', 'assert_result': '0'}}, 'get_default_attendance_group_information': {'attendancegroupId': None, 'params': {'attendancegroupId': None}, 'expect': {'assert_type': 'errcode', 'assert_result': '0'}}, 'update_default_attendance_group': {'body': {'attendanceDeductionSettingDto': None, 'attendanceGroupLeader': None, 'clockInMachineGroupCodes': '', 'clockSwitch': True, 'companyId': None, 'employeeId': None, 'employeeIds': [], 'holidayPlanId': None, 'id': None, 'name': '默认考勤组', 'overtimeId': None, 'pinCoordinateIds': [], 'pinWifiIds': [], 'schedulingOfficers': [], 'schedulingShiftIdList': [], 'shiftPlan': {'FRIDAY': None, 'MONDAY': None, 'SATURDAY': None, 'SUNDAY': None, 'THURSDAY': None, 'TUESDAY': None, 'WEDNESDAY': None}, 'type': 'FIXED'}, 'expect': {'assert_type': 'errcode', 'assert_result': '0'}}, 'check_overtime': {'params': {'attendanceGroupId': None, 'employee_id': None, 'overtimeDate': None, 'overtime_start': None, 'overtime_end': None, 'shiftId': None, 'timeZone': 'Asia/Shanghai'}, 'expect': {'assert_type': 'errcode', 'assert_result': '0'}}, 'send_overtime_apply': {'body': {'org_id': None, 'reason': None, 'employee_id': None, 'start_time': None, 'end_time': None, 'timeZone': 'Asia/Shanghai', 'approverList': [{'employee_id': None, 'sort_order': 1}], 'ccList': [], 'duration': None, 'attachment': '[]'}, 'expect': {'assert_type': 'errcode', 'assert_result': '0'}}, 'get_calendar_day_record': {'body': {'timeZone': 'Asia/Shanghai', 'employeeId': None}, 'expect': {'assert_type': 'errcode', 'assert_result': '0'}}, 'my_approval': {'params': {'company_id': None, 'limit': 20, 'offset': 0}, 'expect': {'assert_type': 'errcode', 'assert_result': '0'}}, 'my_application': {'params': {'employee_id': None, 'limit': 20, 'offset': 0}, 'expect': {'assert_type': 'errcode', 'assert_result': '0'}}, 'get_notifications_list': {'params': {'company_id': None, 'limit': 20, 'offset': 0}, 'expect': {'assert_type': 'errcode', 'assert_result': '0'}}, 'canceled_overtime_apply': {'overtime_form_id': None, 'body': {'overtime_form_id': None, 'cancelReason': '接口自动化取消加班申请'}, 'expect': {'assert_type': 'errcode', 'assert_result': '0'}}, 'delete_pincoordinate': {'pin_coordinate_id': None, 'params': {'attendance_group_id': None}, 'expect': {'assert_type': 'errcode', 'assert_result': '0'}}}" ]
+}

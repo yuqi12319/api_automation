@@ -11,7 +11,7 @@ from Common.operation_yaml import YamlHandle
 from TestApi.EmployeeApi.employee_api import EmployeeApi
 from TestApi.EmployeeApi.employee_domain import EmployeeDomain
 import Common.consts
-from TestApi.MuscatApi.muscat import Muscat
+from TestApi.MuscatApi.user_api import UserApi
 
 
 class TestImportEmployee:
@@ -21,10 +21,10 @@ class TestImportEmployee:
         company_id = str()
         employee_id = str()
         if Common.consts.COMPANY_INFORMATION:
-            company_id = Common.consts.COMPANY_INFORMATION[0]['company_id']
-            employee_id = Common.consts.COMPANY_INFORMATION[0]['employee_id']
+            company_id = Common.consts.COMPANY_INFORMATION['company_id']
+            employee_id = Common.consts.COMPANY_INFORMATION['employee_id']
         else:
-            my_companies_res = Muscat(env).get_my_companies_api()
+            my_companies_res = UserApi(env).get_my_companies_api()
             if my_companies_res.json()['data']:
                 company_id = my_companies_res.json()['data'][0]['company_id']
                 brief_profile_data = YamlHandle().read_yaml('SingleInterfaceData/Employee/brief_profile.yaml')[0]

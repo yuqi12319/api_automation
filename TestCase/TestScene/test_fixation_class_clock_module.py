@@ -10,10 +10,10 @@ import Common.consts
 from Common.operation_yaml import YamlHandle
 from Common.operation_assert import Assertions
 from TestApi.EmployeeApi.employee_api import EmployeeApi
-from TestApi.MuscatApi.muscat import Muscat
 from TestApi.AttendanceApi.attendance_group_api import AttendanceGroupApi
 from TestApi.AttendanceApi.clock_api import ClockApi
 from TestCase.TestScene import attendance
+from TestApi.MuscatApi.user_api import UserApi
 
 
 class TestFixationClassClock:
@@ -23,10 +23,10 @@ class TestFixationClassClock:
         company_id = str()
         employee_id = str()
         if Common.consts.COMPANY_INFORMATION:
-            company_id = Common.consts.COMPANY_INFORMATION[0]['company_id']
-            employee_id = Common.consts.COMPANY_INFORMATION[0]['employee_id']
+            company_id = Common.consts.COMPANY_INFORMATION['company_id']
+            employee_id = Common.consts.COMPANY_INFORMATION['employee_id']
         else:
-            my_companies_res = Muscat(env).get_my_companies_api()
+            my_companies_res = UserApi(env).get_my_companies_api()
             if my_companies_res.json()['data']:
                 company_id = my_companies_res.json()['data'][0]['company_id']
                 brief_profile_data = YamlHandle().read_yaml('SingleInterfaceData/Employee/brief_profile.yaml')[0]
