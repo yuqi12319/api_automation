@@ -10,7 +10,7 @@ from Conf.config import Config
 
 @pytest.fixture(scope="module", autouse=True)
 def login():
-    url = Config().get_conf('test_env', 'test3') + '/dukang-user/login'
+    url = Config().get_conf('test_env', 'sandbox') + '/dukang-user/login'
     body = {
         "areaCode": 86,
         "clientId": "gardenia",
