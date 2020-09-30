@@ -44,6 +44,7 @@ class TestRegisterCompanyScene:
             select_comapny_id_sql = "SELECT * FROM company_register_request WHERE `name` = '%s'" % company_name
             mysql_name = 'dukang_coc_dk' + setup_class
             register_company_result = mysql_operate_select_fetchone(mysql_name, select_sql=select_comapny_id_sql)
+            time.sleep(2)
 
             # 审核通过
             data['company_register_approval']['body']['id'] = register_company_result['id']
@@ -115,18 +116,18 @@ class TestRegisterCompanyScene:
             Assertions().assert_in_text(attendance_approval_list_res.json()['data'], '默认补卡审批流')
             Assertions().assert_in_text(attendance_approval_list_res.json()['data'], '默认离职审批流')
 
-        # with allure.step('第三步：校验是否生成默认薪资项'):
-        #     data['default_payroll_item']['params']['coOrgId'] = company_id
-        #     allure.attach(str(data['default_payroll_item']), "请求数据", allure.attachment_type.JSON)
-        #     payroll_item_list_res = PayrollSetting(setup_class).payroll_item_list_api(data['default_payroll_item'])
-        #     allure.attach(payroll_item_list_res.text, "payroll_item_list_api返回结果", allure.attachment_type.JSON)
-        #     Assertions().assert_in_text(payroll_item_list_res.json()['data'], '基本工资')
-        #     Assertions().assert_in_text(payroll_item_list_res.json()['data'], '工作日加班费')
-        #     Assertions().assert_in_text(payroll_item_list_res.json()['data'], '休息日加班费')
-        #     Assertions().assert_in_text(payroll_item_list_res.json()['data'], '法定假日加班费')
-        #     Assertions().assert_in_text(payroll_item_list_res.json()['data'], '事假')
-        #     Assertions().assert_in_text(payroll_item_list_res.json()['data'], '病假')
-        #     Assertions().assert_in_text(payroll_item_list_res.json()['data'], '缺勤')
+        with allure.step('第三步：校验是否生成默认薪资项'):
+            data['default_payroll_item']['params']['coOrgId'] = company_id
+            allure.attach(str(data['default_payroll_item']), "请求数据", allure.attachment_type.JSON)
+            payroll_item_list_res = PayrollSetting(setup_class).payroll_item_list_api(data['default_payroll_item'])
+            allure.attach(payroll_item_list_res.text, "payroll_item_list_api返回结果", allure.attachment_type.JSON)
+            Assertions().assert_in_text(payroll_item_list_res.json()['data'], '基本工资')
+            Assertions().assert_in_text(payroll_item_list_res.json()['data'], '工作日加班费')
+            Assertions().assert_in_text(payroll_item_list_res.json()['data'], '休息日加班费')
+            Assertions().assert_in_text(payroll_item_list_res.json()['data'], '法定假日加班费')
+            Assertions().assert_in_text(payroll_item_list_res.json()['data'], '事假')
+            Assertions().assert_in_text(payroll_item_list_res.json()['data'], '病假')
+            Assertions().assert_in_text(payroll_item_list_res.json()['data'], '缺勤')
 
         with allure.step('第四步：校验是否生成默认考勤组'):
             data['default_attendance_group']['params']['company_id'] = company_id
@@ -144,14 +145,14 @@ class TestRegisterCompanyScene:
             allure.attach(leave_group_res.text, "get_leave_group_api返回结果", allure.attachment_type.JSON)
             Assertions().assert_in_text(leave_group_res.json()['data'], '默认休假组')
 
-        '''
-        with allure.step('解散公司'):
-            data['dissolve_company']['companyId'] = regist_company_res.json()['data']['company_id']
-            dissolve_company_res = Muscat(self.env).dissolve_company(data['dissolve_company'])
-            Assertions().assert_mode(dissolve_company_res, data['dissolve_company'])
-        '''
+
+        # with allure.step('解散公司'):
+        #     data['dissolve_company']['companyId'] = company_id
+        #     dissolve_company_res = Muscat(setup_class).dissolve_company(data['dissolve_company'])
+        #     Assertions().assert_mode(dissolve_company_res, data['dissolve_company'])
+
 
 
 
 if __name__ == '__main__':
-    pytest.main(['-sv', 'test_register_company_module.py', '--env', 'sandbox'])
+    pytest.main(['-sv', 'test_register_company_module.py', '--env', 'test3'])
