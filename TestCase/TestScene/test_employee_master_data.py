@@ -214,7 +214,8 @@ class TestEmployeeManager:
             data['get_employee_contract']['params']['employeeId'] = setup_class[2]
             get_employee_contract_res = EmployeeContract(setup_class[0]).get_employee_contract_api(
                 data['get_employee_contract'])
-            Assertions().assert_in_text(get_employee_contract_res.json()['data'], str(today_time))
+            # Assertions().assert_in_text(get_employee_contract_res.json()['data'], str(today_time))
+            Assertions().assert_in_text(get_employee_contract_res.json()['data'], 1213141414)
 
 
 if __name__ == '__main__':
