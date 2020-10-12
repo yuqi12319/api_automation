@@ -86,3 +86,5 @@ dissolve_company:
   expect:
     assert_type: errcode
     assert_result: '0'
+---
+case2
