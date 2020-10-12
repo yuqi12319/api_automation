@@ -136,7 +136,7 @@ class TestWorkforceScene:
 
         return data_dict
 
-    # @pytest.mark.skip
+    @pytest.mark.skip
     @allure.story("主流程")
     @pytest.mark.parametrize('data', YamlHandle().read_yaml('SceneData/WorkforceScene/main_scene.yaml'))
     def test_main_scene(self, data, setup_class):
@@ -201,7 +201,7 @@ class TestWorkforceScene:
         #
         # clear_data()
 
-    # @pytest.mark.skip
+    @pytest.mark.skip
     @allure.story("撤销申请")
     @pytest.mark.parametrize('data', YamlHandle().read_yaml('SceneData/WorkforceScene/withdraw_apply.yaml'))
     def test_withdraw_apply(self, data, precondition):
@@ -621,6 +621,7 @@ class TestWorkforceScene:
             allure.attach(require_list_res.text, "recevice_list_api返回结果", allure.attachment_type.JSON)
             # Assertions().assert_mode(recevice_list_res, )
 
+    @pytest.mark.skip
     def test_a(self, setup_class):
         workforce_employees_free_data = dict()
         workforce_employees_free_data['params'] = dict()
@@ -646,6 +647,7 @@ class TestWorkforceScene:
         dispatch_data['body']['employeeIds'] = employeeIds
         dispatch_res = WorkforceDispatch(setup_class['env']).dispatch_api(dispatch_data)
 
+    @pytest.mark.skip
     def test_b(self, setup_class):
         recevice_list_data = dict()
         recevice_list_data['params'] = dict()
