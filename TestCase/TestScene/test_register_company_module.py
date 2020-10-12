@@ -11,12 +11,12 @@ from Common.log import MyLog
 from Common.operation_yaml import YamlHandle
 from Common.operation_assert import Assertions
 from Common.operation_mysql import *
-from TestApi.MuscatApi.muscat import Muscat
+from Conf.config import Config
+from Common.request import *
 from TestApi.WorkflowApi.workflow_domain import WorkflowDomain
 from TestApi.PayrollApi.payroll_setting import PayrollSetting
 from TestApi.AttendanceApi.attendance_setting import AttendanceSetting
 from TestApi.LeaveApi.leave_setting_api import LeaveSettingApi
-from TestApi.UserApi.token import Token
 from TestApi.CocApi.company_register_request_api import CompanyRegisterRequestApi
 from TestApi.MuscatApi.user_api import UserApi
 from TestApi.EmployeeApi.employee_api import EmployeeApi
@@ -32,6 +32,21 @@ class TestRegisterCompanyScene:
     @pytest.mark.run(order=1)
     @pytest.mark.parametrize('data', YamlHandle().read_yaml('SceneData/RegisterComapnyScene/main_scene.yaml'))
     def test_main_scene(self, data, setup_class):
+
+        with allure.step('登陆'):
+
+            url = Config().get_conf('test_env', setup_class) + '/dukang-user/login'
+            body = {
+                "areaCode": 86,
+                "clientId": "gardenia",
+                "password": 12345678,
+                "username": 18373280066
+                # "username": 13300001234
+            }
+
+            res = Request().send_request_method('post', url=url, json=body)
+            access_token = res.json()['data']['accessToken']
+            Common.consts.ACCESS_TOKEN.append(access_token)
 
         with allure.step('第一步：创建公司'):
 
@@ -145,13 +160,10 @@ class TestRegisterCompanyScene:
             allure.attach(leave_group_res.text, "get_leave_group_api返回结果", allure.attachment_type.JSON)
             Assertions().assert_in_text(leave_group_res.json()['data'], '默认休假组')
 
-
         # with allure.step('解散公司'):
         #     data['dissolve_company']['companyId'] = company_id
         #     dissolve_company_res = Muscat(setup_class).dissolve_company(data['dissolve_company'])
         #     Assertions().assert_mode(dissolve_company_res, data['dissolve_company'])
-
-
 
 
 if __name__ == '__main__':
