@@ -52,7 +52,7 @@ class TestEmployeeManager:
             data['get_employee_manager_list']['headers']['x-dk-token'] = Common.consts.ACCESS_TOKEN[0]
             get_employee_manager_list_res = EmployeeApi(setup_class[0]).get_employee_manager_list(
                 data['get_employee_manager_list'])
-            Assertions().assert_mode(get_employee_manager_list_res, 11)
+            Assertions().assert_mode(get_employee_manager_list_res, data['get_employee_manager_list'])
 
         with allure.step('第二步：组织信息设置'):
             # 添加职级
@@ -214,8 +214,7 @@ class TestEmployeeManager:
             data['get_employee_contract']['params']['employeeId'] = setup_class[2]
             get_employee_contract_res = EmployeeContract(setup_class[0]).get_employee_contract_api(
                 data['get_employee_contract'])
-            # Assertions().assert_in_text(get_employee_contract_res.json()['data'], str(today_time))
-            Assertions().assert_in_text(get_employee_contract_res.json()['data'], 1213141414)
+            Assertions().assert_in_text(get_employee_contract_res.json()['data'], str(today_time))
 
 
 if __name__ == '__main__':
