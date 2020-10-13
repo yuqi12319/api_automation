@@ -41,6 +41,8 @@ class TestRegisterCompanyScene:
                 "clientId": "gardenia",
                 "password": 12345678,
                 "username": 18373280066
+                # "password": "qazwsx123",
+                # "username": 15214314514
                 # "username": 13300001234
             }
 
@@ -167,4 +169,4 @@ class TestRegisterCompanyScene:
 
 
 if __name__ == '__main__':
-    pytest.main(['-sv', 'test_register_company_module.py', '--env', 'test3'])
+    pytest.main(['-sv', 'test_register_company_module.py::TestRegisterCompanyScene::test_main_scene', '--env', 'test3'])
