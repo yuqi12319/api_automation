@@ -27,9 +27,8 @@ from Conf.config import Config
 def pytest_addoption(parser):
     parser.addoption("--env", action="store", default="test", help="environment")
 
+
 @pytest.fixture(scope="class")
 def env(pytestconfig):
     return pytestconfig.getoption('--env')
-
-
 
