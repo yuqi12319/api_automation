@@ -26,7 +26,6 @@ from TestApi.ContingentProjectApi.contingent_project import ContingentProject
 from TestApi.EmployeeApi.workforce_employee_domain import WorkforceEmployeeDomain
 
 
-@pytest.mark.workforce
 @allure.feature("劳务工场景测试")
 class TestWorkforceScene:
 
