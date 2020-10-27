@@ -12,14 +12,14 @@ class WorkforceApply(Const):
 
     # 提交用工申请接口
     def send_apply_api(self, data):
-        url = self.url_path + data['url']
+        url = self.url_path + '/dukang-workforce/api/workforce/apply'
         res = self.request.send_request_method(method='post', url=url, json=data['body'], headers=self.headers)
         return res
 
     # 获取用工申请列表接口
 
     def apply_list_api(self, data):
-        url = self.url_path + data['url']
+        url = self.url_path + '/dukang-workforce/api/workforce/form/list'
         res = self.request.send_request_method('post', url=url, params=data['params'], json=data['body'], headers=self.headers)
         return res
 

@@ -1,0 +1,113 @@
+# 获取用工申请审批流列表
+get_apply_approval_list:
+  params:
+    coOrgId:
+    offset: 0
+    limit: 10
+    type: WORKFORCEAPPLICATION
+# 修改默认用工申请审批流为无需审批
+update_apply_approval_automatic_approval:
+  body:
+    coOrgId:
+    name: 默认用工申请审批流
+    orgIds: []
+    type: WORKFORCEAPPLICATION
+    workflowSettingId:
+    workflowSettingRuleGroupDtoList:
+      -
+        workflowSettingApproverList:
+          -
+            employeeId:
+            sortOrder: 1
+            type: FIXED
+        workflowSettingCcList: []
+        workflowSettingRuleGroupRuleDtoList:
+          -
+            ruleName: REQUIRE_APPROVAL
+            ruleValue: 1
+  expect:
+    assert_type: errcode
+    assert_result: '0'
+# 根据招募组织节点获取对应申请审批流
+get_approval_by_organization:
+  organizationId:
+  body:
+    employeeId:
+    type: WORKFORCEAPPLICATION
+    workforceApplicationDto:
+      coOrgId:
+      financeActual:
+      financePlan:
+      organizationId:
+      personnelActual:
+      personnelPlan:
+      recruitmentType: New
+  expect:
+    assert_type: errcode
+    assert_result: '0'
+# 发送用工申请
+send_apply:
+  body:
+    recruitmentType: New
+    remark: This is the position information note
+    address: Here is the working address
+    applyEmployeeId:
+    approverList: []
+    ccList: []
+    provinceId: 500000
+    provinceName: 重庆
+    cityId: 500100
+    cityName: 重庆市
+    coOrgId:
+    coOrgName:
+    labourCompanyId:
+    labourCompanyName:
+    contactEmail: 123@abc.com
+    contactMobile: 18818811881
+    contactPerson: admin
+    demandPersonCount: 20
+    joinDate:
+    probationPeriodExpire:
+    positionId:
+    positionName:
+    projectId:
+    projectName:
+    organizationId:
+    organizationName:
+    needApproval: false
+    workflowDeploymentId:
+    workforcePayrollDtos: []
+    workforceApplicationBudgetDto:
+      demandExplain: This is the budget requirement statement
+      financeActual:
+      financeCurrency:
+      financePeriod:
+      financePlan:
+      passd: false
+      personnelActual:
+      personnelPeriod:
+      personnelPlan:
+      referenceOrganizationId:
+      referenceOrganizationName:
+  expect:
+    assert_type: errcode
+    assert_result: '0'
+# 获取申请单列表
+get_apply_list:
+  params:
+    offset: 0
+    limit: 20
+  body:
+    coOrgId:
+  expect:
+    assert_type: errcode
+    assert_result: '0'
+# 获取需求单列表
+get_require_list:
+  body:
+    coOrgId:
+    limit: 20
+    offset: 0
+  expect:
+    assert_type: errcode
+    assert_result: '0'

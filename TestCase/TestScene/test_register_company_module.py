@@ -29,6 +29,7 @@ class TestRegisterCompanyScene:
         return env
 
     @pytest.mark.smoke
+    @pytest.mark.workforce
     @pytest.mark.run(order=1)
     @pytest.mark.parametrize('data', YamlHandle().read_yaml('SceneData/RegisterComapnyScene/main_scene.yaml'))
     def test_main_scene(self, data, setup_class):
