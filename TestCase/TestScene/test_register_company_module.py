@@ -30,6 +30,7 @@ class TestRegisterCompanyScene:
 
     @pytest.mark.smoke
     @pytest.mark.workforce
+    @pytest.mark.workforce_smoke
     @pytest.mark.run(order=1)
     @pytest.mark.parametrize('data', YamlHandle().read_yaml('SceneData/RegisterComapnyScene/main_scene.yaml'))
     def test_main_scene(self, data, setup_class):
@@ -62,12 +63,13 @@ class TestRegisterCompanyScene:
             select_comapny_id_sql = "SELECT * FROM company_register_request WHERE `name` = '%s'" % company_name
             mysql_name = 'dukang_coc_dk' + setup_class
             register_company_result = mysql_operate_select_fetchone(mysql_name, select_sql=select_comapny_id_sql)
-            time.sleep(2)
+            # time.sleep(8)
 
             # 审核通过
             data['company_register_approval']['body']['id'] = register_company_result['id']
             company_register_approval_res = CompanyRegisterRequestApi(setup_class).company_register_approval_api(data['company_register_approval'])
             Assertions().assert_mode(company_register_approval_res, data['company_register_approval'])
+            # time.sleep(8)
 
             get_my_companies_res = UserApi(setup_class).get_my_companies_api()
             for item in get_my_companies_res.json()['data']:

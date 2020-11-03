@@ -150,7 +150,22 @@ agree_apply_approvel:
     formType: WORKFORCEAPPLICATION
     formWorkflowId:
     processInstanceId:
-    result: REFUSED
+    result: AGREED
+  expect:
+    assert_type: errcode
+    assert_result: '0'
+# 获取需求单列表
+get_require_list:
+  body:
+    coOrgId:
+    limit: 20
+    offset: 0
+  expect:
+    assert_type: errcode
+    assert_result: '0'
+# 需求单详情页接口数据
+get_require_detail:
+  id:
   expect:
     assert_type: errcode
     assert_result: '0'

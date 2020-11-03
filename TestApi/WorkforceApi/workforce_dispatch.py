@@ -19,7 +19,7 @@ class WorkforceDispatch(Const):
 
     # 获取劳务工派遣列表接口
     def dispatch_list_api(self, data):
-        url = self.url_path + "dukang-workforce/api/assign/search"
+        url = self.url_path + "/dukang-workforce/api/assign/search"
         res = self.request.send_request_method('post', url=url, params=data['params'], headers=self.headers)
         return res
 

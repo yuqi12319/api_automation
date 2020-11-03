@@ -1,61 +1,138 @@
-
-#申请接口数据
+# 获取用工申请审批流列表
+get_apply_approval_list:
+  params:
+    coOrgId:
+    offset: 0
+    limit: 10
+    type: WORKFORCEAPPLICATION
+# 修改默认用工申请审批流为无需审批
+update_apply_approval_need_approval:
+  body:
+    coOrgId:
+    name: 默认用工申请审批流
+    orgIds: []
+    type: WORKFORCEAPPLICATION
+    workflowSettingId:
+    workflowSettingRuleGroupDtoList:
+      -
+        workflowSettingApproverList:
+          -
+            employeeId:
+            sortOrder: 1
+            type: SUPERIOR
+        workflowSettingCcList: []
+        workflowSettingRuleGroupRuleDtoList:
+          -
+            ruleName: REQUIRE_APPROVAL
+            ruleValue: 1
+  expect:
+    assert_type: errcode
+    assert_result: '0'
+# 获取公司组织架构
+get_organization_chart_data:
+  organization_id:
+batch_move_employee_data:
+  body:
+    department_id:
+    employee_ids: []
+    to_department_id: []
+  expect:
+    assert_type: errcode
+    assert_result: '0'
+set_department_leader:
+  department_id:
+  body:
+    businessType: WORKFORCE
+    code:
+    header_employee_id:
+    name:
+    organizationBusinessLevelId:
+    parent_id:
+  expect:
+    assert_type: errcode
+    assert_result: '0'
+# 根据招募组织节点获取对应申请审批流
+get_approval_by_organization:
+  organizationId:
+  body:
+    employeeId:
+    type: WORKFORCEAPPLICATION
+    workforceApplicationDto:
+      coOrgId:
+      financeActual:
+      financePlan:
+      organizationId:
+      personnelActual:
+      personnelPlan:
+      recruitmentType: New
+  expect:
+    assert_type: errcode
+    assert_result: '0'
+# 发送用工申请
 send_apply:
-  url: /dukang-workforce/api/workforce/apply
   body:
     recruitmentType: New
-    labourCompanyId:
-    labourCompanyName:
-    coOrgId:
-    coOrgName:
+    remark: This is the position information note
+    address: Here is the working address
+    applyEmployeeId:
+    approverList: []
+    ccList: []
     provinceId: 500000
     provinceName: 重庆
     cityId: 500100
     cityName: 重庆市
-    organizationId:
-    organizationName:
-    address: this is address input
-    joinDate: 1605869338000
-    probationPeriodExpire: 1606646938000
-    positionId:
-    positionName:
-    demandPersonCount: 10
-    workforcePayrollDtos: []
+    coOrgId:
+    coOrgName:
+    labourCompanyId:
+    labourCompanyName:
     contactEmail: 123@abc.com
     contactMobile: 18818811881
     contactPerson: admin
+    demandPersonCount: 20
+    joinDate:
+    probationPeriodExpire:
+    positionId:
+    positionName:
     projectId:
     projectName:
-#    positionObligation:
-#    positionQualification:
-#    positionQualificationId:
-#    positionTask:
-    applyEmployeeId:
-    approverList: []
-    ccList: []
+    organizationId:
+    organizationName:
+    needApproval: false
     workflowDeploymentId:
-    remark: this is remark
+    workforcePayrollDtos: []
+    workforceApplicationBudgetDto:
+      demandExplain: This is the budget requirement statement
+      financeActual:
+      financeCurrency:
+      financePeriod:
+      financePlan:
+      passd: false
+      personnelActual:
+      personnelPeriod:
+      personnelPlan:
+      referenceOrganizationId:
+      referenceOrganizationName:
   expect:
     assert_type: errcode
     assert_result: '0'
-# 申请单列表接口数据
-apply_list:
-  url: /dukang-workforce/api/workforce/form/list
+# 获取申请单列表
+get_apply_list:
   params:
     offset: 0
     limit: 20
   body:
-    coOrgId: 733358092246319104
+    coOrgId:
+  expect:
+    assert_type: errcode
+    assert_result: '0'
 #申请单详情页接口数据
 apply_detail:
-  url: /dukang-workforce/api/workforce/apply/detail/
   application_id:
   expect:
     assert_type: errcode
     assert_result: '0'
-# 撤销申请单单接口数据
+# 撤销申请单接口数据
 withdraw_apply:
-  url: /dukang-workforce/api/workforce/withdraw/
   application_id:
   body:
     form_workflow_id:

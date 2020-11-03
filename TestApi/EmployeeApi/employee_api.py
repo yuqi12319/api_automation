@@ -83,3 +83,9 @@ class EmployeeApi(Const):
         url = self.url_path + '/dukang-employee/employee/application_list'
         res = self.request.send_request_method('get', url=url, params=data['params'], headers=self.headers)
         return res
+
+    # 批量移动部门员工
+    def batch_move_employee_api(self, data):
+        url = self.url_path + '/dukang-employee/employees/batch'
+        res = self.request.send_request_method('put', url=url, json=data['body'], headers=self.headers)
+        return res

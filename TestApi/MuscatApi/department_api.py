@@ -17,3 +17,9 @@ class DepartmentApi(Const):
         url = self.url_path + '/muscat/departments'
         res = self.request.send_request_method('post', url=url, json=data['body'], headers=self.headers)
         return res
+
+    # 修改部门信息
+    def update_department_api(self, data):
+        url = self.url_path + '/muscat/departments/' + str(data['department_id'])
+        res = self.request.send_request_method('put', url=url, json=data['body'], headers=self.headers)
+        return res

@@ -47,6 +47,7 @@ class TestImportEmployee:
             data['importEmployee']['params']['timestamp'] = int(round(time.time() * 1000))
             import_employee_res = EmployeeDomain(setup_class[0]).batch_import_employee(data['importEmployee'], files)
             Assertions().assert_mode(import_employee_res, data['importEmployee'])
+            time.sleep(7)
 
         with allure.step("第二步，获取导入的员工信息"):
             data['getImportEmployee']['headers']['x-dk-token'] = Common.consts.ACCESS_TOKEN[0]

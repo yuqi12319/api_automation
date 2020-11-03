@@ -25,7 +25,7 @@ class WorkforceApply(Const):
 
     # 获取用工申请详情接口
     def apply_detail_api(self, data):
-        url = self.url_path + data['url'] + str(data['application_id'])
+        url = self.url_path + '/dukang-workforce/api/workforce/apply/detail/' + str(data['application_id'])
         res = self.request.send_request_method('get', url=url, headers=self.headers)
         return res
 
@@ -37,6 +37,6 @@ class WorkforceApply(Const):
 
     # 撤销申请接口
     def withdraw_apply_api(self, data):
-        url = self.url_path + data['url'] + str(data['application_id'])
+        url = self.url_path + '/dukang-workforce/api/workforce/withdraw/' + str(data['application_id'])
         res = self.request.send_request_method('put', url=url, json=data['body'], headers=self.headers)
         return res

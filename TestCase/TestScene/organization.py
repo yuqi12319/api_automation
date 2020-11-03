@@ -29,6 +29,9 @@ def add_department(env, businessType, company_id, level_name, parent_id):
     get_organization_business_level_data['params'] = dict()
     get_organization_business_level_data['params']['coOrgId'] = company_id
     get_organization_business_level_data['params']['type'] = businessType
+    OrganizationBusinessLevelApi(env).get_organization_business_level_api(
+        get_organization_business_level_data)
+    time.sleep(6)
     get_organization_business_level_res = OrganizationBusinessLevelApi(env).get_organization_business_level_api(
         get_organization_business_level_data)
     if businessType == 'GENERALDEPARTMENT':

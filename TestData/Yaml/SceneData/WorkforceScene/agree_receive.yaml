@@ -119,8 +119,8 @@ recevice_list:
     coOrgId:
     offset: 0
     limit: 20
-# 拒绝接收
-refuse_receive:
+# 同意接收
+agree_receive:
   body:
     beginTime:
     endTime:
