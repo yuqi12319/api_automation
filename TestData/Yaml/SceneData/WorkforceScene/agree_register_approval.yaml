@@ -1,0 +1,90 @@
+# 获取用工登记审批流列表
+get_register_approval_list:
+  params:
+    coOrgId:
+    offset: 0
+    limit: 10
+    type: WORKFORCEREGISTER
+# 修改默认用工登记审批流为需要上级领导审批
+update_register_approval_need_approval:
+  body:
+    coOrgId:
+    name: 默认用工登记审批流
+    orgIds: []
+    type: WORKFORCEREGISTER
+    workflowSettingId:
+    workflowSettingRuleGroupDtoList:
+      -
+        workflowSettingApproverList:
+          -
+            employeeId:
+            sortOrder: 1
+            type: SUPERIOR
+        workflowSettingCcList: []
+        workflowSettingRuleGroupRuleDtoList: []
+  expect:
+    assert_type: errcode
+    assert_result: '0'
+# 根据招募组织节点获取对应申请审批流
+get_approval_by_organization:
+  organizationId:
+  body:
+    employeeId:
+    type: WORKFORCEREGISTER
+  expect:
+    assert_type: errcode
+    assert_result: '0'
+# 获取登记列表
+get_register_list:
+  params:
+    offset: 0
+    limit: 20
+  body:
+    coOrgId:
+  expect:
+    assert_type: errcode
+    assert_result: '0'
+# 获取登记详情
+get_register_detail:
+  params:
+    employeeId:
+    workforceApplicationId:
+    workforceAssignRelationId:
+  expect:
+    assert_type: errcode
+    assert_result: '0'
+# 获取部门信息
+get_department:
+  department_id:
+  expect:
+    assert_type: errcode
+    assert_result: '0'
+# 提交登记
+commit_register:
+  body:
+    applyEmployeeId:
+    approverList: []
+    ccList: []
+    coOrgId: []
+    employeeId:
+    workflowDeploymentId:
+    workforceApplicationId:
+    workforceAssignRelationId:
+    workforcePayrollDtos: []
+    registrationPositionDto: {}
+    workforceRegistrationEmployeeBasisDto: {}
+  expect:
+    assert_type: errcode
+    assert_result: '0'
+# 审批同意
+agree_register_approval:
+  body:
+    employeeId:
+    formId:
+    formType: WORKFORCEREGISTER
+    formWorkflowId:
+    processInstanceId:
+    result: AGREED
+  expect:
+    assert_type: errcode
+    assert_result: '0'

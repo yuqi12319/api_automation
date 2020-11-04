@@ -30,6 +30,7 @@ from TestCase.TestScene.organization import *
 from TestApi.MuscatApi.organization_api import OrganizationApi
 from TestApi.WorkflowApi.workflow_set_api import WorkflowSetApi
 from TestCase.TestScene.test_import_employee_module import TestImportEmployee
+from TestApi.WorkforceApi.workforce_register import WorkforceRegister
 
 
 @allure.feature("劳务工场景测试")
@@ -277,8 +278,7 @@ class TestWorkforceScene:
                     require_id = item['id']
                     # Assertions().assert_text(item['status'], 'PENDING')
                     break
-                else:
-                    MyLog().error("需求单没有" + code + "需求记录")
+                MyLog().error("需求单没有" + code + "需求记录")
             # 查看需求单详情
             data['get_require_detail']['id'] = require_id
             require_detail_res = WorkforceTicket(setup_class['env']).get_require_detail_api(data['get_require_detail'])
@@ -394,8 +394,7 @@ class TestWorkforceScene:
                     require_id = item['id']
                     # Assertions().assert_text(item['status'], 'PENDING')
                     break
-                else:
-                    MyLog().error("需求单没有" + code + "需求记录")
+                MyLog().error("需求单没有" + code + "需求记录")
             # 查看需求单详情
             data['get_require_detail']['id'] = require_id
             require_detail_res = WorkforceTicket(setup_class['env']).get_require_detail_api(
@@ -565,7 +564,7 @@ class TestWorkforceScene:
     @pytest.mark.workforce
     @allure.story("用工申请拒绝(需要审批)")
     @pytest.mark.parametrize('data', YamlHandle().read_yaml('SceneData/WorkforceScene/refuse_apply_approve.yaml'))
-    def test_refuse_apply_approve(self, data, setup_class):
+    def test_refuse_apply_approval(self, data, setup_class):
 
         with allure.step('第一步：设置用工申请审批流(需要上级领导审批)'):
             # 获取用工需求申请审批流列表
@@ -666,7 +665,7 @@ class TestWorkforceScene:
             get_application_await_list_res = WorkforceWorkflow(setup_class['env']).workflow_application_await_list_api(data['get_application_await_list'])
             Assertions().assert_mode(get_application_await_list_res, data['get_application_await_list'])
             Assertions().assert_in_text(get_application_await_list_res.json()['data'], application_id)
-            # 审批通过
+            # 审批拒绝
             data['agree_apply_approvel']['body']['employeeId'] = get_approval_by_organization_res.json()['data']['employeeVoList'][1]['id']
             data['agree_apply_approvel']['body']['formId'] = application_id
             data['agree_apply_approvel']['body']['formWorkflowId'] = apply_detail_res.json()['data']['formWorkflowId']
@@ -772,7 +771,6 @@ class TestWorkforceScene:
             code = mysql_operate_select_fetchone(database, select_sql)['code']
 
             # 获取申请单列表，判断是否有该申请单
-            # time.sleep(7)
             data['get_apply_list']['body']['coOrgId'] = setup_class['company_id']
             get_apply_list_res = WorkforceApply(setup_class['env']).apply_list_api(data['get_apply_list'])
             allure.attach(str(data['get_apply_list']), "请求数据", allure.attachment_type.JSON)
@@ -975,18 +973,21 @@ class TestWorkforceScene:
                     break
                 MyLog().error("没有找到该接收单")
 
-    @pytest.mark.workforce_smoke
+    @pytest.mark.workforce
     @allure.story("同意接收")
     @pytest.mark.parametrize('data', YamlHandle().read_yaml('SceneData/WorkforceScene/agree_receive.yaml'))
     def test_agree_receive(self, data, setup_class):
         test_apply_automatic_approval_result = self.test_apply_automatic_approval(
             YamlHandle().read_yaml('SceneData/WorkforceScene/apply_automatic_approval.yaml')[0], setup_class)
+        application_id = test_apply_automatic_approval_result[0]
+        require_id = test_apply_automatic_approval_result[1]
+        code = test_apply_automatic_approval_result[2]
 
         with allure.step('第一步：获取关联申请,判断是否存在生成的需求单'):
             data['relevance_apply']['params']['coOrgId'] = setup_class['company_id']
             relevance_apply_res = WorkforceDispatch(setup_class['env']).relevance_apply_api(data['relevance_apply'])
             for item in relevance_apply_res.json()['data']:
-                if item['code'] == test_apply_automatic_approval_result[2]:
+                if item['code'] == code:
                     begin_time = item['beginTime']
                     end_time = item['endTime']
                     ticket_id = item['ticketId']
@@ -1087,6 +1088,408 @@ class TestWorkforceScene:
                     Assertions().assert_text(item['status'], "RECEIVE")
                     break
                 MyLog().error("没有找到该接收单")
+        return employee_infomation['id']
+
+    @pytest.mark.workforce
+    @allure.story("用工登记自动审批")
+    @pytest.mark.parametrize('data', YamlHandle().read_yaml('SceneData/WorkforceScene/register_automatic_approval.yaml'))
+    def test_register_automatic_approval(self, data, setup_class):
+        test_agree_receive_result = self.test_agree_receive(YamlHandle().read_yaml('SceneData/WorkforceScene/agree_receive.yaml')[0], setup_class)
+        dispatch_employee_id = test_agree_receive_result
+
+        with allure.step('第一步：设置用工登记审批流（自动审批）'):
+            # 获取用工登记审批流列表
+            data['get_register_approval_list']['params']['coOrgId'] = setup_class['company_id']
+            get_approval_list_res = WorkflowSetApi(setup_class['env']).get_approval_list_api(
+                data['get_register_approval_list'])
+            for item in get_approval_list_res.json()['data']['workflowSettingVoList']:
+                if item['name'] == '默认用工登记审批流':
+                    workflowSettingId = item['workflowSettingId']
+                MyLog().error("当前公司没有生成默认登记审批流")
+
+            # 修改默认审批流为自动审批
+            data['update_register_approval_automatic_approval']['body']['coOrgId'] = setup_class['company_id']
+            data['update_register_approval_automatic_approval']['body']['orgIds'].append(
+                setup_class['organizations_trees']['organizationId'])
+            data['update_register_approval_automatic_approval']['body']['workflowSettingId'] = workflowSettingId
+            data['update_register_approval_automatic_approval']['body']['workflowSettingRuleGroupDtoList'][0][
+                'workflowSettingApproverList'][0]['employeeId'] = setup_class['employee_id']
+            update_register_approval_res = WorkflowSetApi(setup_class['env']).update_approval(
+                data['update_register_approval_automatic_approval'])
+            Assertions().assert_mode(update_register_approval_res, data['update_register_approval_automatic_approval'])
+
+        with allure.step('第二步：登记派遣过来的员工'):
+            # 获取登记列表
+            data['get_register_list']['body']['coOrgId'] = setup_class['company_id']
+            get_register_list_res = WorkforceRegister(setup_class['env']).get_register_list_api(data['get_register_list'])
+            Assertions().assert_mode(get_register_list_res, data['get_register_list'])
+            for item in get_register_list_res.json()['data']:
+                if item['employeeId'] == dispatch_employee_id:
+                    workforceApplicationId = item['workforceApplicationId']
+                    workforceAssignRelationId = item['workforceAssignRelationId']
+                MyLog().error('登记列表没有找到' + str(dispatch_employee_id) + '员工')
+
+            # 获取登记详情
+            data['get_register_detail']['params']['employeeId'] = dispatch_employee_id
+            data['get_register_detail']['params']['workforceApplicationId'] = workforceApplicationId
+            data['get_register_detail']['params']['workforceAssignRelationId'] = workforceAssignRelationId
+            get_register_detail_res = WorkforceRegister(setup_class['env']).get_register_detail_api(data['get_register_detail'])
+            Assertions().assert_mode(get_register_detail_res, data['get_register_detail'])
+
+            # 获取部门信息
+            data['get_department']['department_id'] = setup_class['organizations_trees']['organizationId']
+            get_department_res = DepartmentApi(setup_class['env']).get_department_api(data['get_department'])
+            Assertions().assert_mode(get_department_res, data['get_department'])
+
+            # 根据招募组织节点获取对应审批流
+            data['get_approval_by_organization']['organizationId'] = setup_class['organizations_trees'][
+                'organizationId']
+            data['get_approval_by_organization']['body']['employeeId'] = setup_class['employee_id']
+            get_approval_by_organization_res = WorkflowDomain(setup_class['env']).get_approval_by_organization_api(
+                data['get_approval_by_organization'])
+            allure.attach(str(data['get_approval_by_organization']), "请求数据", allure.attachment_type.JSON)
+            allure.attach(get_approval_by_organization_res.text, "get_approval_by_organization_api返回结果",
+                          allure.attachment_type.JSON)
+            Assertions().assert_mode(get_approval_by_organization_res, data['get_approval_by_organization'])
+            workflowDeploymentId = get_approval_by_organization_res.json()['data']['workflowDeploymentId']
+
+            # 提交登记
+            data['commit_register']['body']['applyEmployeeId'] = setup_class['employee_id']
+            approverList = get_approval_by_organization_res.json()['data']['employeeVoList'][1]
+            approverList['employeeId'] = approverList['id']
+            data['commit_register']['body']['approverList'].append(approverList)
+            data['commit_register']['body']['coOrgId'] = setup_class['company_id']
+            data['commit_register']['body']['employeeId'] = dispatch_employee_id
+            data['commit_register']['body']['workflowDeploymentId'] = workflowDeploymentId
+            data['commit_register']['body']['workforceApplicationId'] = workforceApplicationId
+            data['commit_register']['body']['workforceAssignRelationId'] = workforceAssignRelationId
+            workforceRegistrationEmployeeBasisDto = dict()
+            employee_basis = get_register_detail_res.json()['data']['workforceEmployeeManageVo']
+            workforceRegistrationEmployeeBasisDto['address'] = employee_basis['address']
+            workforceRegistrationEmployeeBasisDto['birthday'] = employee_basis['birthDateLong']
+            workforceRegistrationEmployeeBasisDto['displayName'] = employee_basis['displayName']
+            workforceRegistrationEmployeeBasisDto['emergencyMobile'] = employee_basis['employeeContactVos'][0]['mobile']
+            workforceRegistrationEmployeeBasisDto['emergencyMobileAreaCode'] = employee_basis['employeeContactVos'][0]['mobileAreaCode']
+            workforceRegistrationEmployeeBasisDto['emergencyName'] = employee_basis['employeeContactVos'][0]['name']
+            workforceRegistrationEmployeeBasisDto['emergencyRelationshipValue'] = employee_basis['employeeContactVos'][0]['relationshipValue']
+            workforceRegistrationEmployeeBasisDto['employeeCode'] = 'A' + employee_basis['employee_code']
+            workforceRegistrationEmployeeBasisDto['idCard'] = employee_basis['identitys'][0]['number']
+            workforceRegistrationEmployeeBasisDto['mobile'] = employee_basis['mobile']
+            workforceRegistrationEmployeeBasisDto['mobileAreaCode'] = employee_basis['mobileArea']
+            workforceRegistrationEmployeeBasisDto['sex'] = employee_basis['genderValue']
+            workforceRegistrationEmployeeBasisDto['workforceEmployeeCode'] = employee_basis['employee_code']
+            data['commit_register']['body']['workforceRegistrationEmployeeBasisDto'] = workforceRegistrationEmployeeBasisDto
+            registrationPositionDto = dict()
+            registrationPositionDto['attendanceNo'] = 'KQ' + employee_basis['employee_code']
+            registrationPositionDto['joinTime'] = int(time.mktime(time.strptime(str(datetime.date.today()), '%Y-%m-%d')) * 1000)
+            registrationPositionDto['lastWorkTime'] = int(time.mktime(time.strptime(str(datetime.date.today() + datetime.timedelta(days=5)), '%Y-%m-%d')) * 1000)
+            registrationPositionDto['leaderEmployeeId'] = get_department_res.json()['data']['header_employee_id']
+            registrationPositionDto['leaderEmployeeName'] = get_department_res.json()['data']['header_employee_name']
+            registrationPositionDto['organizationId'] = setup_class['organizations_trees']['organizationId']
+            registrationPositionDto['organizationName'] = setup_class['organizations_trees']['organizationName']
+            registrationPositionDto['positionId'] = setup_class['position']['positionId']
+            registrationPositionDto['positionName'] = setup_class['position']['positionName']
+            registrationPositionDto['projectId'] = setup_class['project']['id']
+            registrationPositionDto['projectName'] = setup_class['project']['name']
+            registrationPositionDto['workforceEmployeeType'] = "BLUECOLLAR"
+            data['commit_register']['body']['registrationPositionDto'] = registrationPositionDto
+            commit_register_res = WorkforceRegister(setup_class['env']).commit_register_api(data['commit_register'])
+            Assertions().assert_mode(commit_register_res, data['commit_register'])
+
+        with allure.step('第三步：查看登记列表员工状态'):
+            # 获取登记列表
+            time.sleep(6)
+            data['get_register_list']['body']['coOrgId'] = setup_class['company_id']
+            get_register_list_res = WorkforceRegister(setup_class['env']).get_register_list_api(
+                data['get_register_list'])
+            Assertions().assert_mode(get_register_list_res, data['get_register_list'])
+            for item in get_register_list_res.json()['data']:
+                if item['employeeId'] == dispatch_employee_id:
+                    Assertions().assert_text(item['workflowStatus'], 'AGREED')
+                MyLog().error('登记列表没有找到' + str(dispatch_employee_id) + '员工')
+
+    @pytest.mark.workforce
+    @allure.story("用工登记审批拒绝")
+    @pytest.mark.parametrize('data', YamlHandle().read_yaml('SceneData/WorkforceScene/refuse_register_approval.yaml'))
+    def test_refuse_register_approval(self, data, setup_class):
+        test_agree_receive_result = self.test_agree_receive(
+            YamlHandle().read_yaml('SceneData/WorkforceScene/agree_receive.yaml')[0], setup_class)
+        dispatch_employee_id = test_agree_receive_result
+
+        with allure.step('第一步：设置用工登记审批流（自动审批）'):
+            # 获取用工登记审批流列表
+            data['get_register_approval_list']['params']['coOrgId'] = setup_class['company_id']
+            get_approval_list_res = WorkflowSetApi(setup_class['env']).get_approval_list_api(
+                data['get_register_approval_list'])
+            for item in get_approval_list_res.json()['data']['workflowSettingVoList']:
+                if item['name'] == '默认用工登记审批流':
+                    workflowSettingId = item['workflowSettingId']
+                MyLog().error("当前公司没有生成默认登记审批流")
+
+            # 修改默认审批流为需要上级领导审批
+            data['update_register_approval_need_approval']['body']['coOrgId'] = setup_class['company_id']
+            data['update_register_approval_need_approval']['body']['orgIds'].append(
+                setup_class['organizations_trees']['organizationId'])
+            data['update_register_approval_need_approval']['body']['workflowSettingId'] = workflowSettingId
+            data['update_register_approval_need_approval']['body']['workflowSettingRuleGroupDtoList'][0][
+                'workflowSettingApproverList'][0]['employeeId'] = setup_class['employee_id']
+            update_register_approval_res = WorkflowSetApi(setup_class['env']).update_approval(
+                data['update_register_approval_need_approval'])
+            Assertions().assert_mode(update_register_approval_res, data['update_register_approval_need_approval'])
+
+        with allure.step('第二步：登记派遣过来的员工'):
+            # 获取登记列表
+            data['get_register_list']['body']['coOrgId'] = setup_class['company_id']
+            get_register_list_res = WorkforceRegister(setup_class['env']).get_register_list_api(data['get_register_list'])
+            Assertions().assert_mode(get_register_list_res, data['get_register_list'])
+            for item in get_register_list_res.json()['data']:
+                if item['employeeId'] == dispatch_employee_id:
+                    workforceApplicationId = item['workforceApplicationId']
+                    workforceAssignRelationId = item['workforceAssignRelationId']
+                MyLog().error('登记列表没有找到' + str(dispatch_employee_id) + '员工')
+
+            # 获取登记详情
+            data['get_register_detail']['params']['employeeId'] = dispatch_employee_id
+            data['get_register_detail']['params']['workforceApplicationId'] = workforceApplicationId
+            data['get_register_detail']['params']['workforceAssignRelationId'] = workforceAssignRelationId
+            get_register_detail_res = WorkforceRegister(setup_class['env']).get_register_detail_api(data['get_register_detail'])
+            Assertions().assert_mode(get_register_detail_res, data['get_register_detail'])
+
+            # 获取部门信息
+            data['get_department']['department_id'] = setup_class['organizations_trees']['organizationId']
+            get_department_res = DepartmentApi(setup_class['env']).get_department_api(data['get_department'])
+            Assertions().assert_mode(get_department_res, data['get_department'])
+
+            # 根据招募组织节点获取对应审批流
+            data['get_approval_by_organization']['organizationId'] = setup_class['organizations_trees'][
+                'organizationId']
+            data['get_approval_by_organization']['body']['employeeId'] = setup_class['employee_id']
+            get_approval_by_organization_res = WorkflowDomain(setup_class['env']).get_approval_by_organization_api(
+                data['get_approval_by_organization'])
+            allure.attach(str(data['get_approval_by_organization']), "请求数据", allure.attachment_type.JSON)
+            allure.attach(get_approval_by_organization_res.text, "get_approval_by_organization_api返回结果",
+                          allure.attachment_type.JSON)
+            Assertions().assert_mode(get_approval_by_organization_res, data['get_approval_by_organization'])
+            workflowDeploymentId = get_approval_by_organization_res.json()['data']['workflowDeploymentId']
+
+            # 提交登记
+            data['commit_register']['body']['applyEmployeeId'] = setup_class['employee_id']
+            approverList = get_approval_by_organization_res.json()['data']['employeeVoList'][1]
+            approverList['employeeId'] = approverList['id']
+            data['commit_register']['body']['approverList'].append(approverList)
+            data['commit_register']['body']['coOrgId'] = setup_class['company_id']
+            data['commit_register']['body']['employeeId'] = dispatch_employee_id
+            data['commit_register']['body']['workflowDeploymentId'] = workflowDeploymentId
+            data['commit_register']['body']['workforceApplicationId'] = workforceApplicationId
+            data['commit_register']['body']['workforceAssignRelationId'] = workforceAssignRelationId
+            workforceRegistrationEmployeeBasisDto = dict()
+            employee_basis = get_register_detail_res.json()['data']['workforceEmployeeManageVo']
+            workforceRegistrationEmployeeBasisDto['address'] = employee_basis['address']
+            workforceRegistrationEmployeeBasisDto['birthday'] = employee_basis['birthDateLong']
+            workforceRegistrationEmployeeBasisDto['displayName'] = employee_basis['displayName']
+            workforceRegistrationEmployeeBasisDto['emergencyMobile'] = employee_basis['employeeContactVos'][0]['mobile']
+            workforceRegistrationEmployeeBasisDto['emergencyMobileAreaCode'] = employee_basis['employeeContactVos'][0]['mobileAreaCode']
+            workforceRegistrationEmployeeBasisDto['emergencyName'] = employee_basis['employeeContactVos'][0]['name']
+            workforceRegistrationEmployeeBasisDto['emergencyRelationshipValue'] = employee_basis['employeeContactVos'][0]['relationshipValue']
+            workforceRegistrationEmployeeBasisDto['employeeCode'] = 'A' + employee_basis['employee_code']
+            workforceRegistrationEmployeeBasisDto['idCard'] = employee_basis['identitys'][0]['number']
+            workforceRegistrationEmployeeBasisDto['mobile'] = employee_basis['mobile']
+            workforceRegistrationEmployeeBasisDto['mobileAreaCode'] = employee_basis['mobileArea']
+            workforceRegistrationEmployeeBasisDto['sex'] = employee_basis['genderValue']
+            workforceRegistrationEmployeeBasisDto['workforceEmployeeCode'] = employee_basis['employee_code']
+            data['commit_register']['body']['workforceRegistrationEmployeeBasisDto'] = workforceRegistrationEmployeeBasisDto
+            registrationPositionDto = dict()
+            registrationPositionDto['attendanceNo'] = 'KQ' + employee_basis['employee_code']
+            registrationPositionDto['joinTime'] = int(time.mktime(time.strptime(str(datetime.date.today()), '%Y-%m-%d')) * 1000)
+            registrationPositionDto['lastWorkTime'] = int(time.mktime(time.strptime(str(datetime.date.today() + datetime.timedelta(days=5)), '%Y-%m-%d')) * 1000)
+            registrationPositionDto['leaderEmployeeId'] = get_department_res.json()['data']['header_employee_id']
+            registrationPositionDto['leaderEmployeeName'] = get_department_res.json()['data']['header_employee_name']
+            registrationPositionDto['organizationId'] = setup_class['organizations_trees']['organizationId']
+            registrationPositionDto['organizationName'] = setup_class['organizations_trees']['organizationName']
+            registrationPositionDto['positionId'] = setup_class['position']['positionId']
+            registrationPositionDto['positionName'] = setup_class['position']['positionName']
+            registrationPositionDto['projectId'] = setup_class['project']['id']
+            registrationPositionDto['projectName'] = setup_class['project']['name']
+            registrationPositionDto['workforceEmployeeType'] = "BLUECOLLAR"
+            data['commit_register']['body']['registrationPositionDto'] = registrationPositionDto
+            commit_register_res = WorkforceRegister(setup_class['env']).commit_register_api(data['commit_register'])
+            Assertions().assert_mode(commit_register_res, data['commit_register'])
+
+        with allure.step('第三步：审批拒绝'):
+            # 获取登记详情
+            data['get_register_detail']['params']['employeeId'] = dispatch_employee_id
+            data['get_register_detail']['params']['workforceApplicationId'] = workforceApplicationId
+            data['get_register_detail']['params']['workforceAssignRelationId'] = workforceAssignRelationId
+            get_register_detail_res = WorkforceRegister(setup_class['env']).get_register_detail_api(
+                data['get_register_detail'])
+            Assertions().assert_mode(get_register_detail_res, data['get_register_detail'])
+            # 审批拒绝
+            data['refuse_register_approvel']['body']['employeeId'] = get_approval_by_organization_res.json()['data']['employeeVoList'][1]['id']
+            data['refuse_register_approvel']['body']['formId'] = get_register_detail_res.json()['data']['workforceAssignRelationId']
+            data['refuse_register_approvel']['body']['formWorkflowId'] = get_register_detail_res.json()['data']['formWorkflowId']
+            data['refuse_register_approvel']['body']['processInstanceId'] = get_register_detail_res.json()['data']['processInstanceId']
+            workflow_node_approve_res = WorkflowDomain(setup_class['env']).workflow_node_approve_api(
+                data['refuse_register_approvel'])
+            Assertions().assert_mode(workflow_node_approve_res, data['refuse_register_approvel'])
+
+        with allure.step('第四步：获取登记状态'):
+            # 获取登记列表
+            time.sleep(6)
+            data['get_register_list']['body']['coOrgId'] = setup_class['company_id']
+            get_register_list_res = WorkforceRegister(setup_class['env']).get_register_list_api(
+                data['get_register_list'])
+            Assertions().assert_mode(get_register_list_res, data['get_register_list'])
+            for item in get_register_list_res.json()['data']:
+                if item['employeeId'] == dispatch_employee_id:
+                    Assertions().assert_text(item['workflowStatus'], "REFUSED")
+                MyLog().error('登记列表没有找到' + str(dispatch_employee_id) + '员工')
+
+    @pytest.mark.workforce
+    @allure.story("用工登记审批同意")
+    @pytest.mark.parametrize('data', YamlHandle().read_yaml('SceneData/WorkforceScene/agree_register_approval.yaml'))
+    def test_agree_register_approval(self, data, setup_class):
+        test_agree_receive_result = self.test_agree_receive(
+            YamlHandle().read_yaml('SceneData/WorkforceScene/agree_receive.yaml')[0], setup_class)
+        dispatch_employee_id = test_agree_receive_result
+
+        with allure.step('第一步：设置用工登记审批流（自动审批）'):
+            # 获取用工登记审批流列表
+            data['get_register_approval_list']['params']['coOrgId'] = setup_class['company_id']
+            get_approval_list_res = WorkflowSetApi(setup_class['env']).get_approval_list_api(
+                data['get_register_approval_list'])
+            for item in get_approval_list_res.json()['data']['workflowSettingVoList']:
+                if item['name'] == '默认用工登记审批流':
+                    workflowSettingId = item['workflowSettingId']
+                MyLog().error("当前公司没有生成默认登记审批流")
+
+            # 修改默认审批流为需要上级领导审批
+            data['update_register_approval_need_approval']['body']['coOrgId'] = setup_class['company_id']
+            data['update_register_approval_need_approval']['body']['orgIds'].append(
+                setup_class['organizations_trees']['organizationId'])
+            data['update_register_approval_need_approval']['body']['workflowSettingId'] = workflowSettingId
+            data['update_register_approval_need_approval']['body']['workflowSettingRuleGroupDtoList'][0][
+                'workflowSettingApproverList'][0]['employeeId'] = setup_class['employee_id']
+            update_register_approval_res = WorkflowSetApi(setup_class['env']).update_approval(
+                data['update_register_approval_need_approval'])
+            Assertions().assert_mode(update_register_approval_res, data['update_register_approval_need_approval'])
+
+        with allure.step('第二步：登记派遣过来的员工'):
+            # 获取登记列表
+            data['get_register_list']['body']['coOrgId'] = setup_class['company_id']
+            get_register_list_res = WorkforceRegister(setup_class['env']).get_register_list_api(
+                data['get_register_list'])
+            Assertions().assert_mode(get_register_list_res, data['get_register_list'])
+            for item in get_register_list_res.json()['data']:
+                if item['employeeId'] == dispatch_employee_id:
+                    workforceApplicationId = item['workforceApplicationId']
+                    workforceAssignRelationId = item['workforceAssignRelationId']
+                MyLog().error('登记列表没有找到' + str(dispatch_employee_id) + '员工')
+
+            # 获取登记详情
+            data['get_register_detail']['params']['employeeId'] = dispatch_employee_id
+            data['get_register_detail']['params']['workforceApplicationId'] = workforceApplicationId
+            data['get_register_detail']['params']['workforceAssignRelationId'] = workforceAssignRelationId
+            get_register_detail_res = WorkforceRegister(setup_class['env']).get_register_detail_api(
+                data['get_register_detail'])
+            Assertions().assert_mode(get_register_detail_res, data['get_register_detail'])
+
+            # 获取部门信息
+            data['get_department']['department_id'] = setup_class['organizations_trees']['organizationId']
+            get_department_res = DepartmentApi(setup_class['env']).get_department_api(data['get_department'])
+            Assertions().assert_mode(get_department_res, data['get_department'])
+
+            # 根据招募组织节点获取对应审批流
+            data['get_approval_by_organization']['organizationId'] = setup_class['organizations_trees'][
+                'organizationId']
+            data['get_approval_by_organization']['body']['employeeId'] = setup_class['employee_id']
+            get_approval_by_organization_res = WorkflowDomain(setup_class['env']).get_approval_by_organization_api(
+                data['get_approval_by_organization'])
+            allure.attach(str(data['get_approval_by_organization']), "请求数据", allure.attachment_type.JSON)
+            allure.attach(get_approval_by_organization_res.text, "get_approval_by_organization_api返回结果",
+                          allure.attachment_type.JSON)
+            Assertions().assert_mode(get_approval_by_organization_res, data['get_approval_by_organization'])
+            workflowDeploymentId = get_approval_by_organization_res.json()['data']['workflowDeploymentId']
+
+            # 提交登记
+            data['commit_register']['body']['applyEmployeeId'] = setup_class['employee_id']
+            approverList = get_approval_by_organization_res.json()['data']['employeeVoList'][1]
+            approverList['employeeId'] = approverList['id']
+            data['commit_register']['body']['approverList'].append(approverList)
+            data['commit_register']['body']['coOrgId'] = setup_class['company_id']
+            data['commit_register']['body']['employeeId'] = dispatch_employee_id
+            data['commit_register']['body']['workflowDeploymentId'] = workflowDeploymentId
+            data['commit_register']['body']['workforceApplicationId'] = workforceApplicationId
+            data['commit_register']['body']['workforceAssignRelationId'] = workforceAssignRelationId
+            workforceRegistrationEmployeeBasisDto = dict()
+            employee_basis = get_register_detail_res.json()['data']['workforceEmployeeManageVo']
+            workforceRegistrationEmployeeBasisDto['address'] = employee_basis['address']
+            workforceRegistrationEmployeeBasisDto['birthday'] = employee_basis['birthDateLong']
+            workforceRegistrationEmployeeBasisDto['displayName'] = employee_basis['displayName']
+            workforceRegistrationEmployeeBasisDto['emergencyMobile'] = employee_basis['employeeContactVos'][0]['mobile']
+            workforceRegistrationEmployeeBasisDto['emergencyMobileAreaCode'] = employee_basis['employeeContactVos'][0][
+                'mobileAreaCode']
+            workforceRegistrationEmployeeBasisDto['emergencyName'] = employee_basis['employeeContactVos'][0]['name']
+            workforceRegistrationEmployeeBasisDto['emergencyRelationshipValue'] = \
+            employee_basis['employeeContactVos'][0]['relationshipValue']
+            workforceRegistrationEmployeeBasisDto['employeeCode'] = 'A' + employee_basis['employee_code']
+            workforceRegistrationEmployeeBasisDto['idCard'] = employee_basis['identitys'][0]['number']
+            workforceRegistrationEmployeeBasisDto['mobile'] = employee_basis['mobile']
+            workforceRegistrationEmployeeBasisDto['mobileAreaCode'] = employee_basis['mobileArea']
+            workforceRegistrationEmployeeBasisDto['sex'] = employee_basis['genderValue']
+            workforceRegistrationEmployeeBasisDto['workforceEmployeeCode'] = employee_basis['employee_code']
+            data['commit_register']['body'][
+                'workforceRegistrationEmployeeBasisDto'] = workforceRegistrationEmployeeBasisDto
+            registrationPositionDto = dict()
+            registrationPositionDto['attendanceNo'] = 'KQ' + employee_basis['employee_code']
+            registrationPositionDto['joinTime'] = int(
+                time.mktime(time.strptime(str(datetime.date.today()), '%Y-%m-%d')) * 1000)
+            registrationPositionDto['lastWorkTime'] = int(
+                time.mktime(time.strptime(str(datetime.date.today() + datetime.timedelta(days=5)), '%Y-%m-%d')) * 1000)
+            registrationPositionDto['leaderEmployeeId'] = get_department_res.json()['data']['header_employee_id']
+            registrationPositionDto['leaderEmployeeName'] = get_department_res.json()['data']['header_employee_name']
+            registrationPositionDto['organizationId'] = setup_class['organizations_trees']['organizationId']
+            registrationPositionDto['organizationName'] = setup_class['organizations_trees']['organizationName']
+            registrationPositionDto['positionId'] = setup_class['position']['positionId']
+            registrationPositionDto['positionName'] = setup_class['position']['positionName']
+            registrationPositionDto['projectId'] = setup_class['project']['id']
+            registrationPositionDto['projectName'] = setup_class['project']['name']
+            registrationPositionDto['workforceEmployeeType'] = "BLUECOLLAR"
+            data['commit_register']['body']['registrationPositionDto'] = registrationPositionDto
+            commit_register_res = WorkforceRegister(setup_class['env']).commit_register_api(data['commit_register'])
+            Assertions().assert_mode(commit_register_res, data['commit_register'])
+
+        with allure.step('第三步：审批同意'):
+            # 获取登记详情
+            data['get_register_detail']['params']['employeeId'] = dispatch_employee_id
+            data['get_register_detail']['params']['workforceApplicationId'] = workforceApplicationId
+            data['get_register_detail']['params']['workforceAssignRelationId'] = workforceAssignRelationId
+            get_register_detail_res = WorkforceRegister(setup_class['env']).get_register_detail_api(
+                data['get_register_detail'])
+            Assertions().assert_mode(get_register_detail_res, data['get_register_detail'])
+            # 审批同意
+            data['agree_register_approval']['body']['employeeId'] = \
+            get_approval_by_organization_res.json()['data']['employeeVoList'][1]['id']
+            data['agree_register_approval']['body']['formId'] = get_register_detail_res.json()['data'][
+                'workforceAssignRelationId']
+            data['agree_register_approval']['body']['formWorkflowId'] = get_register_detail_res.json()['data'][
+                'formWorkflowId']
+            data['agree_register_approval']['body']['processInstanceId'] = get_register_detail_res.json()['data'][
+                'processInstanceId']
+            workflow_node_approve_res = WorkflowDomain(setup_class['env']).workflow_node_approve_api(
+                data['agree_register_approval'])
+            Assertions().assert_mode(workflow_node_approve_res, data['agree_register_approval'])
+
+        with allure.step('第四步：获取登记状态'):
+            # 获取登记列表
+            time.sleep(6)
+            data['get_register_list']['body']['coOrgId'] = setup_class['company_id']
+            get_register_list_res = WorkforceRegister(setup_class['env']).get_register_list_api(
+                data['get_register_list'])
+            Assertions().assert_mode(get_register_list_res, data['get_register_list'])
+            for item in get_register_list_res.json()['data']:
+                if item['employeeId'] == dispatch_employee_id:
+                    Assertions().assert_text(item['workflowStatus'], "AGREED")
+                MyLog().error('登记列表没有找到' + str(dispatch_employee_id) + '员工')
 
 
 if __name__ == '__main__':

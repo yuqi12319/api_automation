@@ -23,3 +23,9 @@ class DepartmentApi(Const):
         url = self.url_path + '/muscat/departments/' + str(data['department_id'])
         res = self.request.send_request_method('put', url=url, json=data['body'], headers=self.headers)
         return res
+
+    # 获取部门信息
+    def get_department_api(self, data):
+        url = self.url_path + '/muscat/departments/' + str(data['department_id'])
+        res = self.request.send_request_method('get', url=url, headers=self.headers)
+        return res
