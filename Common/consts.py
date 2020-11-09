@@ -33,5 +33,5 @@ COMPANY_INFORMATION = {}
 COMPANY_ID = []
 EMPLOYEE_ID = []
 
-# 公司员工数据
-COMPANY_CHART = []
+# default_workflow_setting_id
+DEFAULT_WORKFLOW_SETTING_ID = {}

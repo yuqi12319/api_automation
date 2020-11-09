@@ -47,6 +47,13 @@ default_workforce_register_approval:
     offset: 0
     limit: 10
     type: WORKFORCEREGISTER
+# 默认用工更新审批流
+default_workforce_update_approval:
+  params:
+    coOrgId:
+    offset: 0
+    limit: 10
+    type: WORKFORCE_UPDATE
 # 默认报销审批流
 default_claim_approval:
   params:

@@ -1,10 +1,3 @@
-# 获取用工申请审批流列表
-get_apply_approval_list:
-  params:
-    coOrgId:
-    offset: 0
-    limit: 10
-    type: WORKFORCEAPPLICATION
 # 修改默认用工申请审批流为无需审批
 update_apply_approval_automatic_approval:
   body:
