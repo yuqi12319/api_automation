@@ -1,0 +1,64 @@
+# 获取用工更新审批流列表
+get_update_approval_list:
+  params:
+    coOrgId:
+    offset: 0
+    limit: 10
+    type: WORKFORCE_UPDATE
+# 修改默认用工更新审批流为无需审批
+update_update_approval_without_approval:
+  body:
+    coOrgId:
+    name: 默认用工更新审批流
+    orgIds: []
+    type: WORKFORCE_UPDATE
+    workflowSettingId:
+    workflowSettingRuleGroupDtoList:
+      -
+        workflowSettingApproverList: []
+        workflowSettingCcList: []
+        workflowSettingRuleGroupRuleDtoList:
+          -
+            ruleName: REQUIRE_APPROVAL
+            ruleValue: 0
+  expect:
+    assert_type: errcode
+    assert_result: '0'
+# 根据招募组织节点获取对应申请审批流
+get_approval_by_organization:
+  organizationId:
+  body:
+    employeeId:
+    type: WORKFORCE_UPDATE
+  expect:
+    assert_type: errcode
+    assert_result: '0'
+# 根据组织获取员工列表
+get_organization_employee_list:
+  params:
+    organizationId:
+    coOrgId:
+    type: BASIC
+  expect:
+    assert_type: errcode
+    assert_result: '0'
+# 获取要更新人员的基本信息
+get_employee_basic:
+  params:
+    employeeId:
+  expect:
+    assert_type: errcode
+    assert_result: '0'
+# 更新基本信息
+update_employee_basic:
+  body:
+    applyEmployeeId:
+    applyEmployeeName:
+    approverList: []
+    ccList: []
+    coOrgId:
+    workflowDeploymentId:
+    workforceEmployeeBasicDetailDto: {}
+  expect:
+    assert_type: errcode
+    assert_result: '0'

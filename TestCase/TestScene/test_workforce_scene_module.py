@@ -31,6 +31,8 @@ from TestApi.MuscatApi.organization_api import OrganizationApi
 from TestApi.WorkflowApi.workflow_set_api import WorkflowSetApi
 from TestCase.TestScene.test_import_employee_module import TestImportEmployee
 from TestApi.WorkforceApi.workforce_register import WorkforceRegister
+from TestApi.WorkforceApi.workforce_organization_api import WorkforceOrganizationApi
+from TestApi.WorkforceApi.workforce_information_update_api import WorkforceInformationUpdateApi
 
 
 @allure.feature("劳务工场景测试")
@@ -1490,6 +1492,68 @@ class TestWorkforceScene:
                 if item['employeeId'] == dispatch_employee_id:
                     Assertions().assert_text(item['workflowStatus'], "AGREED")
                 MyLog().error('登记列表没有找到' + str(dispatch_employee_id) + '员工')
+
+    @pytest.mark.workforce_smoke
+    @allure.story("更新基本信息无需审批")
+    @pytest.mark.parametrize('data', YamlHandle().read_yaml('SceneData/WorkforceScene/update_basic_information_without_approval.yaml'))
+    def test_update_basic_information_without_approval(self, data, setup_class):
+        with allure.step('第一步：设置用工更新审批流（无需审批）'):
+            # 获取用工更新审批流列表
+            data['get_update_approval_list']['params']['coOrgId'] = setup_class['company_id']
+            get_approval_list_res = WorkflowSetApi(setup_class['env']).get_approval_list_api(
+                data['get_update_approval_list'])
+            for item in get_approval_list_res.json()['data']['workflowSettingVoList']:
+                if item['name'] == '默认用工更新审批流':
+                    workflowSettingId = item['workflowSettingId']
+                MyLog().error("当前公司没有生成默认用工更新审批流")
+            # 修改默认审批流为无需审批
+            data['update_update_approval_without_approval']['body']['coOrgId'] = setup_class['company_id']
+            data['update_update_approval_without_approval']['body']['orgIds'].append(
+                setup_class['organizations_trees']['organizationId'])
+            data['update_update_approval_without_approval']['body']['workflowSettingId'] = workflowSettingId
+            update_apply_approval_res = WorkflowSetApi(setup_class['env']).update_approval(
+                data['update_update_approval_without_approval'])
+            Assertions().assert_mode(update_apply_approval_res, data['update_update_approval_without_approval'])
+
+        with allure.step('第二步：更新员工基本信息'):
+            # 根据组织节点获取对应审批流
+            data['get_approval_by_organization']['organizationId'] = setup_class['organizations_trees'][
+                'organizationId']
+            data['get_approval_by_organization']['body']['employeeId'] = setup_class['employee_id']
+            get_approval_by_organization_res = WorkflowDomain(setup_class['env']).get_approval_by_organization_api(
+                data['get_approval_by_organization'])
+            allure.attach(str(data['get_approval_by_organization']), "请求数据", allure.attachment_type.JSON)
+            allure.attach(get_approval_by_organization_res.text, "get_approval_by_organization_api返回结果",
+                          allure.attachment_type.JSON)
+            Assertions().assert_mode(get_approval_by_organization_res, data['get_approval_by_organization'])
+            workflowDeploymentId = get_approval_by_organization_res.json()['data']['workflowDeploymentId']
+
+            # 根据组织获取员工列表
+            data['get_organization_employee_list']['params']['organizationId'] = setup_class['organizations_trees']['organizationId']
+            data['get_organization_employee_list']['params']['coOrgId'] = setup_class['company_id']
+            get_update_workforce_organization_res = WorkforceOrganizationApi(setup_class['env']).get_update_workforce_organization_api(data['get_organization_employee_list'])
+            Assertions().assert_mode(get_update_workforce_organization_res, data['get_organization_employee_list'])
+
+            # 获取要修改员工的基本信息
+            data['get_employee_basic']['params']['employeeId'] = get_update_workforce_organization_res.json()['data'][0]['employeechildren'][0]['id']
+            get_update_employee_basic_res = WorkforceInformationUpdateApi(setup_class['env']).get_update_employee_basic_api(data['get_employee_basic'])
+            Assertions().assert_mode(get_update_employee_basic_res, data['get_employee_basic'])
+
+            # 更新基本信息
+            data['update_employee_basic']['body']['applyEmployeeId'] = setup_class['employee_id']
+            data['update_employee_basic']['body']['applyEmployeeName'] = 'admin'
+            data['update_employee_basic']['body']['coOrgId'] = setup_class['company_id']
+            data['update_employee_basic']['body']['workflowDeploymentId'] = workflowDeploymentId
+            workforceEmployeeBasicDetailDto = get_update_employee_basic_res.json()['data']
+            workforceEmployeeBasicDetailDto['selectEmployeeName'] = workforceEmployeeBasicDetailDto['displayname']
+            workforceEmployeeBasicDetailDto['selectOrganizationId'] = setup_class['organizations_trees']['organizationId']
+            workforceEmployeeBasicDetailDto['selectOrganizationName'] = setup_class['organizations_trees']['organizationName']
+            workforceEmployeeBasicDetailDto['emergencyContact'] = '张三'
+            workforceEmployeeBasicDetailDto['emergencyContactMobile'] = 18812341234
+            workforceEmployeeBasicDetailDto['emergencyContactType'] = '父子'
+            data['update_employee_basic']['body']['workforceEmployeeBasicDetailDto'] = workforceEmployeeBasicDetailDto
+            post_update_employee_basic_res = WorkforceInformationUpdateApi(setup_class['env']).post_update_employee_basic_api(data['update_employee_basic'])
+            Assertions().assert_mode(post_update_employee_basic_res, data['update_employee_basic'])
 
 
 if __name__ == '__main__':

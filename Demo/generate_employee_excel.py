@@ -6,11 +6,13 @@
 from openpyxl import *
 from Common.operation_random import *
 import time
+from random import choice
 
 
 class Generate_Employee_excel:
     def __init__(self):
         self.wb = load_workbook('batch_employee.xlsx')
+        self.temporaryworkers = load_workbook('batch_temporaryworker.xlsx')
 
     def add(self, count, job_number_start):
         '''
@@ -43,7 +45,30 @@ class Generate_Employee_excel:
 
         self.wb.save(str(int(time.time())) + '.xlsx')
 
+    def generate_temporary_workers_excel(self, count):
+        """
+        :param count: 需要生成多少人
+        """
+        sheet = self.temporaryworkers.active
+        for i in range(2, count + 2):
+            idcard = random_idcard()
+            a = 'A' + str(i)
+            sheet[a] = idcard   # 身份证号码
+            name = random_name()
+            b = 'B' + str(i)
+            sheet[b] = name[0]     # 姓名
+            sex = ['男', '女', '其他']
+            c = 'C' + str(i)
+            sheet[c] = choice(sex)
+            d = 'D' + str(i)
+            sheet[d] = '汉族'
+            e = 'E' + str(i)
+            sheet[e] = date_of_birth_by_idcard(idcard)  # 出生日期
+
+        self.temporaryworkers.save(str(int(time.time())) + '.xlsx')
+
 
 if __name__ == '__main__':
     obj = Generate_Employee_excel()
-    obj.add(5, 1)
+    # obj.add(5, 16)
+    obj.generate_temporary_workers_excel(10)

@@ -24,6 +24,12 @@ class Const(object):
             self.url_path = Config().get_conf('test_env', 'test2')
         elif env == "test3":
             self.url_path = Config().get_conf('test_env', 'test3')
+        elif env == "dev1":
+            self.url_path = Config().get_conf('test_env', 'dev1')
+        elif env == "dev2":
+            self.url_path = Config().get_conf('test_env', 'dev2')
+        elif env == "dev3":
+            self.url_path = Config().get_conf('test_env', 'dev3')
         self.headers = dict()
         if Common.consts.ACCESS_TOKEN:
             self.headers['X-Dk-Token'] = Common.consts.ACCESS_TOKEN[0]
