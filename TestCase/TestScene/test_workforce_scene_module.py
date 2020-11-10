@@ -253,8 +253,8 @@ class TestWorkforceScene:
                     application_id = item['applicationId']
                     # Assertions().assert_text(item['workflowStatus'], 'AGREED')
                     break
-                else:
-                    MyLog().error("申请单列表没有" + code + "申请记录")
+            else:
+                MyLog().error("申请单列表没有" + code + "申请记录")
             # 查看申请单详情页
             data['apply_detail']['application_id'] = application_id
             apply_detail_res = WorkforceApply(setup_class['env']).apply_detail_api(data['apply_detail'])
