@@ -7,7 +7,7 @@
 from TestApi.consts_api import Const
 
 
-class WorkflowDomain(Const):
+class WorkflowDomainApi(Const):
     def __init__(self, env):
         super().__init__(env)
 

@@ -21,23 +21,6 @@ update_apply_approval_automatic_approval:
   expect:
     assert_type: errcode
     assert_result: '0'
-# 根据招募组织节点获取对应申请审批流
-get_approval_by_organization:
-  organizationId:
-  body:
-    employeeId:
-    type: WORKFORCEAPPLICATION
-    workforceApplicationDto:
-      coOrgId:
-      financeActual:
-      financePlan:
-      organizationId:
-      personnelActual:
-      personnelPlan:
-      recruitmentType: New
-  expect:
-    assert_type: errcode
-    assert_result: '0'
 # 发送用工申请
 send_apply:
   body:

@@ -17,8 +17,20 @@ class WorkforceInformationUpdateApi(Const):
         res = self.request.send_request_method('get', url=url, params=data['params'], headers=self.headers)
         return res
 
-    # 新增用工稽查局信息更新
+    # 新增用工基础信息更新
     def post_update_employee_basic_api(self, data):
         url = self.url_path + '/dukang-workforce/api/workforce_update_records/employee_basic'
         res = self.request.send_request_method('post', url=url, json=data['body'], headers=self.headers)
+        return res
+
+    # 用工信息更新记录查询
+    def get_workforce_update_list_api(self, data):
+        url = self.url_path + '/dukang-workforce/api/workforce_update_records/search'
+        res = self.request.send_request_method('post', url=url, params=data['params'], json=data['body'], headers=self.headers)
+        return res
+
+    # 用工基础信息更新详情
+    def get_workforce_update_detail_api(self, data):
+        url = self.url_path + '/dukang-workforce/api/workforce_update_records/employee_basic_detail'
+        res = self.request.send_request_method('get', url=url, params=data['params'], headers=self.headers)
         return res

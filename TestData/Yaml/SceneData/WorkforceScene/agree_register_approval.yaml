@@ -18,15 +18,6 @@ update_register_approval_need_approval:
   expect:
     assert_type: errcode
     assert_result: '0'
-# 根据招募组织节点获取对应申请审批流
-get_approval_by_organization:
-  organizationId:
-  body:
-    employeeId:
-    type: WORKFORCEREGISTER
-  expect:
-    assert_type: errcode
-    assert_result: '0'
 # 获取登记列表
 get_register_list:
   params:

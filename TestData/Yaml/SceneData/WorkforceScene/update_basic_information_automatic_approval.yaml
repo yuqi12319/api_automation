@@ -1,5 +1,5 @@
-# 修改默认用工更新审批流为无需审批
-update_update_approval_without_approval:
+# 修改默认用工申请审批流为无需审批
+update_update_approval_automatic_approval:
   body:
     coOrgId:
     name: 默认用工更新审批流
@@ -8,12 +8,16 @@ update_update_approval_without_approval:
     workflowSettingId:
     workflowSettingRuleGroupDtoList:
       -
-        workflowSettingApproverList: []
+        workflowSettingApproverList:
+          -
+            employeeId:
+            sortOrder: 1
+            type: FIXED
         workflowSettingCcList: []
         workflowSettingRuleGroupRuleDtoList:
           -
             ruleName: REQUIRE_APPROVAL
-            ruleValue: 0
+            ruleValue: 1
   expect:
     assert_type: errcode
     assert_result: '0'
@@ -37,6 +41,7 @@ update_employee_basic:
   expect:
     assert_type: errcode
     assert_result: '0'
+# 获取更新列表
 get_workforce_update_list:
   params:
     offset: 0
@@ -46,6 +51,7 @@ get_workforce_update_list:
   expect:
     assert_type: errcode
     assert_result: '0'
+# 获取更新详情
 get_workforce_update_detail:
   params:
     id:

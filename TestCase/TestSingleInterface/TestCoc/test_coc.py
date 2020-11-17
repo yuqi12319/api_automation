@@ -8,7 +8,7 @@ import pytest
 import allure
 from Common.operation_yaml import YamlHandle
 from Common.operation_assert import Assertions
-from TestApi.CocApi.coc import Coc
+from TestApi.CocApi.company_workforce_map_api import CompanyWorkforceMapApi
 
 
 class TestCoc:
@@ -21,7 +21,7 @@ class TestCoc:
     @allure.title('获取关联劳务公司')
     @pytest.mark.parametrize('data', YamlHandle().read_yaml('SingleInterfaceData/Coc/workforce_company_map.yaml'))
     def test_workforce_company_map(self, data):
-        res = Coc(self.env).workforce_company_map_api(data)
+        res = CompanyWorkforceMapApi(self.env).workforce_company_map_api(data)
         Assertions().assert_mode(res, data)
 
     # @pytest.skip
@@ -29,7 +29,7 @@ class TestCoc:
     @pytest.mark.parametrize('data',
                              YamlHandle().read_yaml('SingleInterfaceData/Coc/workforce_company_relation_add.yaml'))
     def test_workforce_company_workforce_add(self, data):
-        res = Coc(self.env).workforce_company_workforce_add(data)
+        res = CompanyWorkforceMapApi(self.env).workforce_company_workforce_add_api(data)
         Assertions().assert_mode(res, data)
 
 

@@ -6,14 +6,14 @@
 
 import pytest, allure
 import time
+from faker import Faker
 import Common.consts
 from Common.log import MyLog
 from Common.operation_yaml import YamlHandle
 from Common.operation_assert import Assertions
 from Common.operation_mysql import *
-from Conf.config import Config
 from Common.request import *
-from TestApi.WorkflowApi.workflow_domain import WorkflowDomain
+from TestApi.WorkflowApi.workflow_domain import WorkflowDomainApi
 from TestApi.PayrollApi.payroll_setting import PayrollSetting
 from TestApi.AttendanceApi.attendance_setting import AttendanceSetting
 from TestApi.LeaveApi.leave_setting_api import LeaveSettingApi
@@ -35,12 +35,15 @@ class TestRegisterCompanyScene:
     @pytest.mark.run(order=1)
     @pytest.mark.parametrize('data', YamlHandle().read_yaml('SceneData/RegisterComapnyScene/main_scene.yaml'))
     def test_main_scene(self, data, setup_class):
+        fake = Faker(locale='zh_CN')
         env = setup_class
+        # fake = setup_class[1]
 
         with allure.step('第一步：创建公司'):
 
             # 注册公司
-            company_name = 'test_company_' + str(int(time.time()))
+            # company_name = 'test_company_' + str(int(time.time()))
+            company_name = fake.company()
             data['register_company']['body']['name'] = company_name
             add_company_register_res = CompanyRegisterRequestApi(env).add_company_register_api(data['register_company'])
             Assertions().assert_mode(add_company_register_res, data['register_company'])
@@ -125,21 +128,21 @@ class TestRegisterCompanyScene:
             # 默认报销审批流判断
             data['default_claim_approval']['params']['coOrgId'] = company_id
             allure.attach(str(data['default_claim_approval']), "请求数据", allure.attachment_type.JSON)
-            claim_approval_list_res = WorkflowDomain(env).claim_approval_list_api(data['default_claim_approval'])
+            claim_approval_list_res = WorkflowDomainApi(env).claim_approval_list_api(data['default_claim_approval'])
             allure.attach(claim_approval_list_res.text, "claim_approval_list_api返回结果", allure.attachment_type.JSON)
             Assertions().assert_in_text(claim_approval_list_res.json()['data'], '默认报销审批流')
 
             # 默认请假审批流判断
             data['default_leave_approval']['params']['coOrgId'] = company_id
             allure.attach(str(data['default_leave_approval']), "请求数据", allure.attachment_type.JSON)
-            leave_approval_list_res = WorkflowDomain(env).leave_approval_list_api(data['default_leave_approval'])
+            leave_approval_list_res = WorkflowDomainApi(env).leave_approval_list_api(data['default_leave_approval'])
             allure.attach(leave_approval_list_res.text, "leave_approval_list_api返回结果", allure.attachment_type.JSON)
             Assertions().assert_in_text(leave_approval_list_res.json()['data'], '默认请假审批流')
 
             # 默认加班,补卡,外出,离职审批流判断
             data['default_attendance_approval']['params']['company_id'] = company_id
             allure.attach(str(data['default_attendance_approval']), "请求数据", allure.attachment_type.JSON)
-            attendance_approval_list_res = WorkflowDomain(env).attendance_approval_list_api(
+            attendance_approval_list_res = WorkflowDomainApi(env).attendance_approval_list_api(
                 data['default_attendance_approval'])
             allure.attach(attendance_approval_list_res.text, "attendance_approval_list_api返回结果", allure.attachment_type.JSON)
             Assertions().assert_in_text(attendance_approval_list_res.json()['data'], '默认加班审批流')
