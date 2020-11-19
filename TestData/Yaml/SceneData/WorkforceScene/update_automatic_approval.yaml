@@ -1,0 +1,101 @@
+# 修改默认用工申请审批流为无需审批
+update_update_approval_automatic_approval:
+  body:
+    coOrgId:
+    name: 默认用工更新审批流
+    orgIds: []
+    type: WORKFORCE_UPDATE
+    workflowSettingId:
+    workflowSettingRuleGroupDtoList:
+      -
+        workflowSettingApproverList:
+          -
+            employeeId:
+            sortOrder: 1
+            type: FIXED
+        workflowSettingCcList: []
+        workflowSettingRuleGroupRuleDtoList:
+          -
+            ruleName: REQUIRE_APPROVAL
+            ruleValue: 1
+  expect:
+    assert_type: errcode
+    assert_result: '0'
+# 获取要更新人员的基本信息
+get_employee_basic:
+  params:
+    employeeId:
+  expect:
+    assert_type: errcode
+    assert_result: '0'
+# 更新基本信息
+update_employee_basic:
+  body:
+    applyEmployeeId:
+    applyEmployeeName:
+    approverList: []
+    ccList: []
+    coOrgId:
+    workflowDeploymentId:
+    workforceEmployeeBasicDetailDto: {}
+  expect:
+    assert_type: errcode
+    assert_result: '0'
+# 获取要更新人员的职位信息
+get_employee_position:
+  params:
+    organizationId:
+    employeeId:
+  expect:
+    assert_type: errcode
+    assert_result: '0'
+# 更新职位信息
+update_employee_position:
+  body:
+    applyEmployeeId:
+    applyEmployeeName:
+    approverList: []
+    ccList: []
+    coOrgId:
+    workflowDeploymentId:
+    workforcePositionDetailDto: {}
+  expect:
+    assert_type: errcode
+    assert_result: '0'
+# 获取要更新人员的待遇信息
+get_employee_payroll:
+  params:
+    employeeId:
+  expect:
+    assert_type: errcode
+    assert_result: '0'
+# 更新待遇信息
+update_employee_payroll:
+  body:
+    applyEmployeeId:
+    applyEmployeeName:
+    approverList: []
+    ccList: []
+    coOrgId:
+    workflowDeploymentId:
+    workforcePayrollRecordDtos: {}
+  expect:
+    assert_type: errcode
+    assert_result: '0'
+# 获取更新列表
+get_workforce_update_list:
+  params:
+    offset: 0
+    limit: 20
+  body:
+    coOrgId:
+  expect:
+    assert_type: errcode
+    assert_result: '0'
+# 获取更新详情
+get_workforce_update_detail:
+  params:
+    id:
+  expect:
+    assert_type: errcode
+    assert_result: '0'

@@ -11,7 +11,7 @@ import random
 import time
 from Common.operation_yaml import YamlHandle
 from Common.operation_assert import Assertions
-from TestApi.CommissionApi.positon import Position
+from TestApi.CommissionApi.positon_api import PositionApi
 from TestApi.EmployeeApi.employee_api import EmployeeApi
 from TestApi.EmployeeApi.rank import Rank
 from TestApi.EmployeeApi.cost_center import CostCenter
@@ -71,12 +71,12 @@ class TestEmployeeManager:
             data['add_position']['body']['coOrgId'] = setup_class[1]
             position_name = '职位' + str(int(time.time()))
             data['add_position']['body']['name'] = position_name
-            add_position_res = Position(setup_class[0]).add_position_api(data['add_position'])
+            add_position_res = PositionApi(setup_class[0]).add_position_api(data['add_position'])
             Assertions().assert_mode(add_position_res, data['add_position'])
 
             # 查看职位
             data['get_position']['body']['coOrgId'] = setup_class[1]
-            get_position_res = Position(setup_class[0]).get_position_api(data['get_position'])
+            get_position_res = PositionApi(setup_class[0]).get_position_api(data['get_position'])
             Assertions().assert_in_text(get_position_res.json()['data'], position_name)
             
             # 添加劳动合同主体

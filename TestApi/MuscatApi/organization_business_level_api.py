@@ -6,6 +6,7 @@
 
 from TestApi.consts_api import Const
 
+
 class OrganizationBusinessLevelApi(Const):
 
     def __init__(self, env):

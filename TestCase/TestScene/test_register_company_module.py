@@ -4,8 +4,8 @@
 # Time:2020/8/21 3:54 下午
 # Description: 注册公司
 
-import pytest, allure
-import time
+import pytest
+import allure
 from faker import Faker
 import Common.consts
 from Common.log import MyLog
@@ -27,7 +27,8 @@ class TestRegisterCompanyScene:
 
     @pytest.fixture(scope='class')
     def setup_class(self, env):
-        return env
+        fake = Faker(locale='zh_CN')
+        return env, fake
 
     @pytest.mark.smoke
     @pytest.mark.workforce
@@ -35,9 +36,8 @@ class TestRegisterCompanyScene:
     @pytest.mark.run(order=1)
     @pytest.mark.parametrize('data', YamlHandle().read_yaml('SceneData/RegisterComapnyScene/main_scene.yaml'))
     def test_main_scene(self, data, setup_class):
-        fake = Faker(locale='zh_CN')
-        env = setup_class
-        # fake = setup_class[1]
+        env = setup_class[0]
+        fake = setup_class[1]
 
         with allure.step('第一步：创建公司'):
 

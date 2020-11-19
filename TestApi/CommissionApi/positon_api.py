@@ -1,5 +1,5 @@
 # coding:utf-8
-# Name:positon.py
+# Name:positon_api.py
 # Author:qi.yu
 # Time:2020/8/28 10:36 上午
 # Description:
@@ -7,7 +7,7 @@
 from TestApi.consts_api import Const
 
 
-class Position(Const):
+class PositionApi(Const):
 
     def __init__(self, env):
         super().__init__(env)
