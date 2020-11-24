@@ -18,7 +18,7 @@ if __name__ == '__main__':
     # 定义测试集
     # args = ['-sq', '--alluredir', xml_report_path, './TestCase/TestScene/test_register_company_module.py', '--env', 'test3']
     # pytest.main(args)
-    args = ['-sv', '--alluredir', xml_report_path, './TestCase/TestScene', '-m', 'workforce', '--env', 'test3']
+    args = ['-sv', '--alluredir', xml_report_path, './TestCase/TestScene', '-m', 'workforce_smoke', '--env', 'test3']
     pytest.main(args)
 
 

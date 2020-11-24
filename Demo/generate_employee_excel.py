@@ -80,5 +80,5 @@ class Generate_Employee_excel:
 
 if __name__ == '__main__':
     obj = Generate_Employee_excel()
-    obj.add(100, 1)
+    obj.add(2000, 1)
     # obj.generate_temporary_workers_excel(1000)

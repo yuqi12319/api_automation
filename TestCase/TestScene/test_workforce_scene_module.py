@@ -1416,7 +1416,7 @@ class TestWorkforceScene:
                     Assertions().assert_text(item['workflowStatus'], "AGREED")
                 MyLog().error('登记列表没有找到' + str(dispatch_employee_id) + '员工')
 
-    @pytest.mark.workforce_smoke
+    # @pytest.mark.workforce_smoke
     @pytest.mark.workforce
     @allure.story("更新无需审批")
     @pytest.mark.parametrize('data', YamlHandle().read_yaml('SceneData/WorkforceScene/update_without_approval.yaml'))
@@ -1559,7 +1559,7 @@ class TestWorkforceScene:
             # Assertions().assert_text(get_workforce_update_detail_res.json()['data']['emergencyContactMobile'], '18812341234')
             # Assertions().assert_text(get_workforce_update_detail_res.json()['data']['emergencyContactType'], '父子')
 
-    @pytest.mark.workforce_smoke
+    # @pytest.mark.workforce_smoke
     @pytest.mark.workforce
     @allure.story("更新自动审批")
     @pytest.mark.parametrize('data', YamlHandle().read_yaml('SceneData/WorkforceScene/update_automatic_approval.yaml'))
@@ -1705,7 +1705,7 @@ class TestWorkforceScene:
         #     Assertions().assert_text(get_workforce_update_detail_res.json()['data']['emergencyContactMobile'], '18812341234')
         #     Assertions().assert_text(get_workforce_update_detail_res.json()['data']['emergencyContactType'], '父子')
 
-    @pytest.mark.workforce_smoke
+    # @pytest.mark.workforce_smoke
     @pytest.mark.workforce
     @allure.story("更新需要审批")
     @pytest.mark.parametrize('data', YamlHandle().read_yaml('SceneData/WorkforceScene/update_need_approval.yaml'))
@@ -1837,7 +1837,58 @@ class TestWorkforceScene:
             Assertions().assert_mode(get_workforce_update_list_res, data['get_workforce_update_list'])
             Assertions().assert_text(len(get_workforce_update_list_res.json()['data']['list']), 9)
 
+    '''
+    @pytest.mark.workforce_smoke
+    def test_a(self, setup_class):
+        dddd = dict()
+        dddd['body'] = dict()
+        dddd['params'] = dict()
+        dddd['params']['page'] = 0
+        dddd['params']['size'] = 2000
+        dddd['body']['beginTime'] = 1605715200000
+        dddd['body']['endTime'] = 1606320000000
+        dddd['body']['coOrgId'] = 740893441877082112
+        dddd['body']['name'] = ''
+        workforce_employees_free_res = WorkforceEmployeeDomain(setup_class['env']).workforce_employees_free(
+            dddd)
+        # print(len(workforce_employees_free_res.json()['data']))
+        employee_infomation = list()
+        for item in workforce_employees_free_res.json()['data']:
+            employee_infomation.append(item['id'])
+
+        cccc = dict()
+        cccc['body'] = dict()
+        cccc['body']['beginTime'] = 1605715200000
+        cccc['body']['endTime'] = 1606320000000
+        cccc['body']['coOrgId'] = 740893441877082112
+        cccc['body']['dispatchCoOrgId'] = 740893441877082112
+        cccc['body']['workforceRequestId'] = 779003610947125248
+        cccc['body']['employeeIds'] = list()
+        cccc['body']['employeeIds'] = employee_infomation
+        cccc['body']['workforceDispatchEmployeeBasisDtos'] = list()
+        askda = workforce_employees_free_res.json()['data']
+        del askda[0]
+        for item in askda:
+            yyy = dict()
+            yyy['address'] = ''
+            yyy['birthday'] = item['birthDateLong']
+            yyy['coOrgId'] = 740893441877082112
+            yyy['displayName'] = item['displayName']
+            yyy['employeeId'] = item['id']
+            yyy['idCard'] = item['identitys'][0]['number']
+            yyy['mobile'] = item['mobile']
+            yyy['mobileAreaCode'] = 86
+            yyy['sex'] = item['genderValue']
+            yyy['workforceEmployeeCode'] = item['employee_code']
+            yyy['emergencyMobile'] = ''
+            yyy['emergencyMobileAreaCode'] = ''
+            yyy['emergencyName'] = ''
+            yyy['emergencyRelationshipValue'] = ''
+            cccc['body']['workforceDispatchEmployeeBasisDtos'].append(yyy)
+        dispatch_res = WorkforceDispatch(setup_class['env']).dispatch_api(cccc)
+    '''
+
 
 if __name__ == '__main__':
     pytest.main(
-        ["-sv", "test_workforce_scene_module.py::TestWorkforceScene::test_b", '-m', 'workforce', "--env", "test3"])
+        ["-sv", "test_workforce_scene_module.py", '-m', 'workforce', "--env", "test3"])
